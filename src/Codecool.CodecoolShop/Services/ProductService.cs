@@ -49,9 +49,28 @@ namespace Codecool.CodecoolShop.Services
             return this.productDao.GetAll();
         }
 
-        public IEnumerable<Product> GetSortedProducts()
+        public IEnumerable<Product> GetSortedProducts(int category, int supplier)
         {
-            return this.productDao.GetAll();
+            IEnumerable<Product> products;
+
+            if (category != 0 && supplier == 0)
+            {
+                products = GetProductsForCategory(category);
+            }
+            else if (category == 0 && supplier != 0)
+            {
+                products = GetProductsForSupplier(supplier);
+            }
+            else if (category == 0 && supplier == 0)
+            {
+                products = GetAllProducts();
+            }
+            else
+            {
+                products = GetProductsForCategoryAndSupplier(category, supplier);
+            }
+
+            return products;
         }
     }
 }
