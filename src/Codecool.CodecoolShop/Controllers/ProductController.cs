@@ -17,21 +17,45 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly ILogger<ProductController> _logger;
         public ProductService ProductService { get; set; }
         public CategoryService CategoryService { get; set; }
+        public SupplierService SupplierService { get; set; }
 
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
             ProductService = new ProductService(
                 ProductDaoMemory.GetInstance(),
-                ProductCategoryDaoMemory.GetInstance());
+                ProductCategoryDaoMemory.GetInstance(),
+                SupplierDaoMemory.GetInstance());
             CategoryService = new CategoryService(ProductCategoryDaoMemory.GetInstance());
+            SupplierService = new SupplierService(SupplierDaoMemory.GetInstance());
         }
 
-        public IActionResult Index(int category = 1)
+        public IActionResult Index(int category = 1, int supplier = 0)
         {
-            var products = ProductService.GetProductsForCategory(category);
             ViewBag.Categories = CategoryService.GetCategories();
+            ViewBag.Suppliers = SupplierService.GetSuppliers();
             ViewBag.CurrentCategory = category;
+            ViewBag.CurrentSupplier = supplier;
+
+            IEnumerable<Product> products;
+
+            if (category != 0 && supplier == 0)
+            {
+                products = ProductService.GetProductsForCategory(category);
+            }
+            else if (category == 0 && supplier != 0)
+            {
+                products = ProductService.GetProductsForSupplier(supplier);
+            }
+            else if (category == 0 && supplier == 0)
+            {
+                products = ProductService.GetAllProducts();
+            }
+            else
+            {
+                products = ProductService.GetProductsForCategoryAndSupplier(category, supplier);
+            }
+            
             return View(products.ToList());
         }
 

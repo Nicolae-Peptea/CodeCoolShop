@@ -24,6 +24,20 @@ a {
   border-color: #1861ac;
 }
 
+/* Cards grid style
+-------------------------------------------------- */
+.cards {
+    display: inline-block;
+    max-width: 350px;
+    height: 350px;
+}
+.card img {
+    height: 50%;
+    width: 50%;
+    align-self: center;
+    padding-top: 10px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
