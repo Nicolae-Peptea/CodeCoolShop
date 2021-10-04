@@ -24,18 +24,95 @@ a {
   border-color: #1861ac;
 }
 
+/* Sort control group style
+-------------------------------------------------- */
+.sort-control-group {
+    border-bottom: 1px solid #e5e5e5;
+    border-radius: 3px;
+    border-width: 1px;
+    display: block;
+    margin: 5px 0;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+.sort-control-item {
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    width: fit-content;
+}
+
+.sort-control-item select {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: #fff;
+    border-color: #ccc;
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+    max-width: 150px;
+    min-width: 130px;
+    padding: 5px 10px;
+}
+
+.sort-control-group button {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: #F1F1F1;
+    border-color: #ccc;
+    color: #666;
+    font-size: 16px;
+    width: 60px;
+    padding: 5px 10px;
+}
+
+.sort-control-group button:hover {
+    background-color: #E5E5E5;
+    /*border-color: #545454;*/
+    cursor: pointer;
+    color: #444;
+}
+
 /* Cards grid style
 -------------------------------------------------- */
 .cards {
-    display: inline-block;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+}
+
+.card {
+    height: 540px;
     max-width: 350px;
-    height: 350px;
 }
 .card img {
-    height: 50%;
-    width: 50%;
     align-self: center;
+    height: 33%;
     padding-top: 10px;
+    /*width: 50%;*/
+}
+
+.card-body a {
+    background: linear-gradient(to right,#4a60c1 10%,#3985e0);
+    border-width: 0;
+    border-radius: 3px;
+    display: block;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 5px 10px;
+    position: absolute;
+    width: 96%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 5px;
+}
+
+.card-body a:hover {
+    background: linear-gradient(to right,#3A50AF 10%,#3178CE);
+    cursor: pointer;
 }
 
 /* Sticky footer styles
