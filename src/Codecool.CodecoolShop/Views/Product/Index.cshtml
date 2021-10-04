@@ -5,61 +5,65 @@
 @model List<Codecool.CodecoolShop.Models.Product>
 
 <form  asp-area="" asp-controller="Product" asp-action="Index">
-    <div>
-        <label for="sort_by_category">Sort by Category:</label>
-        <select name="category">
-            @if (ViewBag.CurrentCategory == 0)
-            {
-                <option value="0" selected>All</option>
-            }
-            else
-            {
-                <option value="0">All</option>
-            }
-            @foreach (var category in ViewBag.Categories)
-            {
-                @if (ViewBag.CurrentCategory == category.Id)
+    <div class="sort-control-group">
+        <div class="sort-control-item">
+            <label for="sort_by_category">Sort by Category:</label>
+            <select name="category">
+                @if (ViewBag.CurrentCategory == 0)
                 {
-                    <option value="@category.Id" selected>@category.Name</option>
+                    <option value="0" selected>All</option>
                 }
                 else
                 {
-                    <option value="@category.Id">@category.Name</option>
+                    <option value="0">All</option>
                 }
-            }
-        </select>
-
-        <label for="sort_by_suppliers">Sort by Suppliers:</label>
-        <select name="supplier">
-            @if (ViewBag.CurrentSupplier == 0)
-            {
-                <option value="0" selected>All</option>
-            }
-            else
-            {
-                <option value="0">All</option>
-            }
-            @foreach (var supplier in ViewBag.Suppliers)
-            {
-                @if (ViewBag.CurrentSupplier == supplier.Id)
+                @foreach (var category in ViewBag.Categories)
                 {
-                    <option value="@supplier.Id" selected>@supplier.Name</option>
+                    @if (ViewBag.CurrentCategory == category.Id)
+                    {
+                        <option value="@category.Id" selected>@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="sort-control-item">
+            <label for="sort_by_suppliers">Sort by Suppliers:</label>
+            <select name="supplier">
+                @if (ViewBag.CurrentSupplier == 0)
+                {
+                    <option value="0" selected>All</option>
                 }
                 else
                 {
-                    <option value="@supplier.Id">@supplier.Name</option>
+                    <option value="0">All</option>
                 }
-            }
-        </select>
+                @foreach (var supplier in ViewBag.Suppliers)
+                {
+                    @if (ViewBag.CurrentSupplier == supplier.Id)
+                    {
+                        <option value="@supplier.Id" selected>@supplier.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@supplier.Id">@supplier.Name</option>
+                    }
+                }
+            </select>
+        </div>
 
         <button name="sort" type="submit">Sort</button>
     </div>
 </form>
 
 <div class="container">
-    @foreach (var element in Model)
-    {
-        <div class="cards">
+    
+    <div class="cards">
+        @foreach (var element in Model)
+        {
             <div class="card">
                 <img src="img/@(element.Name).jpg">
 
@@ -70,13 +74,14 @@
                         @num
                     </h5>
                     <h5 class="card-title">@element.Name</h5>
-                    <p class="card-text">@element.Description.</p>
+                    <p class="card-text">@element.Description.Substring(0, 70)...</p>
                     <p class="card-text">Category: @element.ProductCategory.Department</p>
                     <p class="card-text">Supplier: @element.Supplier.Name</p>
                     <p class="card-text text-center"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
-                    <a href="" type="button" class="btn btn-primary" style="float: bottom">Add To Cart</a>
+                    <a href="" type="button" class="btn btn-primary">Add To Cart</a>
                 </div>
             </div>
-        </div>
-     }
+        }
+    </div>
+     
 </div>
