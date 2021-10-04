@@ -37,25 +37,8 @@ namespace Codecool.CodecoolShop.Controllers
             ViewBag.CurrentCategory = category;
             ViewBag.CurrentSupplier = supplier;
 
-            IEnumerable<Product> products;
+            IEnumerable<Product> products = ProductService.GetSortedProducts(category, supplier); ;
 
-            if (category != 0 && supplier == 0)
-            {
-                products = ProductService.GetProductsForCategory(category);
-            }
-            else if (category == 0 && supplier != 0)
-            {
-                products = ProductService.GetProductsForSupplier(supplier);
-            }
-            else if (category == 0 && supplier == 0)
-            {
-                products = ProductService.GetAllProducts();
-            }
-            else
-            {
-                products = ProductService.GetProductsForCategoryAndSupplier(category, supplier);
-            }
-            
             return View(products.ToList());
         }
 
