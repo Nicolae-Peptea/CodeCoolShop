@@ -4,6 +4,25 @@
 
 @model List<Codecool.CodecoolShop.Models.Product>
 
+<form  asp-area="" asp-controller="Product" asp-action="Index">
+    <div>
+        <label for="sort_by_category">Sort by Category:</label>
+        <select name="category" onChange="this.form.submit();">
+            @foreach (var category in ViewBag.Categories)
+            {
+                @if (ViewBag.CurrentCategory == category.Id)
+                {
+                    <option value="@category.Id" selected>@category.Name</option>
+                }
+                else
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            }
+        </select>
+    </div>
+</form>
+
 <div class="container">
     @foreach (var element in Model)
     {

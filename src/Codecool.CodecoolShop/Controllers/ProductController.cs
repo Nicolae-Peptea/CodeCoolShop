@@ -16,6 +16,7 @@ namespace Codecool.CodecoolShop.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         public ProductService ProductService { get; set; }
+        public CategoryService CategoryService { get; set; }
 
         public ProductController(ILogger<ProductController> logger)
         {
@@ -23,11 +24,14 @@ namespace Codecool.CodecoolShop.Controllers
             ProductService = new ProductService(
                 ProductDaoMemory.GetInstance(),
                 ProductCategoryDaoMemory.GetInstance());
+            CategoryService = new CategoryService(ProductCategoryDaoMemory.GetInstance());
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int category = 1)
         {
-            var products = ProductService.GetProductsForCategory(1);
+            var products = ProductService.GetProductsForCategory(category);
+            ViewBag.Categories = CategoryService.GetCategories();
+            ViewBag.CurrentCategory = category;
             return View(products.ToList());
         }
 
