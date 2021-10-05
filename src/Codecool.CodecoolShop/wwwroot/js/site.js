@@ -4,16 +4,23 @@
 // Write your JavaScript code.
 
 let cartButton = document.querySelector("#cart");
-let shoppingCart = document.querySelector(".shopping-cart");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
+let shoppingCart = document.querySelector(".shopping-cart");
+let itemsInShoppingCart = document.querySelector(".badge");
+
+
+function showCartQuantityWhenLoading() {
+    let shoppingCartItems = sessionStorage.getItem("shoppingCartQuantity");
+    itemsInShoppingCart.innerHTML = shoppingCartItems;
+}
+
 
 buyButtons.forEach((element) => {
     element.addEventListener('click', async function() {
 
         event.preventDefault();
-
         let productId = element.getAttribute("data-product-id");
-        let itemsInShoppingCart = document.querySelector(".badge");
+        
         let routeUrl = 'api/buy';
         let cartItemsTotal = 0;
 
@@ -29,6 +36,7 @@ buyButtons.forEach((element) => {
                 cartItemsTotal += element.Quantity;
             })
 
+            sessionStorage.setItem("shoppingCartQuantity", cartItemsTotal)
             itemsInShoppingCart.innerHTML = cartItemsTotal;
 
         } catch (e) {
@@ -36,6 +44,7 @@ buyButtons.forEach((element) => {
         }
     })
 })
+
 
 cartButton.addEventListener('click', async function () {
     event.preventDefault();
@@ -47,3 +56,5 @@ cartButton.addEventListener('click', async function () {
         shoppingCart.style.visibility = "visible";
     }
 })
+
+showCartQuantityWhenLoading();

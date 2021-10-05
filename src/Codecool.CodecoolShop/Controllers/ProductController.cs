@@ -54,8 +54,8 @@ namespace Codecool.CodecoolShop.Controllers
             item.Product = boughtProduct;
 
             OrderService.BuyProduct(item);
-            var orderItems = OrderService.GetAllItems();
-            string orderItemsAsJson = JsonConvert.SerializeObject(orderItems);
+            IEnumerable<Item> orderItems = OrderService.GetAllItems();
+            string orderItemsAsJson = JsonConvert.SerializeObject(orderItems); //TODO method to serialize in OrderService
 
             return orderItemsAsJson;
         }
