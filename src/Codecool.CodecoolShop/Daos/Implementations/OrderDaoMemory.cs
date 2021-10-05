@@ -8,9 +8,8 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class OrderDaoMemory : IOrderDao
     {
-        private List<Product> data = new List<Product>();
+        private List<Item> data = new List<Item>();
         private static OrderDaoMemory instance = null;
-
 
         public static OrderDaoMemory GetInstance()
         {
@@ -22,33 +21,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return instance;
         }
 
-
-        public void Add(Product item)
+        public int GetTotalValue()
         {
             throw new NotImplementedException();
         }
 
-        public Product Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetBy(Supplier supplier)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetBy(ProductCategory productCategory)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetBy(ProductCategory productCategory, Supplier supplier)
+        public void Add(Item item)
         {
             throw new NotImplementedException();
         }
@@ -58,7 +36,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             throw new NotImplementedException();
         }
 
-        public int GetTotalValue()
+        public Item Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Item> GetAll()
         {
             throw new NotImplementedException();
         }
