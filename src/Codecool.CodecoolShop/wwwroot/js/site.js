@@ -9,16 +9,31 @@ let buyButtons = [...document.querySelectorAll("#add-to-cart")];
 
 buyButtons.forEach((element) => {
     element.addEventListener('click', async function() {
-        event.preventDefault();
-        let productId = element.getAttribute("data-product-id");
-        let routeUrl = 'api/buy';
 
-        const response = $.ajax({
-            url: routeUrl,
-            data: { id: productId },
-            method: "post",
-        })
-        
+        event.preventDefault();
+
+        let productId = element.getAttribute("data-product-id");
+        let itemsInShoppingCart = document.querySelector(".badge");
+        let routeUrl = 'api/buy';
+        let cartItemsTotal = 0;
+
+        try {
+            const response = await $.ajax({
+                url: routeUrl,
+                data: { id: productId },
+                method: "post",
+                dataType: "json",
+            })
+
+            response.forEach((element) => {
+                cartItemsTotal += element.Quantity;
+            })
+
+            itemsInShoppingCart.innerHTML = cartItemsTotal;
+
+        } catch (e) {
+            console.log("Error" + e);
+        }
     })
 })
 
