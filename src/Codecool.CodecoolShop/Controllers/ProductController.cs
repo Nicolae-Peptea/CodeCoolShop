@@ -42,6 +42,12 @@ namespace Codecool.CodecoolShop.Controllers
             return View(products.ToList());
         }
 
+
+        public void AddProductToCart(int productId)
+        {
+
+        }
+
         public IActionResult Privacy()
         {
             return View();
