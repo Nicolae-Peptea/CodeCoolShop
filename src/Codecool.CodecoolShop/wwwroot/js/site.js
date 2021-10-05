@@ -3,7 +3,8 @@
 
 // Write your JavaScript code.
 
-
+let cartButton = document.querySelector("#cart");
+let shoppingCart = document.querySelector(".shopping-cart");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
 
 buyButtons.forEach((element) => {
@@ -19,4 +20,15 @@ buyButtons.forEach((element) => {
         })
         
     })
+})
+
+cartButton.addEventListener('click', async function () {
+    event.preventDefault();
+    let visibility = shoppingCart.style.visibility;
+    if (visibility == "visible") {
+        shoppingCart.style.visibility = "hidden";
+    }
+    else {
+        shoppingCart.style.visibility = "visible";
+    }
 })

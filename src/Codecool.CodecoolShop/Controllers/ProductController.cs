@@ -39,7 +39,7 @@ namespace Codecool.CodecoolShop.Controllers
             ViewBag.CurrentCategory = category;
             ViewBag.CurrentSupplier = supplier;
 
-            IEnumerable<Product> products = ProductService.GetSortedProducts(category, supplier); ;
+            IEnumerable<Product> products = ProductService.GetSortedProducts(category, supplier);
 
             return View(products.ToList());
         }
@@ -53,8 +53,6 @@ namespace Codecool.CodecoolShop.Controllers
             item.Product = boughtProduct;
 
             OrderService.BuyProduct(item);
-
-
         }
 
 
