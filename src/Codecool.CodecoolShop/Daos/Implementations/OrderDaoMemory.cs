@@ -54,5 +54,10 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             return data;
         }
+
+        public int GetTotalQuantity()
+        {
+            return data.Select(x => x.Quantity).Sum();
+        }
     }
 }

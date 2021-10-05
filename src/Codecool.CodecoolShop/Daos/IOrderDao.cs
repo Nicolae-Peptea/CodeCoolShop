@@ -9,5 +9,6 @@ namespace Codecool.CodecoolShop.Daos
     public interface IOrderDao : IDao<Item>
     {
         int GetTotalValue();
+
     }
 }
