@@ -6,55 +6,113 @@
 let cartButton = document.querySelector("#cart");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
 let shoppingCart = document.querySelector(".shopping-cart");
-let itemsInShoppingCart = document.querySelector(".badge");
+let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
+let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
+let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 
 
 function showCartQuantityWhenLoading() {
-    let shoppingCartItems = sessionStorage.getItem("shoppingCartQuantity");
-    itemsInShoppingCart.innerHTML = shoppingCartItems;
+    let shoppingCartQuantity = sessionStorage.getItem("shoppingCartQuantity");
+    itemsInShoppingCartFields.innerHTML = shoppingCartQuantity;
 }
 
 
-buyButtons.forEach((element) => {
-    element.addEventListener('click', async function() {
+function loadShoppingCartItemsFromSessionStorage() {
+    let shoppingCartItemsFromSessionStorage = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    loadCartItems(shoppingCartItemsFromSessionStorage);
+}
 
+
+function initBuyButtonsFunctionality() {
+    buyButtons.forEach((element) => {
+        element.addEventListener('click', async function () {
+
+            event.preventDefault();
+            let productId = element.getAttribute("data-product-id");
+
+            let routeUrl = 'api/buy';
+            let cartItemsTotal = 0;
+
+            try {
+                const response = await $.ajax({
+                    url: routeUrl,
+                    data: { id: productId },
+                    method: "post",
+                    dataType: "json",
+                })
+
+                response.forEach((element) => {
+                    cartItemsTotal += element.Quantity;
+                })
+
+                sessionStorage.setItem("shoppingCartQuantity", cartItemsTotal);
+                sessionStorage.setItem("shoppingCartItems", JSON.stringify(response));
+
+                itemsInShoppingCartFields.forEach((field) => {
+                    field.innerHTML = cartItemsTotal;
+                })
+
+                loadCartItems(response);
+            } catch (e) {
+                console.log("Error" + e);
+            }
+        })
+    })
+}
+
+
+function initCartButtonFunctionality() {
+    cartButton.addEventListener('click', async function () {
         event.preventDefault();
-        let productId = element.getAttribute("data-product-id");
-        
-        let routeUrl = 'api/buy';
-        let cartItemsTotal = 0;
-
-        try {
-            const response = await $.ajax({
-                url: routeUrl,
-                data: { id: productId },
-                method: "post",
-                dataType: "json",
-            })
-
-            response.forEach((element) => {
-                cartItemsTotal += element.Quantity;
-            })
-
-            sessionStorage.setItem("shoppingCartQuantity", cartItemsTotal)
-            itemsInShoppingCart.innerHTML = cartItemsTotal;
-
-        } catch (e) {
-            console.log("Error" + e);
+        let visibility = shoppingCart.style.visibility;
+        if (visibility == "visible") {
+            shoppingCart.style.visibility = "hidden";
+            shoppingCartItemsContainer.innerHTML = "";
+        }
+        else {
+            loadShoppingCartItemsFromSessionStorage();
+            shoppingCart.style.visibility = "visible";
         }
     })
-})
+}
 
 
-cartButton.addEventListener('click', async function () {
-    event.preventDefault();
-    let visibility = shoppingCart.style.visibility;
-    if (visibility == "visible") {
-        shoppingCart.style.visibility = "hidden";
+function loadCartItems(items) {
+    let itemsFormat = "";
+    let totalCartSumField = document.querySelector(".main-color-text");
+    let totalCartSum = 0;
+
+    if (items != null) {
+        let itemsInCartViewLimit = 3;
+        for (let i = 0; i < items.length; i++) {
+            if (i < itemsInCartViewLimit) {
+                let itemFormat = getItemFormat(items[i]);
+                itemsFormat += itemFormat;
+            }
+            
+            totalCartSum += items[i].Product.DefaultPrice * items[i].Quantity;
+        }
     }
     else {
-        shoppingCart.style.visibility = "visible";
+        itemsFormat = "The shopping cart is empty.";
     }
-})
+
+    totalCartSumField.innerHTML = formatter.format(totalCartSum);
+    shoppingCartItemsContainer.innerHTML = itemsFormat;
+}
+
+function getItemFormat(item) {
+    return `
+        <li class="clearfix">
+            <img src="img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
+            <span class="item-name">${item.Product.Name}</span>
+            <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+            <span class="item-quantity">Quantity: ${item.Quantity}</span>
+        </li>`;
+}
 
 showCartQuantityWhenLoading();
+loadShoppingCartItemsFromSessionStorage();
+initCartButtonFunctionality();
+initBuyButtonsFunctionality();
+

@@ -182,6 +182,10 @@ a {
     background: #7FA6F7;
 }
 
+.clearfix img {
+    height: 70px;
+}
+
 .clearfix:after {
     content: "";
     display: table;
