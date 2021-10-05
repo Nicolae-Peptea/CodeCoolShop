@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using Newtonsoft.Json;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -46,13 +47,17 @@ namespace Codecool.CodecoolShop.Controllers
 
         [HttpPost]
         [Route ("api/buy")]
-        public void Buy (int id)
+        public string Buy (int id)
         {
             Item item = new Item();
             Product boughtProduct = ProductService.GetProductById(id);
             item.Product = boughtProduct;
 
             OrderService.BuyProduct(item);
+            var orderItems = OrderService.GetAllItems();
+            string orderItemsAsJson = JsonConvert.SerializeObject(orderItems);
+
+            return orderItemsAsJson;
         }
 
         public IActionResult Privacy()

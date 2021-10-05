@@ -20,5 +20,10 @@ namespace Codecool.CodecoolShop.Services
         {
             order.Add(item);
         }
+
+        public IEnumerable<Item> GetAllItems()
+        {
+            return this.order.GetAll();
+        }
     }
 }

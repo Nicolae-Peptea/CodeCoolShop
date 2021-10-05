@@ -52,7 +52,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public IEnumerable<Item> GetAll()
         {
-            throw new NotImplementedException();
+            return data;
         }
     }
 }
