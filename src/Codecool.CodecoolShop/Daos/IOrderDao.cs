@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Codecool.CodecoolShop.Daos.Implementations
+namespace Codecool.CodecoolShop.Daos
 {
-    interface IOrderDao : IProductDao
+    public interface IOrderDao : IDao<Item>
     {
-        int GetTotalValue(); 
+        int GetTotalValue();
     }
 }

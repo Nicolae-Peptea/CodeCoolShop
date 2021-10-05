@@ -18,6 +18,7 @@ namespace Codecool.CodecoolShop.Controllers
         public ProductService ProductService { get; set; }
         public CategoryService CategoryService { get; set; }
         public SupplierService SupplierService { get; set; }
+        public OrderService OrderService { get; set; }
 
         public ProductController(ILogger<ProductController> logger)
         {
@@ -28,6 +29,7 @@ namespace Codecool.CodecoolShop.Controllers
                 SupplierDaoMemory.GetInstance());
             CategoryService = new CategoryService(ProductCategoryDaoMemory.GetInstance());
             SupplierService = new SupplierService(SupplierDaoMemory.GetInstance());
+            OrderService = new OrderService(OrderDaoMemory.GetInstance());
         }
 
         public IActionResult Index(int category = 1, int supplier = 0)
@@ -40,6 +42,16 @@ namespace Codecool.CodecoolShop.Controllers
             IEnumerable<Product> products = ProductService.GetSortedProducts(category, supplier); ;
 
             return View(products.ToList());
+        }
+
+        [HttpPost]
+        [Route ("api/buy")]
+        public void Buy (int id)
+        {
+            Item item = new Item();
+            Product boughtProduct = ProductService.GetProductById(id);
+
+
         }
 
 
