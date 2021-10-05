@@ -55,12 +55,6 @@ namespace Codecool.CodecoolShop.Controllers
             OrderService.BuyProduct(item);
         }
 
-
-        public void AddProductToCart(int productId)
-        {
-
-        }
-
         public IActionResult Privacy()
         {
             return View();
