@@ -28,7 +28,16 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Item item)
         {
-            throw new NotImplementedException();
+            var isItemInListAlready = data.Find(x => x.Product.Id == item.Product.Id);
+
+            if (isItemInListAlready != null)
+            {
+                isItemInListAlready.Quantity++;
+            }
+            else
+            {
+                data.Add(item);
+            }
         }
 
         public void Remove(int id)

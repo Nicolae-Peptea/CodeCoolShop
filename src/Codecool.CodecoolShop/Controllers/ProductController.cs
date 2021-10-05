@@ -50,6 +50,9 @@ namespace Codecool.CodecoolShop.Controllers
         {
             Item item = new Item();
             Product boughtProduct = ProductService.GetProductById(id);
+            item.Product = boughtProduct;
+
+            OrderService.BuyProduct(item);
 
 
         }

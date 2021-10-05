@@ -9,6 +9,6 @@ namespace Codecool.CodecoolShop.Models
     {
         public  Product Product { get; set; }
 
-        public int Quantity { get; set; }
+        public int Quantity { get; set; } = 1;
     }
 }
