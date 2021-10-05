@@ -28,7 +28,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Item item)
         {
-            var isItemInListAlready = data.Find(x => x.Product.Id == item.Product.Id);
+            var isItemInListAlready = Get(item.Product.Id);
 
             if (isItemInListAlready != null)
             {
@@ -47,7 +47,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public Item Get(int id)
         {
-            throw new NotImplementedException();
+            return data.Find(x => x.Product.Id == id);
         }
 
         public IEnumerable<Item> GetAll()
