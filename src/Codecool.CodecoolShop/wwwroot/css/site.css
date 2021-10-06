@@ -195,6 +195,32 @@ a {
     clear: both;
 }
 
+/* Cart page style
+-------------------------------------------------- */
+.shopping-cart-page-container #empty-cart {
+    height: 350px;
+    padding-top: 150px;
+    margin-top: 5px;
+    position: relative;
+    text-align: center;
+}
+
+.shopping-cart-page-container #empty-cart .shopping-cart-title {
+    text-align: center;
+    font-size: 30px;
+}
+
+.shopping-cart-page-container #empty-cart .textBox {
+    margin: 20px 0;
+}
+
+.shopping-cart-page-container #filled-cart {
+    height: 350px;
+    padding-top: 150px;
+    margin-top: 5px;
+    position: relative;
+    visibility: hidden;
+}
 /* Sort control group style
 -------------------------------------------------- */
 .sort-control-group {

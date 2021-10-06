@@ -128,7 +128,7 @@ function initDeleteCartItemsButtons() {
 function formatShoppingCartItem(item) {
     return `
         <li class="clearfix">
-            <img src="img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
+            <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
             <span class="item-name">${item.Product.Name}</span>
             <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
             <span class="item-quantity">x ${item.Quantity}</span> <button class="delete-cart-item" data-product-id="${item.Product.Id}">x</button>
