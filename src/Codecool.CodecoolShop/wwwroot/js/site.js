@@ -88,7 +88,7 @@ function loadCartItems(items) {
 
     if (items != null) {
         for (let i = 0; i < items.length; i++) {
-            itemsFormat += getItemFormat(items[i]);
+            itemsFormat += formatShoppingCartItem(items[i]);
             totalCartSum += items[i].Product.DefaultPrice * items[i].Quantity;
         }
     }
@@ -100,7 +100,7 @@ function loadCartItems(items) {
     shoppingCartItemsContainer.innerHTML = itemsFormat;
 }
 
-function getItemFormat(item) {
+function formatShoppingCartItem(item) {
     return `
         <li class="clearfix">
             <img src="img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
