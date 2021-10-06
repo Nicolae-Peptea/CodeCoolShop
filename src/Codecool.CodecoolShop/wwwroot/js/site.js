@@ -112,11 +112,11 @@ function initDeleteCartItemsButtons() {
             try {
                 const response = await $.ajax({
                     url: routeUrl,
-                    data: { id: productId },
+                    data: { productId: productId },
                     method: "delete",
                     dataType: "json",
                 })
-                console.log(response);
+                loadCartItems(response);
 
             } catch (e) {
                 console.log("Error" + e);

@@ -60,11 +60,9 @@ namespace Codecool.CodecoolShop.Controllers
 
         [HttpDelete]
         [Route("api/remove-cart-item")]
-        public string RemoveCartItem(int id)
+        public string RemoveCartItem(int productId)
         {
-            Item item = new Item();
-            Product boughtProduct = ProductService.GetProductById(id);
-            item.Product = boughtProduct;
+            OrderService.RemoveItem(productId);
 
             string orderItemsAsJson = OrderService.GetItemsAsJson();
 
