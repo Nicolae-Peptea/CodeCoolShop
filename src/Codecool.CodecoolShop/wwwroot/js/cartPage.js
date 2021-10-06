@@ -4,22 +4,6 @@ let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-cont
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 
 
-function filledCartFormat() {
-    return `
-        <h1>${document.title.split("-").shift()}</h1>
-
-        <div id="filled-cart">
-            <div class="items"></div>
-            <div class="shopping-cart-summary">
-                <div class="shopping-cart-page-total">
-                    <span class="total-left"><strong>Total:</strong></span>
-                    <span class="total-right"></span>
-                </div>
-                <button>Checkout</button>
-            </div>
-        </div>`;
-}
-
 function loadShoppingCartPageContainer(items) {
     let itemsFormat = "";
     let totalCartSum = 0;
@@ -41,7 +25,9 @@ function loadShoppingCartPage() {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
 
     if (items) {
-        shoppingCartPageContainer.innerHTML = filledCartFormat();
+        const filledCartFormatBuilder = htmlFactory(htmlTemplates.filledCartFormat);
+        const filledCartFormat = filledCartFormatBuilder();
+        shoppingCartPageContainer.innerHTML = filledCartFormat;
         loadShoppingCartPageContainer(items);
     }
     else {
@@ -50,7 +36,5 @@ function loadShoppingCartPage() {
         shoppingCartPageContainer.innerHTML = emptyCartFormat;
     }
 }
-
-
 
 loadShoppingCartPage();
