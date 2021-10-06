@@ -1,29 +1,31 @@
-﻿let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
+﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
+
+let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 
-function formatShoppingCartPageItem(item) {
-    return `
-        <div class="filled-cart-item">
-            <div class="filled-cart-item-left">
-                <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
-            </div>
-            <div class="filled-cart-item-right">
-                <a class="filled-cart-item-name"
-                    href="" title="${item.Product.Name}">${item.Product.Name}
-                </a>
+//function formatShoppingCartPageItem(item) {
+//    return `
+//        <div class="filled-cart-item">
+//            <div class="filled-cart-item-left">
+//                <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
+//            </div>
+//            <div class="filled-cart-item-right">
+//                <a class="filled-cart-item-name"
+//                    href="" title="${item.Product.Name}">${item.Product.Name}
+//                </a>
 
-                <div class="filled-cart-item-quantity">
-                    <button name="decrease-quantity" type="submit"><i class="arrow down"></i></button>
-                    <p><strong>${item.Quantity} ${item.Quantity == 1 ? "Piece" : "Pieces"}</strong></p>
-                    <button name="increase-quantity" type="submit"><i class="arrow up"></i></button>
-                </div>
+//                <div class="filled-cart-item-quantity">
+//                    <button name="decrease-quantity" type="submit"><i class="arrow down"></i></button>
+//                    <p><strong>${item.Quantity} ${item.Quantity == 1 ? "Piece" : "Pieces"}</strong></p>
+//                    <button name="increase-quantity" type="submit"><i class="arrow up"></i></button>
+//                </div>
 
-                <button class="filled-cart-item-delete" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
+//                <button class="filled-cart-item-delete" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
 
-                <span class="filled-cart-item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
-            </div>
-        </div>`;
-}
+//                <span class="filled-cart-item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+//            </div>
+//        </div>`;
+//}
 
 function emptyCartFormat() {
     return `
@@ -58,8 +60,10 @@ function filledCartFormat() {
 function loadShoppingCartPageContainer(items) {
     let itemsFormat = "";
     let totalCartSum = 0;
+    const formatShoppingCartPageItemBuilder = htmlFactory(htmlTemplates.formatShoppingCartPageItem);
     for (let i = 0; i < items.length; i++) {
-        itemsFormat += formatShoppingCartPageItem(items[i]);
+        const formatShoppingCartPageItem = formatShoppingCartPageItemBuilder(items[i]);
+        itemsFormat += formatShoppingCartPageItem;
         totalCartSum += items[i].Product.DefaultPrice * items[i].Quantity;
     }
 

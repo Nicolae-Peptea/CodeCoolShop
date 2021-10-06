@@ -2,12 +2,15 @@
 
 export const htmlTemplates = {
     formatShoppingCartItem: 1,
+    formatShoppingCartPageItem: 2,
 };
 
 export function htmlFactory(template) {
     switch (template) {
         case htmlTemplates.formatShoppingCartItem:
             return formatShoppingCartItemBuilder;
+        case htmlTemplates.formatShoppingCartPageItem:
+            return formatShoppingCartPageItemBuilder;
         default:
             console.error("Undefined template: " + template);
             return () => {
@@ -31,4 +34,28 @@ function formatShoppingCartItemBuilder(item) {
              </div>
             </div>
         </li>`;
+}
+
+function formatShoppingCartPageItemBuilder(item) {
+    return `
+        <div class="filled-cart-item">
+            <div class="filled-cart-item-left">
+                <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
+            </div>
+            <div class="filled-cart-item-right">
+                <a class="filled-cart-item-name"
+                    href="" title="${item.Product.Name}">${item.Product.Name}
+                </a>
+
+                <div class="filled-cart-item-quantity">
+                    <button name="decrease-quantity" type="submit"><i class="arrow down"></i></button>
+                    <p><strong>${item.Quantity} ${item.Quantity == 1 ? "Piece" : "Pieces"}</strong></p>
+                    <button name="increase-quantity" type="submit"><i class="arrow up"></i></button>
+                </div>
+
+                <button class="filled-cart-item-delete" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
+
+                <span class="filled-cart-item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+            </div>
+        </div>`;
 }
