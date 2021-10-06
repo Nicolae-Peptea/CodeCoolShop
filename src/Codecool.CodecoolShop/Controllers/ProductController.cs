@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
-using Newtonsoft.Json;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -54,8 +53,7 @@ namespace Codecool.CodecoolShop.Controllers
             item.Product = boughtProduct;
 
             OrderService.BuyProduct(item);
-            IEnumerable<Item> orderItems = OrderService.GetAllItems();
-            string orderItemsAsJson = JsonConvert.SerializeObject(orderItems); //TODO method to serialize in OrderService
+            string orderItemsAsJson = OrderService.GetItemsAsJson();
 
             return orderItemsAsJson;
         }
