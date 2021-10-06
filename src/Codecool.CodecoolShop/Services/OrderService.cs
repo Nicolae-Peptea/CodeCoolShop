@@ -1,9 +1,7 @@
 ﻿using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Models;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Services
 {
@@ -24,6 +22,15 @@ namespace Codecool.CodecoolShop.Services
         public IEnumerable<Item> GetAllItems()
         {
             return this.order.GetAll();
+        }
+
+
+        public string GetItemsAsJson()
+        {
+            IEnumerable<Item> orderItems = GetAllItems();
+            string orderItemsAsJson = JsonConvert.SerializeObject(orderItems);
+
+            return orderItemsAsJson;
         }
     }
 }
