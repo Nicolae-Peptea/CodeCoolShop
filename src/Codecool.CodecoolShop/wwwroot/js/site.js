@@ -13,7 +13,9 @@ let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'U
 
 function showCartQuantityWhenLoading() {
     let shoppingCartQuantity = sessionStorage.getItem("shoppingCartQuantity");
-    itemsInShoppingCartFields.innerHTML = shoppingCartQuantity;
+    itemsInShoppingCartFields.forEach((element) => {
+        element.innerHTML = shoppingCartQuantity;
+    })
 }
 
 
@@ -52,7 +54,9 @@ function initBuyButtonsFunctionality() {
                     field.innerHTML = cartItemsTotal;
                 })
 
-                loadCartItems(response);
+                if (shoppingCart.style.visibility == "visible") {
+                    loadCartItems(response);
+                }
             } catch (e) {
                 console.log("Error" + e);
             }
@@ -70,8 +74,8 @@ function initCartButtonFunctionality() {
             shoppingCartItemsContainer.innerHTML = "";
         }
         else {
-            loadShoppingCartItemsFromSessionStorage();
             shoppingCart.style.visibility = "visible";
+            loadShoppingCartItemsFromSessionStorage();
         }
     })
 }
@@ -107,12 +111,11 @@ function getItemFormat(item) {
             <img src="img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
             <span class="item-name">${item.Product.Name}</span>
             <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
-            <span class="item-quantity">Quantity: ${item.Quantity}</span>
+            <span class="item-quantity">x ${item.Quantity}</span>
         </li>`;
 }
 
 showCartQuantityWhenLoading();
-loadShoppingCartItemsFromSessionStorage();
 initCartButtonFunctionality();
 initBuyButtonsFunctionality();
 
