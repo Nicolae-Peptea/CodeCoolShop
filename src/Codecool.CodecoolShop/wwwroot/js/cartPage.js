@@ -9,10 +9,24 @@ let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-cont
 function formatShoppingCartPageItem(item) {
     return `
         <div class="filled-cart-item">
-            <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
-            <span class="item-name">${item.Product.Name}</span>
-            <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
-            <span class="item-quantity">x ${item.Quantity}</span> <button class="delete-cart-item" data-product-id="${item.Product.Id}">x</button>
+            <div class="filled-cart-item-left">
+                <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
+            </div>
+            <div class="filled-cart-item-right">
+                <a class="filled-cart-item-name"
+                    href="" title="${item.Product.Name}">${item.Product.Name}
+                </a>
+
+                <div class="filled-cart-item-quantity">
+                    <button name="decrease-quantity" type="submit"><i class="arrow down"></i></button>
+                    <p><strong>${item.Quantity} ${item.Quantity == 1 ? "Piece" : "Pieces"}</strong></p>
+                    <button name="increase-quantity" type="submit"><i class="arrow up"></i></button>
+                </div>
+
+                <button class="delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
+
+                <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+            </div>
         </div>`;
 }
 

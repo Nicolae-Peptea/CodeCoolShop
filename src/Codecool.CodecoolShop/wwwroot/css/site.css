@@ -235,18 +235,75 @@ a {
 }
 
 .shopping-cart-page-container .filled-cart-item {
-    box-shadow: 1px 1px 2px #bbc6cc;
-    padding: 30px 25px 20px 25px;
-    border-radius: 5px;
-    position: relative;
     background-color: #fff;
+    box-shadow: 1px 1px 2px #bbc6cc;
+    border: 0 none;
+    border-radius: 5px;
     margin: 0 0 10px 0;
     overflow: hidden;
-    border: 0 none;
+    padding: 30px 25px 20px 25px;
+    position: relative;
 }
 
 .filled-cart-item img {
     height: 120px;
+}
+
+.filled-cart-item-name {
+    color: #404040;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.filled-cart-item-name:hover {
+    color: #575555;
+    cursor: pointer;
+}
+
+.filled-cart-item-quantity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+}
+
+.filled-cart-item-quantity p {
+    font-size: 18px;
+    margin: 0 5px;
+}
+
+.filled-cart-item-quantity button {
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.filled-cart-item-left {
+    float: left;
+    text-align: center;
+    width: 130px;
+}
+
+.filled-cart-item-right {
+    margin-left: 140px;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    padding: 10px;
+}
+
+.filled-cart-item-right .delete-cart-item {
+    width: fit-content;
+}
+
+.filled-cart-item-right .item-price {
+    float: right !important;
+    line-height: 15px;
+    text-align: right;
+    width: 165px;
 }
 
 .shopping-cart-summary {
@@ -287,6 +344,23 @@ a {
 .shopping-cart-summary button:hover {
     /*background: #6394F8;*/
     background-image: linear-gradient(to bottom right,#3482dd,#1763bc);
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
 }
 
 /* Sort control group style
