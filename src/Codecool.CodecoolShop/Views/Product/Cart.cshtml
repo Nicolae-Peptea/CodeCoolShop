@@ -2,19 +2,8 @@
     ViewData["Title"] = "My Cart";
 }
 
-<div class="shopping-cart-page-container" id="cartProductsPage">
-    <div id="empty-cart">
-        <div class="shopping-cart-title">Your cart is empty</div>
-        <div class="textBox mrg-btm-sm">
-            <div>To add products to cart</div>
-            <div>please go back to the store.</div>
-        </div>
-        <a class="empty-cart-primary-btn pho-btn btn btn-primary" asp-area="" asp-controller="Product" asp-action="Index">
-            <i class="em em-go-left"></i>Back to Store
-        </a>
-    </div>
-    <div id="filled-cart">
-        <h1>@ViewData["Title"]</h1>
-        <div class="items"></div>
-    </div>
-</div> 
+<div class="shopping-cart-page-container" id="cartProductsPage"></div>
+
+@section Scripts {
+    <script src="~/js/cartPage.js" asp-append-version="true"></script>
+}
