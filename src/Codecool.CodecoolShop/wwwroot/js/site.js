@@ -98,10 +98,10 @@ function loadCartItems(items) {
 
     totalCartSumField.innerHTML = formatter.format(totalCartSum);
     shoppingCartItemsContainer.innerHTML = itemsFormat;
-    deleteItem();
+    initDeleteCartItemsButtons();
 }
 
-function deleteItem() {
+function initDeleteCartItemsButtons() {
     let buttons = [...document.querySelectorAll(".delete-cart-item")];
     buttons.forEach((button) => {
         button.addEventListener('click', async (event) => {
