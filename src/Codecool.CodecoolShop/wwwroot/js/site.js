@@ -1,5 +1,6 @@
 ﻿
 import { ajaxFetch } from "/js/utils.js";
+import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
 
 let cartButton = document.querySelector("#cart");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
@@ -80,10 +81,13 @@ function loadCartItems(items) {
     let itemsFormat = "";
     let totalCartSumField = document.querySelector(".main-color-text");
     let totalCartSum = 0;
+    const formatShoppingCartItemBuilder = htmlFactory(htmlTemplates.formatShoppingCartItem);
 
     if (items != null) {
         for (let i = 0; i < items.length; i++) {
-            itemsFormat += formatShoppingCartItem(items[i]);
+            const formatShoppingCartItem = formatShoppingCartItemBuilder(items[i]);
+
+            itemsFormat += formatShoppingCartItem;
             totalCartSum += items[i].Product.DefaultPrice * items[i].Quantity;
         }
     }
@@ -118,25 +122,6 @@ function initCartButtonFunctionality() {
     })
 }
 
-
-function formatShoppingCartItem(item) {
-    return `
-        <li class="clearfix">
-            <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
-            <span class="item-name">${item.Product.Name}</span>
-            <div class="cart-details-container">
-            <div class=".cart-items-right">
-            <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
-            <span class="item-quantity">x ${item.Quantity}</span>
-            </div>
-            <div class=".cart-items-left">
-            <button class="delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
-             </div>
-            </div>
-        </li>`;
-}
-
 showCartQuantityAfterLoading();
 initCartButtonFunctionality();
 initBuyButtons();
-
