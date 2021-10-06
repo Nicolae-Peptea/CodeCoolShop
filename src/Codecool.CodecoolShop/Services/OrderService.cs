@@ -16,7 +16,12 @@ namespace Codecool.CodecoolShop.Services
 
         public void BuyProduct(Item item)
         {
-            order.Add(item);
+            this.order.Add(item);
+        }
+
+        public void RemoveItem(int productId)
+        {
+            this.order.Remove(productId);
         }
 
         public IEnumerable<Item> GetAllItems()

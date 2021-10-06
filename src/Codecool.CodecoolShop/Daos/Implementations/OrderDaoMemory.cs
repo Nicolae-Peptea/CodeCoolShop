@@ -40,9 +40,9 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
         }
 
-        public void Remove(int id)
+        public void Remove(int productId)
         {
-            throw new NotImplementedException();
+            data.Remove(data.Single(item => item.Product.Id == productId));
         }
 
         public Item Get(int id)
