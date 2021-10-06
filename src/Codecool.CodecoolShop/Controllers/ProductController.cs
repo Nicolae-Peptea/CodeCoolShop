@@ -44,6 +44,11 @@ namespace Codecool.CodecoolShop.Controllers
             return View(products.ToList());
         }
 
+        public IActionResult Cart()
+        {
+            return View();
+        }
+
         [HttpPost]
         [Route ("api/buy")]
         public string Buy (int id)
