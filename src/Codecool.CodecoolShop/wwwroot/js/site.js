@@ -106,7 +106,21 @@ function initDeleteCartItemsButtons() {
     buttons.forEach((button) => {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
-            console.log(button);
+            let productId = button.getAttribute("data-product-id");
+            let routeUrl = 'api/remove-cart-item';
+
+            try {
+                const response = await $.ajax({
+                    url: routeUrl,
+                    data: { id: productId },
+                    method: "delete",
+                    dataType: "json",
+                })
+                console.log(response);
+
+            } catch (e) {
+                console.log("Error" + e);
+            }
         })
     })
 }
