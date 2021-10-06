@@ -98,6 +98,17 @@ function loadCartItems(items) {
 
     totalCartSumField.innerHTML = formatter.format(totalCartSum);
     shoppingCartItemsContainer.innerHTML = itemsFormat;
+    deleteItem();
+}
+
+function deleteItem() {
+    let buttons = [...document.querySelectorAll(".delete-cart-item")];
+    buttons.forEach((button) => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            console.log(button);
+        })
+    })
 }
 
 function formatShoppingCartItem(item) {
