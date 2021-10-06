@@ -87,13 +87,8 @@ function loadCartItems(items) {
     let totalCartSum = 0;
 
     if (items != null) {
-        let itemsInCartViewLimit = 3;
         for (let i = 0; i < items.length; i++) {
-            if (i < itemsInCartViewLimit) {
-                let itemFormat = getItemFormat(items[i]);
-                itemsFormat += itemFormat;
-            }
-            
+            itemsFormat += getItemFormat(items[i]);
             totalCartSum += items[i].Product.DefaultPrice * items[i].Quantity;
         }
     }
