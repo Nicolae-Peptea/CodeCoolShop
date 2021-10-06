@@ -4,6 +4,7 @@ export const htmlTemplates = {
     formatShoppingCartItem: 1,
     formatShoppingCartPageItem: 2,
     emptyCartFormat: 3,
+    filledCartFormat: 4,
 };
 
 export function htmlFactory(template) {
@@ -14,6 +15,8 @@ export function htmlFactory(template) {
             return formatShoppingCartPageItemBuilder;
         case htmlTemplates.emptyCartFormat:
             return emptyCartFormatBuilder;
+        case htmlTemplates.filledCartFormat:
+            return filledCartFormatBuilder;
         default:
             console.error("Undefined template: " + template);
             return () => {
@@ -74,5 +77,21 @@ function emptyCartFormatBuilder() {
             <a class="empty-cart-primary-btn pho-btn btn btn-primary" href="/">
                 <i class="em em-go-left"></i>Back to Store
             </a>
+        </div>`;
+}
+
+function filledCartFormatBuilder() {
+    return `
+        <h1>${document.title.split("-").shift()}</h1>
+
+        <div id="filled-cart">
+            <div class="items"></div>
+            <div class="shopping-cart-summary">
+                <div class="shopping-cart-page-total">
+                    <span class="total-left"><strong>Total:</strong></span>
+                    <span class="total-right"></span>
+                </div>
+                <button>Checkout</button>
+            </div>
         </div>`;
 }
