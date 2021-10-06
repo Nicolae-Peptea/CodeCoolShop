@@ -1,8 +1,4 @@
-﻿
-
-
-
-async function ajaxFetch(data, httpRequestType, urlRoute) {
+﻿export async function ajaxFetch(data, httpRequestType, urlRoute) {
     try {
         let response = await $.ajax({
             url: urlRoute,

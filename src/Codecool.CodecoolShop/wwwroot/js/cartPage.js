@@ -1,10 +1,5 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-//let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
-let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
+﻿let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
+let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 
 function formatShoppingCartPageItem(item) {
     return `
@@ -23,9 +18,9 @@ function formatShoppingCartPageItem(item) {
                     <button name="increase-quantity" type="submit"><i class="arrow up"></i></button>
                 </div>
 
-                <button class="delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
+                <button class="filled-cart-item-delete" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
 
-                <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+                <span class="filled-cart-item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
             </div>
         </div>`;
 }
@@ -38,7 +33,7 @@ function emptyCartFormat() {
                 <div>To add products to cart</div>
                 <div>please go back to the store.</div>
             </div>
-            <a class="empty-cart-primary-btn pho-btn btn btn-primary" asp-area="" asp-controller="Product" asp-action="Index">
+            <a class="empty-cart-primary-btn pho-btn btn btn-primary" href="/">
                 <i class="em em-go-left"></i>Back to Store
             </a>
         </div>`;
@@ -46,8 +41,9 @@ function emptyCartFormat() {
 
 function filledCartFormat() {
     return `
+        <h1>${document.title.split("-").shift()}</h1>
+
         <div id="filled-cart">
-            <h1>${document.title}</h1>
             <div class="items"></div>
             <div class="shopping-cart-summary">
                 <div class="shopping-cart-page-total">
