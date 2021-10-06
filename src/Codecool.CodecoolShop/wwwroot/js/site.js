@@ -1,7 +1,5 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿
+import { ajaxFetch } from "/js/utils.js";
 
 let cartButton = document.querySelector("#cart");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
@@ -26,34 +24,17 @@ function loadShoppingCartItemsFromSessionStorage() {
 
 
 function initBuyButtons() {
-    buyButtons.forEach((element) => {
-        element.addEventListener('click', async function (event) {
+    buyButtons.forEach((button) => {
+        button.addEventListener("click", async (event) => {
 
             event.preventDefault();
-            let productId = element.getAttribute("data-product-id");
-            let url = 'api/buy';
-            let totalItems = 0;
-
-            try {
-                const response = await ajaxFetch(productId, "post", url);
-
-                response.forEach((element) => {
-                    totalItems += element.Quantity;
-                })
-
-                itemsInShoppingCartFields.forEach((field) => {
-                    field.innerHTML = totalItems;
-                })
-
-                setSessionStorageForShoppingCart(totalItems, response);
-
-                if (shoppingCart.style.visibility == "visible") {
-                    loadCartItems(response);
-                }
-
-            } catch (e) {
-                console.log("Error" + e);
-            }
+            let url = "api/add-cart-item";
+            let httpRequest = "post";
+            let data = await updateCart(button, httpRequest, url);
+           
+            if (shoppingCart.style.visibility == "visible") {
+                loadCartItems(data);
+            }  
         })
     })
 }
@@ -63,31 +44,35 @@ function initDeleteCartItemsButtons() {
     let buttons = [...document.querySelectorAll(".delete-cart-item")];
     buttons.forEach((button) => {
         button.addEventListener('click', async (event) => {
+
             event.preventDefault();
-            let productId = button.getAttribute("data-product-id");
-            let url = 'api/remove-cart-item';
-            let totalItems = 0;
+            let url = "api/remove-cart-item";
+            let httpRequest = "delete";
+            let data = await updateCart(button, httpRequest, url);
 
-            try {
-                const response = await ajaxFetch(productId, "delete", url);
-
-                response.forEach((element) => {
-                    totalItems += element.Quantity;
-                })
-
-                itemsInShoppingCartFields.forEach((field) => {
-                    field.innerHTML = totalItems;
-                })
-
-
-                loadCartItems(response);
-
-                setSessionStorageForShoppingCart(totalItems, response);
-            } catch (e) {
-                console.log("Error" + e);
-            }
+            loadCartItems(data);
         })
     })
+}
+
+
+async function updateCart(htmlElement, httpRequest, url) {
+
+    let productId = htmlElement.getAttribute("data-product-id");
+    let totalItems = 0;
+    let response = await ajaxFetch(productId, httpRequest, url);
+
+    response.forEach((element) => {
+        totalItems += element.Quantity;
+    })
+
+    itemsInShoppingCartFields.forEach((field) => {
+        field.innerHTML = totalItems;
+    })
+
+    setSessionStorageForShoppingCart(totalItems, response);
+
+    return response;
 }
 
 
@@ -115,16 +100,6 @@ function loadCartItems(items) {
 function setSessionStorageForShoppingCart(totalItems, jsonResonse) {
     sessionStorage.setItem("shoppingCartQuantity", totalItems);
     sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
-}
-
-
-async function ajaxFetch(data, httpRequestType, urlRoute) {
-    return await $.ajax({
-        url: urlRoute,
-        data: { id: data },
-        method: httpRequestType,
-        dataType: "json",
-    })
 }
 
 
