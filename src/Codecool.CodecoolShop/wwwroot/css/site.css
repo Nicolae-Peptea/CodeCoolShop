@@ -378,6 +378,19 @@ a {
     cursor: pointer;
 }
 
+.delete-cart-item {
+    background: none;
+    border: none;
+    padding: 0;
+    color: royalblue;
+    font-size: 20px;
+}
+
+.delete-cart-item:hover {
+    cursor: pointer;
+    color: red;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

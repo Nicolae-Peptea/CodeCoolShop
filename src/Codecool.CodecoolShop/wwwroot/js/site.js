@@ -155,7 +155,7 @@ function formatShoppingCartItem(item) {
             <span class="item-quantity">x ${item.Quantity}</span>
             </div>
             <div class=".cart-items-left">
-            <button class="delete-cart-item" data-product-id="${item.Product.Id}">&#xe020;</button>
+            <button class="delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
              </div>
             </div>
         </li>`;
