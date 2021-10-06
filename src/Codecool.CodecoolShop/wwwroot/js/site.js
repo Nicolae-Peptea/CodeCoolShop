@@ -11,7 +11,7 @@ let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 
 
-function showCartQuantityWhenLoading() {
+function showCartQuantityAfterLoading() {
     let shoppingCartQuantity = sessionStorage.getItem("shoppingCartQuantity");
     itemsInShoppingCartFields.forEach((element) => {
         element.innerHTML = shoppingCartQuantity;
@@ -25,38 +25,32 @@ function loadShoppingCartItemsFromSessionStorage() {
 }
 
 
-function initBuyButtonsFunctionality() {
+function initBuyButtons() {
     buyButtons.forEach((element) => {
-        element.addEventListener('click', async function () {
+        element.addEventListener('click', async function (event) {
 
             event.preventDefault();
             let productId = element.getAttribute("data-product-id");
-
-            let routeUrl = 'api/buy';
-            let cartItemsTotal = 0;
+            let url = 'api/buy';
+            let totalItems = 0;
 
             try {
-                const response = await $.ajax({
-                    url: routeUrl,
-                    data: { id: productId },
-                    method: "post",
-                    dataType: "json",
-                })
+                const response = await ajaxFetch(productId, "post", url);
 
                 response.forEach((element) => {
-                    cartItemsTotal += element.Quantity;
+                    totalItems += element.Quantity;
                 })
-
-                sessionStorage.setItem("shoppingCartQuantity", cartItemsTotal);
-                sessionStorage.setItem("shoppingCartItems", JSON.stringify(response));
 
                 itemsInShoppingCartFields.forEach((field) => {
-                    field.innerHTML = cartItemsTotal;
+                    field.innerHTML = totalItems;
                 })
+
+                setSessionStorageForShoppingCart(totalItems, response);
 
                 if (shoppingCart.style.visibility == "visible") {
                     loadCartItems(response);
                 }
+
             } catch (e) {
                 console.log("Error" + e);
             }
@@ -65,18 +59,34 @@ function initBuyButtonsFunctionality() {
 }
 
 
-function initCartButtonFunctionality() {
-    cartButton.addEventListener('click', async function () {
-        event.preventDefault();
-        let visibility = shoppingCart.style.visibility;
-        if (visibility == "visible") {
-            shoppingCart.style.visibility = "hidden";
-            shoppingCartItemsContainer.innerHTML = "";
-        }
-        else {
-            shoppingCart.style.visibility = "visible";
-            loadShoppingCartItemsFromSessionStorage();
-        }
+function initDeleteCartItemsButtons() {
+    let buttons = [...document.querySelectorAll(".delete-cart-item")];
+    buttons.forEach((button) => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            let productId = button.getAttribute("data-product-id");
+            let url = 'api/remove-cart-item';
+            let totalItems = 0;
+
+            try {
+                const response = await ajaxFetch(productId, "delete", url);
+
+                response.forEach((element) => {
+                    totalItems += element.Quantity;
+                })
+
+                itemsInShoppingCartFields.forEach((field) => {
+                    field.innerHTML = totalItems;
+                })
+
+
+                loadCartItems(response);
+
+                setSessionStorageForShoppingCart(totalItems, response);
+            } catch (e) {
+                console.log("Error" + e);
+            }
+        })
     })
 }
 
@@ -101,29 +111,38 @@ function loadCartItems(items) {
     initDeleteCartItemsButtons();
 }
 
-function initDeleteCartItemsButtons() {
-    let buttons = [...document.querySelectorAll(".delete-cart-item")];
-    buttons.forEach((button) => {
-        button.addEventListener('click', async (event) => {
-            event.preventDefault();
-            let productId = button.getAttribute("data-product-id");
-            let routeUrl = 'api/remove-cart-item';
 
-            try {
-                const response = await $.ajax({
-                    url: routeUrl,
-                    data: { productId: productId },
-                    method: "delete",
-                    dataType: "json",
-                })
-                loadCartItems(response);
+function setSessionStorageForShoppingCart(totalItems, jsonResonse) {
+    sessionStorage.setItem("shoppingCartQuantity", totalItems);
+    sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
+}
 
-            } catch (e) {
-                console.log("Error" + e);
-            }
-        })
+
+async function ajaxFetch(data, httpRequestType, urlRoute) {
+    return await $.ajax({
+        url: urlRoute,
+        data: { id: data },
+        method: httpRequestType,
+        dataType: "json",
     })
 }
+
+
+function initCartButtonFunctionality() {
+    cartButton.addEventListener('click', async function () {
+        event.preventDefault();
+        let visibility = shoppingCart.style.visibility;
+        if (visibility == "visible") {
+            shoppingCart.style.visibility = "hidden";
+            shoppingCartItemsContainer.innerHTML = "";
+        }
+        else {
+            shoppingCart.style.visibility = "visible";
+            loadShoppingCartItemsFromSessionStorage();
+        }
+    })
+}
+
 
 function formatShoppingCartItem(item) {
     return `
@@ -136,13 +155,13 @@ function formatShoppingCartItem(item) {
             <span class="item-quantity">x ${item.Quantity}</span>
             </div>
             <div class=".cart-items-left">
-            <button class="delete-cart-item" data-product-id="${item.Product.Id}">x</button>
+            <button class="delete-cart-item" data-product-id="${item.Product.Id}">&#xe020;</button>
              </div>
             </div>
         </li>`;
 }
 
-showCartQuantityWhenLoading();
+showCartQuantityAfterLoading();
 initCartButtonFunctionality();
-initBuyButtonsFunctionality();
+initBuyButtons();
 

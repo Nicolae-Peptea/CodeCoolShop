@@ -28,11 +28,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Item item)
         {
-            var isItemInListAlready = Get(item.Product.Id);
+            var itemInList = Get(item.Product.Id);
 
-            if (isItemInListAlready != null)
+            if (itemInList != null)
             {
-                isItemInListAlready.Quantity++;
+                itemInList.Quantity++;
             }
             else
             {
