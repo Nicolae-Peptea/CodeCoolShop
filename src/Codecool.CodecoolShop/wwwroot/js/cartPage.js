@@ -61,9 +61,9 @@ function initQuantityModifyingButtonsFunctionality() {
 }
 
 function initDeleteShoppingCartItemsButtonsFunctionality() {
-    let increaseQuantityButtons = [...document.querySelectorAll(".filled-cart-item-delete")];
+    let deleteShoppingCartItemsButtons = [...document.querySelectorAll(".filled-cart-item-delete")];
 
-    increaseQuantityButtons.forEach((button) => {
+    deleteShoppingCartItemsButtons.forEach((button) => {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
             let productId = button.getAttribute("data-product-id");
