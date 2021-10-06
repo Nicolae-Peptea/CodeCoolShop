@@ -50,7 +50,7 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         [HttpPost]
-        [Route ("api/buy")]
+        [Route ("api/add-cart-item")]
         public string Buy (int id)
         {
             Item item = new Item();
@@ -70,6 +70,17 @@ namespace Codecool.CodecoolShop.Controllers
         public string RemoveCartItem(int id)
         {
             OrderService.RemoveItem(id);
+
+            string orderItemsAsJson = OrderService.GetItemsAsJson();
+
+            return orderItemsAsJson;
+        }
+
+        [HttpGet]
+        [Route("api/cart-item")]
+        public string SeeCartItem(int id)
+        {
+            OrderService.GetAllItems();
 
             string orderItemsAsJson = OrderService.GetItemsAsJson();
 
