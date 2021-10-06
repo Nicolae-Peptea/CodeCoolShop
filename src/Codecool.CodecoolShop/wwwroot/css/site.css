@@ -67,6 +67,7 @@ a {
     margin: 10px 0;
     background: #DEE3ED;
     width: 320px;
+    max-height: 434px;
     position: absolute;
     border-radius: 3px;
     padding: 20px;
@@ -117,6 +118,8 @@ a {
 
 .shopping-cart-items {
     padding: 20px 0 0 0;
+    max-height: 266px;
+    overflow: auto;
 }
 
 .shopping-cart-items li {
