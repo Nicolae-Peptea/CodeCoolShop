@@ -3,6 +3,7 @@
 export const htmlTemplates = {
     formatShoppingCartItem: 1,
     formatShoppingCartPageItem: 2,
+    emptyCartFormat: 3,
 };
 
 export function htmlFactory(template) {
@@ -11,6 +12,8 @@ export function htmlFactory(template) {
             return formatShoppingCartItemBuilder;
         case htmlTemplates.formatShoppingCartPageItem:
             return formatShoppingCartPageItemBuilder;
+        case htmlTemplates.emptyCartFormat:
+            return emptyCartFormatBuilder;
         default:
             console.error("Undefined template: " + template);
             return () => {
@@ -57,5 +60,19 @@ function formatShoppingCartPageItemBuilder(item) {
 
                 <span class="filled-cart-item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
             </div>
+        </div>`;
+}
+
+function emptyCartFormatBuilder() {
+    return `
+        <div id="empty-cart">
+            <div class="shopping-cart-title">Your cart is empty</div>
+            <div class="textBox mrg-btm-sm">
+                <div>To add products to cart</div>
+                <div>please go back to the store.</div>
+            </div>
+            <a class="empty-cart-primary-btn pho-btn btn btn-primary" href="/">
+                <i class="em em-go-left"></i>Back to Store
+            </a>
         </div>`;
 }
