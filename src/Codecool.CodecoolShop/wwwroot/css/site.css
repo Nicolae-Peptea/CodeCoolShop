@@ -185,6 +185,13 @@ a {
     background: #7FA6F7;
 }
 
+
+.cart-details-container {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .clearfix img {
     height: 70px;
 }
