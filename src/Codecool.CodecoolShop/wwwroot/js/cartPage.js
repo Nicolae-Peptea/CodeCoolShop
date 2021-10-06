@@ -29,7 +29,8 @@ function loadShoppingCartPage() {
         const filledCartFormat = filledCartFormatBuilder();
         shoppingCartPageContainer.innerHTML = filledCartFormat;
         loadShoppingCartPageContainer(items);
-        quantityModifyingButtonsFunctionality();
+        initQuantityModifyingButtonsFunctionality();
+        initDeleteShoppingCartItemsButtonsFunctionality();
     }
     else {
         const emptyCartFormatBuilder = htmlFactory(htmlTemplates.emptyCartFormat);
@@ -38,7 +39,7 @@ function loadShoppingCartPage() {
     }
 }
 
-function quantityModifyingButtonsFunctionality() {
+function initQuantityModifyingButtonsFunctionality() {
     let increaseQuantityButtons = [...document.querySelectorAll(".increase-quantity")];
     let decreaseQuantityButtons = [...document.querySelectorAll(".decrease-quantity")];
     increaseQuantityButtons.forEach((button) => {
@@ -55,6 +56,23 @@ function quantityModifyingButtonsFunctionality() {
             let productId = button.getAttribute("data-product-id");
             console.log(productId);
             let value = -1;
+        })
+    })
+}
+
+function initDeleteShoppingCartItemsButtonsFunctionality() {
+    let increaseQuantityButtons = [...document.querySelectorAll(".filled-cart-item-delete")];
+
+    increaseQuantityButtons.forEach((button) => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            let productId = button.getAttribute("data-product-id");
+            console.log(productId);
+            //let url = "api/remove-cart-item";
+            //let httpRequest = "delete";
+            //let data = await updateCart(button, httpRequest, url);
+
+            //loadCartItems(data);
         })
     })
 }
