@@ -29,12 +29,34 @@ function loadShoppingCartPage() {
         const filledCartFormat = filledCartFormatBuilder();
         shoppingCartPageContainer.innerHTML = filledCartFormat;
         loadShoppingCartPageContainer(items);
+        quantityModifyingButtonsFunctionality();
     }
     else {
         const emptyCartFormatBuilder = htmlFactory(htmlTemplates.emptyCartFormat);
         const emptyCartFormat = emptyCartFormatBuilder();
         shoppingCartPageContainer.innerHTML = emptyCartFormat;
     }
+}
+
+function quantityModifyingButtonsFunctionality() {
+    let increaseQuantityButtons = [...document.querySelectorAll(".increase-quantity")];
+    let decreaseQuantityButtons = [...document.querySelectorAll(".decrease-quantity")];
+    increaseQuantityButtons.forEach((button) => {
+        button.addEventListener('click', async function () {
+            event.preventDefault();
+            let productId = button.getAttribute("data-product-id");
+            console.log(productId);
+            let value = 1;
+        })
+    })
+    decreaseQuantityButtons.forEach((button) => {
+        button.addEventListener('click', async function () {
+            event.preventDefault();
+            let productId = button.getAttribute("data-product-id");
+            console.log(productId);
+            let value = -1;
+        })
+    })
 }
 
 loadShoppingCartPage();

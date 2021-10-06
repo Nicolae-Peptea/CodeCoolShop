@@ -54,9 +54,9 @@ function formatShoppingCartPageItemBuilder(item) {
                 </a>
 
                 <div class="filled-cart-item-quantity">
-                    <button name="decrease-quantity" type="submit"><i class="arrow down"></i></button>
+                    <button class="decrease-quantity" name="decrease-quantity" type="submit" data-product-id="${item.Product.Id}"><i class="arrow down"></i></button>
                     <p><strong>${item.Quantity} ${item.Quantity == 1 ? "Piece" : "Pieces"}</strong></p>
-                    <button name="increase-quantity" type="submit"><i class="arrow up"></i></button>
+                    <button class="increase-quantity" name="increase-quantity" type="submit"data-product-id="${item.Product.Id}"><i class="arrow up"></i></button>
                 </div>
 
                 <button class="filled-cart-item-delete" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
