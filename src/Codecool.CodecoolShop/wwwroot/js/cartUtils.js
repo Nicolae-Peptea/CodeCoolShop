@@ -9,11 +9,18 @@
         field.innerHTML = totalItems;
     })
 
-    setSessionStorageForShoppingCart(totalItems, response);
+    setSessionStorage(totalItems, response);
 }
 
 
-function setSessionStorageForShoppingCart(totalItems, jsonResonse) {
-    sessionStorage.setItem("shoppingCartQuantity", totalItems);
-    sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
+function setSessionStorage(totalItems, jsonResonse) {
+    if (totalItems === 0) {
+        sessionStorage.clear();
+    }
+    else {
+        sessionStorage.setItem("shoppingCartQuantity", totalItems);
+        sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
+    }
+
+    
 }
