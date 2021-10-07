@@ -31,7 +31,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             data.Add(item);
         }
 
-        public void Remove(int id)
+        public void RemoveItem(int id)
         {
             data.Remove(this.Get(id));
         }

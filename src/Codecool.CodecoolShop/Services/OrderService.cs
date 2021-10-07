@@ -21,7 +21,12 @@ namespace Codecool.CodecoolShop.Services
 
         public void RemoveItem(int productId)
         {
-            this.order.Remove(productId);
+            this.order.RemoveItem(productId);
+        }
+
+        public void DecreaseItemQuantity(Item item)
+        {
+            this.order.RemoveItemQuantity(item);
         }
 
         public IEnumerable<Item> GetAllItems()

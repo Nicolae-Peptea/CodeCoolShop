@@ -10,5 +10,7 @@ namespace Codecool.CodecoolShop.Daos
     {
         int GetTotalValue();
 
+        void RemoveItemQuantity(Item item);
+
     }
 }

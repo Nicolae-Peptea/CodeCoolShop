@@ -51,7 +51,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         [HttpPost]
         [Route ("api/add-cart-item")]
-        public string Buy (int id)
+        public string AddItemToCart (int id)
         {
             Item item = new Item();
             Product boughtProduct = ProductService.GetProductById(id);
@@ -76,15 +76,12 @@ namespace Codecool.CodecoolShop.Controllers
             return orderItemsAsJson;
         }
 
-        [HttpGet]
-        [Route("api/cart-item")]
-        public string SeeCartItem(int id)
+        [HttpPut]
+        [Route("api/decrease-item-qunatity")]
+        public string EditCartItems(int id)
         {
-            OrderService.GetAllItems();
-
-            string orderItemsAsJson = OrderService.GetItemsAsJson();
-
-            return orderItemsAsJson;
+            OrderService.DecreaseItemQuantity
+            return "s";
         }
 
         public IActionResult Privacy()
