@@ -1,21 +1,13 @@
 ﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
+import { dataHandler } from "/js/dataHandler.js";
 
 let countriesApiUrl = "https://countriesnow.space/api/v0.1/countries";
 
 async function getCountriesApi() {
-    try {
-        let response = await $.ajax({
-            method: "get",
-            url: countriesApiUrl,
-            dataType: "json",
-        })
-
-        let countries = response.data;
-        localStorage.setItem("countries", JSON.stringify(countries));
-
-    } catch (e) {
-        console.log("Error" + e);
-    }
+    let getCountriesFromApiHandler = dataHandler.getData;
+    let apiData = await getCountriesFromApiHandler(countriesApiUrl);
+    let countries = apiData.data;
+    localStorage.setItem("countries", JSON.stringify(countries));
 }
 
 function displayCartQuantityInForm() {
