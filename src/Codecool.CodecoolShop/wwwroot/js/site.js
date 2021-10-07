@@ -1,5 +1,5 @@
 ﻿
-import { updateCart } from "/js/cartUtils.js";
+import { updateCart, updateCartItems } from "/js/cartUtils.js";
 import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
 import { dataHandler } from "/js/dataHandler.js";
 
@@ -26,13 +26,16 @@ function initBuyButtons() {
             event.preventDefault();
 
             let quantity = 1;
-            let productId = button.getAttribute("data-product-id");
-            let data = await dataHandler.addNewItemToCart(productId, quantity);
+            //let productId = button.getAttribute("data-product-id");
+            //let data = await dataHandler.addNewItemToCart(productId, quantity);
 
-            updateCart(data, itemsInShoppingCartFields)
+            //updateCart(data, itemsInShoppingCartFields)
+
+            let functionToHandleUpdate = dataHandler.addNewItemToCart;
+            updateCartItems(itemsInShoppingCartFields, quantity, functionToHandleUpdate)
           
             if (shoppingCart.style.visibility == "visible") {
-                loadCartItems(data);
+                loadShoppingCartItemsFromSessionStorage()
             }
         })
     })
@@ -49,7 +52,7 @@ function initDeleteCartItemsButtons() {
             let data = await dataHandler.removeItemFromCart(productId);
 
             updateCart(data, itemsInShoppingCartFields)
-            loadCartItems(data);
+            loadShoppingCartItemsFromSessionStorage()
         })
     })
 }
