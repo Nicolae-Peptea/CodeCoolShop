@@ -1,12 +1,30 @@
-﻿export function updateCart(response, htmlElements) {
+﻿
+export async function updateCartItems(htmlWithAttribute, quantity, functionToUpdate) {
+    let productId = htmlWithAttribute.getAttribute("data-product-id");
+    let data = await functionToUpdate(productId, quantity);
+
+    updateCart(data)
+}
+
+
+export async function deleteCartItems(htmlWithAttribute, functionToUpdate) {
+
+    let productId = htmlWithAttribute.getAttribute("data-product-id");
+    let data = await functionToUpdate(productId);
+
+    updateCart(data)
+}
+
+
+function updateCart(response) {
     let totalItems = 0;
-    let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
+    let totalItemsInShoppingCart = [...document.querySelectorAll(".badge")];
 
     response.forEach((element) => {
         totalItems += element.Quantity;
     })
 
-    htmlElements.forEach((field) => {
+    totalItemsInShoppingCart.forEach((field) => {
         field.innerHTML = totalItems;
     })
 
@@ -21,23 +39,7 @@ function setSessionStorage(totalItems, jsonResonse) {
     else {
         sessionStorage.setItem("shoppingCartQuantity", totalItems);
         sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
-    } 
+    }
 }
 
 
-
-export async function updateCartItems(htmlWithAttribute, quantity, functionToUpdate) {
-    let productId = htmlWithAttribute.getAttribute("data-product-id");
-    let data = await functionToUpdate(productId, quantity);
-
-    updateCart(data, itemsInShoppingCartFields)
-}
-
-
-async function deleteCartItems(htmlElement) {
-
-    let productId = htmlElement.getAttribute("data-product-id");
-    let data = await dataHandler.removeItemFromCart(productId);
-
-    updateCart(data, itemsInShoppingCartFields)
-}
