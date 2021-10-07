@@ -1,6 +1,8 @@
 ﻿
-import { ajaxFetch } from "/js/utils.js";
+import { updateCart } from "/js/cartUtils.js";
 import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
+import { dataHandler } from "/js/dataHandler.js";
+
 
 let cartButton = document.querySelector("#cart");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
@@ -18,21 +20,16 @@ function showCartQuantityAfterLoading() {
 }
 
 
-function loadShoppingCartItemsFromSessionStorage() {
-    let shoppingCartItemsFromSessionStorage = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
-    loadCartItems(shoppingCartItemsFromSessionStorage);
-}
-
-
 function initBuyButtons() {
     buyButtons.forEach((button) => {
         button.addEventListener("click", async (event) => {
-
             event.preventDefault();
-            let url = "api/add-cart-item";
-            let httpRequest = "post";
-            let data = await updateCart(button, httpRequest, url);
-           
+
+            let productId = button.getAttribute("data-product-id");
+            let data = await dataHandler.addNewItemToCart(productId);
+
+            updateCart(data, itemsInShoppingCartFields)
+          
             if (shoppingCart.style.visibility == "visible") {
                 loadCartItems(data);
             }  
@@ -45,11 +42,12 @@ function initDeleteCartItemsButtons() {
     let buttons = [...document.querySelectorAll(".delete-cart-item")];
     buttons.forEach((button) => {
         button.addEventListener('click', async (event) => {
-
             event.preventDefault();
-            let url = "api/remove-cart-item";
-            let httpRequest = "delete";
-            let data = await updateCart(button, httpRequest, url);
+
+            let productId = button.getAttribute("data-product-id");
+            let data = await dataHandler.removeItemFromCart(productId);
+
+            updateCart(data, itemsInShoppingCartFields)
 
             loadCartItems(data);
         })
@@ -57,23 +55,25 @@ function initDeleteCartItemsButtons() {
 }
 
 
-async function updateCart(htmlElement, httpRequest, url) {
-
-    let productId = htmlElement.getAttribute("data-product-id");
-    let totalItems = 0;
-    let response = await ajaxFetch(productId, httpRequest, url);
-
-    response.forEach((element) => {
-        totalItems += element.Quantity;
+function initCartButtonFunctionality() {
+    cartButton.addEventListener('click', async function () {
+        event.preventDefault();
+        let visibility = shoppingCart.style.visibility;
+        if (visibility == "visible") {
+            shoppingCart.style.visibility = "hidden";
+            shoppingCartItemsContainer.innerHTML = "";
+        }
+        else {
+            shoppingCart.style.visibility = "visible";
+            loadShoppingCartItemsFromSessionStorage();
+        }
     })
+}
 
-    itemsInShoppingCartFields.forEach((field) => {
-        field.innerHTML = totalItems;
-    })
 
-    setSessionStorageForShoppingCart(totalItems, response);
-
-    return response;
+function loadShoppingCartItemsFromSessionStorage() {
+    let shoppingCartItemsFromSessionStorage = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    loadCartItems(shoppingCartItemsFromSessionStorage);
 }
 
 
@@ -100,27 +100,6 @@ function loadCartItems(items) {
     initDeleteCartItemsButtons();
 }
 
-
-function setSessionStorageForShoppingCart(totalItems, jsonResonse) {
-    sessionStorage.setItem("shoppingCartQuantity", totalItems);
-    sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
-}
-
-
-function initCartButtonFunctionality() {
-    cartButton.addEventListener('click', async function () {
-        event.preventDefault();
-        let visibility = shoppingCart.style.visibility;
-        if (visibility == "visible") {
-            shoppingCart.style.visibility = "hidden";
-            shoppingCartItemsContainer.innerHTML = "";
-        }
-        else {
-            shoppingCart.style.visibility = "visible";
-            loadShoppingCartItemsFromSessionStorage();
-        }
-    })
-}
 
 showCartQuantityAfterLoading();
 initCartButtonFunctionality();

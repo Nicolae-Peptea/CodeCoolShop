@@ -21,6 +21,7 @@ function loadShoppingCartPageContainer(items) {
     totalCartSumField.innerHTML = formatter.format(totalCartSum);
 }
 
+
 function loadShoppingCartPage() {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
 
