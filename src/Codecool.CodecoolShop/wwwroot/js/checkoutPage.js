@@ -1,9 +1,6 @@
 ﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
 
-let checkoutPageContainer = document.querySelector(".checkout-page-container");
-let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 let countriesApiUrl = "https://countriesnow.space/api/v0.1/countries";
-let countries;
 
 async function getCountriesApi() {
     try {
@@ -13,7 +10,7 @@ async function getCountriesApi() {
             dataType: "json",
         })
 
-        countries = response.data;
+        let countries = response.data;
         localStorage.setItem("countries", JSON.stringify(countries));
 
     } catch (e) {
@@ -74,6 +71,7 @@ function initIntlPhoneNumber() {
 }
 
 function initCountriesInSelector() {
+    let countries = JSON.parse(localStorage.getItem("countries"));
     let countrySelector = document.querySelector("#country");
     let format = "";
     format += `<option value="choose">Choose...</option>`;
@@ -93,6 +91,7 @@ function initCountrySelectorOnChangeFunctionality() {
 }
 
 function initCitiesInSelector() {
+    let countries = JSON.parse(localStorage.getItem("countries"));
     let countrySelector = document.getElementById("country");
     let citySelector = document.getElementById("city");
     let countryName = countrySelector.value;
@@ -164,10 +163,7 @@ $("#email").on("change", validate);
 displayCartQuantityInForm();
 displayItemsFromCart();
 initIntlPhoneNumber();
-if (localStorage.getItem("countries")) {
-    countries = JSON.parse(localStorage.getItem("countries"));
-}
-else {
+if (!localStorage.getItem("countries")) {
     await getCountriesApi();
 }
 initCountriesInSelector();
