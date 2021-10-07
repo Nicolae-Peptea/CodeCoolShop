@@ -27,8 +27,17 @@ a {
     border-color: #1861ac;
 }
 
+.navbar-collapse ul.navbar-right {
+    margin-bottom: 0
+}
+
 .navbar-right {
     padding: 0;
+}
+
+.filled-cart-item-quantity {
+    max-width: 160px;
+    width: 100%;
 }
 
 .navbar-right li {
@@ -281,12 +290,12 @@ a {
 }
 
 .filled-cart-item-quantity {
+    position: relative;
     display: flex;
     flex-direction: row;
     text-align: right;
     align-items: center;
-    width: fit-content;
-    height: fit-content;
+    justify-content: center;
 }
 
 .filled-cart-item-quantity p {
@@ -314,6 +323,16 @@ a {
     line-height: 15px;
     text-align: right;
     width: 165px;
+}
+
+.decrease-quantity {
+    position: absolute;
+    left: 0;
+}
+
+.increase-quantity {
+    position: absolute;
+    right: 0;
 }
 
 .shopping-cart-page-total {
@@ -485,6 +504,13 @@ a {
     color: red;
 }
 
+.delete-cart-item{
+    margin-right: 10px;
+}
+
+.filled-cart-item-delete:focus{
+    outline:none;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
