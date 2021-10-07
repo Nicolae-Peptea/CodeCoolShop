@@ -261,7 +261,7 @@ a {
     margin-left: 140px;
     display: flex;
     flex-direction: row;
-    align-content: space-between;
+    align-items: center;
     padding: 10px;
 }
 
@@ -283,8 +283,6 @@ a {
 .filled-cart-item-quantity {
     display: flex;
     flex-direction: row;
-    flex: 1 1 auto;
-    margin: 5px;
     text-align: right;
     align-items: center;
     width: fit-content;
@@ -304,10 +302,8 @@ a {
 }
 
 .filled-cart-item-delete {
-    flex: 1 1 auto;
-    margin: 5px;
     text-align: right;
-    width: fit-content;
+    width: 75px;
 }
 
 .filled-cart-item-price {
