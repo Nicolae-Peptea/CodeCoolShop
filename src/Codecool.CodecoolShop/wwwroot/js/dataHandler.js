@@ -1,14 +1,15 @@
 ﻿export let dataHandler = {
-    addNewItemToCart: async function (itemId) {
+    addNewItemToCart: async function (itemId, quantity) {
 
-        let url = "api/add-cart-item";
+        let url = "/api/update-cart-item";
         let data = {
             'id': itemId,
+            'quantity': quantity,
         };
         return await apiPost(url, data);
     },
     removeItemFromCart: async function (itemId) {
-        let url = "api/remove-cart-item";
+        let url = "/api/remove-cart-item";
         let data = {
             'id': itemId,
         };
@@ -40,23 +41,6 @@ async function apiDelete(url, data) {
             url: url,
             data: data,
             method: "delete",
-            dataType: "json",
-        })
-
-        return response;
-
-    } catch (e) {
-        console.log("Error" + e);
-    }
-}
-
-
-async function apiPut(url, data) {
-    try {
-        let response = await $.ajax({
-            url: url,
-            data: data,
-            method: "put",
             dataType: "json",
         })
 

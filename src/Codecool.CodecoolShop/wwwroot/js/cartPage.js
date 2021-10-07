@@ -1,8 +1,11 @@
 ﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
+import { dataHandler } from "/js/dataHandler.js";
+import { updateCartItems, deleteCartItems } from "/js/cartUtils.js";
+
 
 let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
-
+let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
 
 function loadShoppingCartPageContainer(items) {
     let itemsFormat = "";
@@ -28,9 +31,10 @@ function loadShoppingCartPage() {
     if (items) {
         const filledCartFormatBuilder = htmlFactory(htmlTemplates.filledCartFormat);
         const filledCartFormat = filledCartFormatBuilder();
+
         shoppingCartPageContainer.innerHTML = filledCartFormat;
         loadShoppingCartPageContainer(items);
-        initQuantityModifyingButtonsFunctionality();
+        initQuantityModifyingButtons();
         initDeleteShoppingCartItemsButtonsFunctionality();
     }
     else {
@@ -40,25 +44,27 @@ function loadShoppingCartPage() {
     }
 }
 
-function initQuantityModifyingButtonsFunctionality() {
+function initQuantityModifyingButtons() {
     let increaseQuantityButtons = [...document.querySelectorAll(".increase-quantity")];
     let decreaseQuantityButtons = [...document.querySelectorAll(".decrease-quantity")];
+
     increaseQuantityButtons.forEach((button) => {
         button.addEventListener('click', async function () {
             event.preventDefault();
-            let productId = button.getAttribute("data-product-id");
-            console.log(productId);
-            let value = 1;
+
+            const increaseQuantity = 1;
+            updateCart(button, increaseQuantity)
         })
     })
     decreaseQuantityButtons.forEach((button) => {
         button.addEventListener('click', async function () {
             event.preventDefault();
-            let productId = button.getAttribute("data-product-id");
-            console.log(productId);
-            let value = -1;
+
+            const decreaseQuantity = -1;
+            updateCart(button, decreaseQuantity)
         })
     })
+  
 }
 
 function initDeleteShoppingCartItemsButtonsFunctionality() {
@@ -67,15 +73,22 @@ function initDeleteShoppingCartItemsButtonsFunctionality() {
     deleteShoppingCartItemsButtons.forEach((button) => {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
-            let productId = button.getAttribute("data-product-id");
-            console.log(productId);
-            //let url = "api/remove-cart-item";
-            //let httpRequest = "delete";
-            //let data = await updateCart(button, httpRequest, url);
 
-            //loadCartItems(data);
+            const functionToDelete = dataHandler.removeItemFromCart;
+            await deleteCartItems(button, functionToDelete);
+            loadShoppingCartPage();
         })
     })
 }
+
+
+async function updateCart(htmlElement, quantity) {
+    const functionToUpdate = dataHandler.addNewItemToCart;
+    await updateCartItems(htmlElement, quantity, functionToUpdate);
+
+    loadShoppingCartPage();
+}
+
+
 
 loadShoppingCartPage();

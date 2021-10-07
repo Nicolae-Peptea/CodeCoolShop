@@ -28,19 +28,29 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Item item)
         {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Item item, int quantity)
+        {
             var itemInList = Get(item.Product.Id);
 
             if (itemInList != null)
             {
-                itemInList.Quantity++;
+                itemInList.Quantity += quantity;
             }
             else
             {
                 data.Add(item);
             }
+
+            if (itemInList != null && itemInList.Quantity == 0)
+            {
+                RemoveItem(item.Product.Id);
+            }
         }
 
-        public void Remove(int productId)
+        public void RemoveItem(int productId)
         {
             data.Remove(data.Single(item => item.Product.Id == productId));
         }
