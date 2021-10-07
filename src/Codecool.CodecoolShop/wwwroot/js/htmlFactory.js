@@ -5,6 +5,8 @@ export const htmlTemplates = {
     formatShoppingCartPageItem: 2,
     emptyCartFormat: 3,
     filledCartFormat: 4,
+    formatCheckoutPageCartItem: 5,
+    formatCheckoutPageCartTotal: 6,
 };
 
 export function htmlFactory(template) {
@@ -17,6 +19,10 @@ export function htmlFactory(template) {
             return emptyCartFormatBuilder;
         case htmlTemplates.filledCartFormat:
             return filledCartFormatBuilder;
+        case htmlTemplates.formatCheckoutPageCartItem:
+            return checkoutPageCartItemBuilder;
+        case htmlTemplates.formatCheckoutPageCartTotal:
+            return checkoutPageCartTotalBuilder;
         default:
             console.error("Undefined template: " + template);
             return () => {
@@ -91,7 +97,26 @@ function filledCartFormatBuilder() {
                     <span class="total-left"><strong>Total:</strong></span>
                     <span class="total-right"></span>
                 </div>
-                <button>Checkout</button>
+                <button onclick="location.href='/Product/Checkout'">Proceed to Checkout</button>
             </div>
         </div>`;
+}
+
+function checkoutPageCartItemBuilder(item) {
+    return `
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+                <h6 class="my-0">${item.Product.Name}</h6>
+                <small class="text-muted">x ${item.Quantity}</small>
+            </div>
+            <span class="text-muted">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+        </li>`;
+}
+
+function checkoutPageCartTotalBuilder(total) {
+    return `
+        <li class="list-group-item d-flex justify-content-between">
+            <span>Total (USD)</span>
+            <strong>${formatter.format(total)}</strong>
+        </li>`;
 }
