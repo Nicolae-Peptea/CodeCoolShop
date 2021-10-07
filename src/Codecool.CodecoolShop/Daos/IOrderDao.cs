@@ -9,8 +9,6 @@ namespace Codecool.CodecoolShop.Daos
     public interface IOrderDao : IDao<Item>
     {
         int GetTotalValue();
-
-        void RemoveItemQuantity(Item item);
-
+        void Update(Item item, int quantity);
     }
 }

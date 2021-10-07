@@ -28,11 +28,20 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Item item)
         {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Item item, int quantity)
+        {
             var itemInList = Get(item.Product.Id);
 
             if (itemInList != null)
             {
-                itemInList.Quantity++;
+                itemInList.Quantity = quantity;
+            }
+            else if (itemInList.Quantity == 0)
+            {
+                RemoveItem(item.Product.Id);
             }
             else
             {
@@ -43,20 +52,6 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public void RemoveItem(int productId)
         {
             data.Remove(data.Single(item => item.Product.Id == productId));
-        }
-
-
-        public void RemoveItemQuantity(Item item)
-        {
-            var itemInList = Get(item.Product.Id);
-            if (itemInList != null)
-            {
-                itemInList.Quantity--;
-            }
-            else
-            {
-                RemoveItem(item.Product.Id);
-            }
         }
 
         public Item Get(int id)

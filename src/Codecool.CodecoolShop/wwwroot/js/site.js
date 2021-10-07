@@ -32,7 +32,7 @@ function initBuyButtons() {
           
             if (shoppingCart.style.visibility == "visible") {
                 loadCartItems(data);
-            }  
+            }
         })
     })
 }
