@@ -1,5 +1,4 @@
-﻿
-import { updateCart, updateCartItems } from "/js/cartUtils.js";
+﻿import { updateCartItems, deleteCartItems } from "/js/cartUtils.js";
 import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
 import { dataHandler } from "/js/dataHandler.js";
 
@@ -8,11 +7,12 @@ let cartButton = document.querySelector("#cart");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
 let shoppingCart = document.querySelector(".shopping-cart");
 let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
-let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 
 
 function showCartQuantityAfterLoading() {
+
+    let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
     let shoppingCartQuantity = sessionStorage.getItem("shoppingCartQuantity");
     itemsInShoppingCartFields.forEach((element) => {
         element.innerHTML = shoppingCartQuantity;
@@ -26,13 +26,8 @@ function initBuyButtons() {
             event.preventDefault();
 
             let quantity = 1;
-            //let productId = button.getAttribute("data-product-id");
-            //let data = await dataHandler.addNewItemToCart(productId, quantity);
-
-            //updateCart(data, itemsInShoppingCartFields)
-
             let functionToHandleUpdate = dataHandler.addNewItemToCart;
-            updateCartItems(itemsInShoppingCartFields, quantity, functionToHandleUpdate)
+            await updateCartItems(button, quantity, functionToHandleUpdate)
           
             if (shoppingCart.style.visibility == "visible") {
                 loadShoppingCartItemsFromSessionStorage()
@@ -48,10 +43,9 @@ function initDeleteCartItemsButtons() {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
 
-            let productId = button.getAttribute("data-product-id");
-            let data = await dataHandler.removeItemFromCart(productId);
+            let functionToHandleDelete = dataHandler.removeItemFromCart;
 
-            updateCart(data, itemsInShoppingCartFields)
+            await deleteCartItems(button, functionToHandleDelete);
             loadShoppingCartItemsFromSessionStorage()
         })
     })
