@@ -14,9 +14,9 @@ namespace Codecool.CodecoolShop.Services
             this.order = order;
         }
 
-        public void BuyProduct(Item item)
+        public void BuyProduct(Item item, int quantity)
         {
-            this.order.Add(item);
+            this.order.Update(item, quantity);
         }
 
         public void RemoveItem(int productId)
@@ -24,9 +24,9 @@ namespace Codecool.CodecoolShop.Services
             this.order.RemoveItem(productId);
         }
 
-        public void DecreaseItemQuantity(Item item)
+        public void DecreaseItemQuantity(Item item, int quantity)
         {
-            this.order.RemoveItemQuantity(item);
+            this.order.Update(item, quantity);
         }
 
         public IEnumerable<Item> GetAllItems()
