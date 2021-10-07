@@ -30,12 +30,52 @@ function loadShoppingCartPage() {
         const filledCartFormat = filledCartFormatBuilder();
         shoppingCartPageContainer.innerHTML = filledCartFormat;
         loadShoppingCartPageContainer(items);
+        initQuantityModifyingButtonsFunctionality();
+        initDeleteShoppingCartItemsButtonsFunctionality();
     }
     else {
         const emptyCartFormatBuilder = htmlFactory(htmlTemplates.emptyCartFormat);
         const emptyCartFormat = emptyCartFormatBuilder();
         shoppingCartPageContainer.innerHTML = emptyCartFormat;
     }
+}
+
+function initQuantityModifyingButtonsFunctionality() {
+    let increaseQuantityButtons = [...document.querySelectorAll(".increase-quantity")];
+    let decreaseQuantityButtons = [...document.querySelectorAll(".decrease-quantity")];
+    increaseQuantityButtons.forEach((button) => {
+        button.addEventListener('click', async function () {
+            event.preventDefault();
+            let productId = button.getAttribute("data-product-id");
+            console.log(productId);
+            let value = 1;
+        })
+    })
+    decreaseQuantityButtons.forEach((button) => {
+        button.addEventListener('click', async function () {
+            event.preventDefault();
+            let productId = button.getAttribute("data-product-id");
+            console.log(productId);
+            let value = -1;
+        })
+    })
+}
+
+function initDeleteShoppingCartItemsButtonsFunctionality() {
+    let deleteShoppingCartItemsButtons = [...document.querySelectorAll(".filled-cart-item-delete")];
+
+    deleteShoppingCartItemsButtons.forEach((button) => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            let productId = button.getAttribute("data-product-id");
+            console.log(productId);
+            //let url = "api/remove-cart-item";
+            //let httpRequest = "delete";
+            //let data = await updateCart(button, httpRequest, url);
+
+            //loadCartItems(data);
+        })
+    })
 }
 
 loadShoppingCartPage();
