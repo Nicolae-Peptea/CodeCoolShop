@@ -1,6 +1,6 @@
 ﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
 import { dataHandler } from "/js/dataHandler.js";
-import { updateCart } from "/js/cartUtils.js";
+import { updateCartItems, deleteCartItems } from "/js/cartUtils.js";
 
 
 let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
@@ -53,7 +53,7 @@ function initQuantityModifyingButtons() {
             event.preventDefault();
 
             const increaseQuantity = 1;
-            updateCartItems(button, increaseQuantity);
+            updateCart(button, increaseQuantity)
         })
     })
     decreaseQuantityButtons.forEach((button) => {
@@ -61,7 +61,7 @@ function initQuantityModifyingButtons() {
             event.preventDefault();
 
             const decreaseQuantity = -1;
-            updateCartItems(button, decreaseQuantity);
+            updateCart(button, decreaseQuantity)
         })
     })
   
@@ -73,27 +73,19 @@ function initDeleteShoppingCartItemsButtonsFunctionality() {
     deleteShoppingCartItemsButtons.forEach((button) => {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
-            deleteCartItems(button)
+
+            const functionToDelete = dataHandler.removeItemFromCart;
+            await deleteCartItems(button, functionToDelete);
+            loadShoppingCartPage();
         })
     })
 }
 
 
-async function updateCartItems(htmlElement, quantity) {
-    let productId = htmlElement.getAttribute("data-product-id");
-    let data = await dataHandler.addNewItemToCart(productId, quantity);
+async function updateCart(htmlElement, quantity) {
+    const functionToUpdate = dataHandler.addNewItemToCart;
+    await updateCartItems(htmlElement, quantity, functionToUpdate);
 
-    updateCart(data, itemsInShoppingCartFields)
-    loadShoppingCartPage();
-}
-
-
-async function deleteCartItems(htmlElement) {
-
-    let productId = htmlElement.getAttribute("data-product-id");
-    let data = await dataHandler.removeItemFromCart(productId);
-
-    updateCart(data, itemsInShoppingCartFields)
     loadShoppingCartPage();
 }
 
