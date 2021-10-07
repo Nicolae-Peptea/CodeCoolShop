@@ -97,7 +97,7 @@ function filledCartFormatBuilder() {
                     <span class="total-left"><strong>Total:</strong></span>
                     <span class="total-right"></span>
                 </div>
-                <button onclick="location.href='/Product/Checkout'">Checkout</button>
+                <button onclick="location.href='/Product/Checkout'">Proceed to Checkout</button>
             </div>
         </div>`;
 }
