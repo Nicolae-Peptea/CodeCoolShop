@@ -37,15 +37,16 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
             if (itemInList != null)
             {
-                itemInList.Quantity = quantity;
-            }
-            else if (itemInList.Quantity == 0)
-            {
-                RemoveItem(item.Product.Id);
+                itemInList.Quantity += quantity;
             }
             else
             {
                 data.Add(item);
+            }
+
+            if (itemInList != null && itemInList.Quantity == 0)
+            {
+                RemoveItem(item.Product.Id);
             }
         }
 

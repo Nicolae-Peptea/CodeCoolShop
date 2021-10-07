@@ -1,8 +1,11 @@
 ﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
+import { dataHandler } from "/js/dataHandler.js";
+import { updateCart } from "/js/cartUtils.js";
+
 
 let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
-
+let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
 
 function loadShoppingCartPageContainer(items) {
     let itemsFormat = "";
@@ -28,9 +31,10 @@ function loadShoppingCartPage() {
     if (items) {
         const filledCartFormatBuilder = htmlFactory(htmlTemplates.filledCartFormat);
         const filledCartFormat = filledCartFormatBuilder();
+
         shoppingCartPageContainer.innerHTML = filledCartFormat;
         loadShoppingCartPageContainer(items);
-        initQuantityModifyingButtonsFunctionality();
+        initQuantityModifyingButtons();
         initDeleteShoppingCartItemsButtonsFunctionality();
     }
     else {
@@ -40,25 +44,27 @@ function loadShoppingCartPage() {
     }
 }
 
-function initQuantityModifyingButtonsFunctionality() {
+function initQuantityModifyingButtons() {
     let increaseQuantityButtons = [...document.querySelectorAll(".increase-quantity")];
     let decreaseQuantityButtons = [...document.querySelectorAll(".decrease-quantity")];
+
     increaseQuantityButtons.forEach((button) => {
         button.addEventListener('click', async function () {
             event.preventDefault();
-            let productId = button.getAttribute("data-product-id");
-            console.log(productId);
-            let value = 1;
+
+            const increaseQuantity = 1;
+            updateCartItems(button, increaseQuantity);
         })
     })
     decreaseQuantityButtons.forEach((button) => {
         button.addEventListener('click', async function () {
             event.preventDefault();
-            let productId = button.getAttribute("data-product-id");
-            console.log(productId);
-            let value = -1;
+
+            const decreaseQuantity = -1;
+            updateCartItems(button, decreaseQuantity);
         })
     })
+  
 }
 
 function initDeleteShoppingCartItemsButtonsFunctionality() {
@@ -77,5 +83,16 @@ function initDeleteShoppingCartItemsButtonsFunctionality() {
         })
     })
 }
+
+
+async function updateCartItems(htmlElement, quantity) {
+    let productId = htmlElement.getAttribute("data-product-id");
+    let data = await dataHandler.addNewItemToCart(productId, quantity);
+
+    updateCart(data, itemsInShoppingCartFields)
+    loadShoppingCartPage();
+}
+
+
 
 loadShoppingCartPage();

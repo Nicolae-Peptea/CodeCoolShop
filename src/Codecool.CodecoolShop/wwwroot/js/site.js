@@ -25,8 +25,9 @@ function initBuyButtons() {
         button.addEventListener("click", async (event) => {
             event.preventDefault();
 
+            let quantity = 1;
             let productId = button.getAttribute("data-product-id");
-            let data = await dataHandler.addNewItemToCart(productId);
+            let data = await dataHandler.addNewItemToCart(productId, quantity);
 
             updateCart(data, itemsInShoppingCartFields)
           
@@ -48,7 +49,6 @@ function initDeleteCartItemsButtons() {
             let data = await dataHandler.removeItemFromCart(productId);
 
             updateCart(data, itemsInShoppingCartFields)
-
             loadCartItems(data);
         })
     })
