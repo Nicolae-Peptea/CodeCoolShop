@@ -49,6 +49,11 @@ namespace Codecool.CodecoolShop.Controllers
             return View();
         }
 
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
         [HttpPost]
         [Route ("api/add-cart-item")]
         public string Buy (int id)
