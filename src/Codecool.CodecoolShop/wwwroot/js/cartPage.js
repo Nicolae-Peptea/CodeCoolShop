@@ -73,13 +73,7 @@ function initDeleteShoppingCartItemsButtonsFunctionality() {
     deleteShoppingCartItemsButtons.forEach((button) => {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
-            let productId = button.getAttribute("data-product-id");
-            console.log(productId);
-            //let url = "api/remove-cart-item";
-            //let httpRequest = "delete";
-            //let data = await updateCart(button, httpRequest, url);
-
-            //loadCartItems(data);
+            deleteCartItems(button)
         })
     })
 }
@@ -88,6 +82,16 @@ function initDeleteShoppingCartItemsButtonsFunctionality() {
 async function updateCartItems(htmlElement, quantity) {
     let productId = htmlElement.getAttribute("data-product-id");
     let data = await dataHandler.addNewItemToCart(productId, quantity);
+
+    updateCart(data, itemsInShoppingCartFields)
+    loadShoppingCartPage();
+}
+
+
+async function deleteCartItems(htmlElement) {
+
+    let productId = htmlElement.getAttribute("data-product-id");
+    let data = await dataHandler.removeItemFromCart(productId);
 
     updateCart(data, itemsInShoppingCartFields)
     loadShoppingCartPage();
