@@ -56,6 +56,12 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         [HttpPost]
+        public IActionResult Checkout(BillingModel model)
+        {
+            return View();
+        }
+
+        [HttpPost]
         [Route ("/api/update-cart-item")]
         public string AddItemToCart (int id, int quantity)
         {
