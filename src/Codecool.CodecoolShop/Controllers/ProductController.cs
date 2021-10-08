@@ -52,13 +52,13 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Checkout()
         {
-            return View();
+            return View("Checkout");
         }
 
         [HttpPost]
         public IActionResult Checkout(BillingModel model)
         {
-            return View();
+            return View("Checkout");
         }
 
         [HttpPost]
