@@ -2,6 +2,8 @@
 import { dataHandler } from "/js/dataHandler.js";
 
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
+let shoppingCart = document.querySelector(".shopping-cart");
+let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
 
 
 export async function updateCartItems(htmlWithAttribute, quantity, functionToUpdate) {
@@ -22,7 +24,6 @@ export async function deleteCartItems(htmlWithAttribute, functionToUpdate) {
 
 
 export function showCartQuantityAfterLoading() {
-
     let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
     let shoppingCartQuantity = sessionStorage.getItem("shoppingCartQuantity");
     itemsInShoppingCartFields.forEach((element) => {
@@ -32,7 +33,6 @@ export function showCartQuantityAfterLoading() {
 
 
 export function loadCartItems() {
-    let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
     let itemsFormat = "";
     let totalCartSumField = document.querySelector(".main-color-text");
@@ -66,6 +66,24 @@ export function initDeleteShoppingCartItemsButtonsFunctionality(buttonsClass, it
             await deleteCartItems(button, dataHandler.removeItemFromCart);
             itemsFormatLoadingMethod();
         })
+    })
+}
+
+
+export function initCartButtonFunctionality() {
+    let cartButton = document.querySelector("#cart");
+
+    cartButton.addEventListener('click', async function () {
+        event.preventDefault();
+        let visibility = shoppingCart.style.visibility;
+        if (visibility == "visible") {
+            shoppingCart.style.visibility = "hidden";
+            shoppingCartItemsContainer.innerHTML = "";
+        }
+        else {
+            shoppingCart.style.visibility = "visible";
+            loadCartItems();
+        }
     })
 }
 
