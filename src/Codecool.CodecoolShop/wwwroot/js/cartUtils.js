@@ -15,6 +15,15 @@ export async function deleteCartItems(htmlWithAttribute, functionToUpdate) {
     updateCart(data)
 }
 
+export function showCartQuantityAfterLoading() {
+
+    let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
+    let shoppingCartQuantity = sessionStorage.getItem("shoppingCartQuantity");
+    itemsInShoppingCartFields.forEach((element) => {
+        element.innerHTML = shoppingCartQuantity;
+    })
+}
+
 
 function updateCart(response) {
     let totalItems = 0;

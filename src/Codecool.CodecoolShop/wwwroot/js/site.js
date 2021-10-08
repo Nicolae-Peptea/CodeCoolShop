@@ -1,4 +1,4 @@
-﻿import { updateCartItems, deleteCartItems } from "/js/cartUtils.js";
+﻿import { updateCartItems, deleteCartItems, showCartQuantityAfterLoading } from "/js/cartUtils.js";
 import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
 import { dataHandler } from "/js/dataHandler.js";
 
@@ -8,16 +8,6 @@ let buyButtons = [...document.querySelectorAll("#add-to-cart")];
 let shoppingCart = document.querySelector(".shopping-cart");
 let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
-
-
-function showCartQuantityAfterLoading() {
-
-    let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
-    let shoppingCartQuantity = sessionStorage.getItem("shoppingCartQuantity");
-    itemsInShoppingCartFields.forEach((element) => {
-        element.innerHTML = shoppingCartQuantity;
-    })
-}
 
 
 function initBuyButtons() {
