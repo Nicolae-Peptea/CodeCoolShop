@@ -1,11 +1,10 @@
 ﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
 import { dataHandler } from "/js/dataHandler.js";
-import { updateCartItems, deleteCartItems } from "/js/cartUtils.js";
-
+import { updateCartItems, deleteCartItems, initDeleteShoppingCartItemsButtonsFunctionality } from "/js/cartUtils.js";
 
 let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
-let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
+
 
 function loadShoppingCartPageContainer(items) {
     let itemsFormat = "";
@@ -35,7 +34,8 @@ function loadShoppingCartPage() {
         shoppingCartPageContainer.innerHTML = filledCartFormat;
         loadShoppingCartPageContainer(items);
         initQuantityModifyingButtons();
-        initDeleteShoppingCartItemsButtonsFunctionality();
+        initDeleteShoppingCartItemsButtonsFunctionality(".filled-cart-item-delete",
+            loadShoppingCartPage);
     }
     else {
         const emptyCartFormatBuilder = htmlFactory(htmlTemplates.emptyCartFormat);
@@ -64,21 +64,6 @@ function initQuantityModifyingButtons() {
             updateCart(button, decreaseQuantity)
         })
     })
-  
-}
-
-function initDeleteShoppingCartItemsButtonsFunctionality() {
-    let deleteShoppingCartItemsButtons = [...document.querySelectorAll(".filled-cart-item-delete")];
-
-    deleteShoppingCartItemsButtons.forEach((button) => {
-        button.addEventListener('click', async (event) => {
-            event.preventDefault();
-
-            const functionToDelete = dataHandler.removeItemFromCart;
-            await deleteCartItems(button, functionToDelete);
-            loadShoppingCartPage();
-        })
-    })
 }
 
 
@@ -88,7 +73,6 @@ async function updateCart(htmlElement, quantity) {
 
     loadShoppingCartPage();
 }
-
 
 
 loadShoppingCartPage();

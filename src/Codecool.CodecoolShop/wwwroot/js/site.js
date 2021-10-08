@@ -1,5 +1,4 @@
-﻿import { updateCartItems, deleteCartItems, showCartQuantityAfterLoading } from "/js/cartUtils.js";
-import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
+﻿import { updateCartItems, showCartQuantityAfterLoading, loadCartItems } from "/js/cartUtils.js";
 import { dataHandler } from "/js/dataHandler.js";
 
 
@@ -7,7 +6,6 @@ let cartButton = document.querySelector("#cart");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
 let shoppingCart = document.querySelector(".shopping-cart");
 let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
-let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 
 
 function initBuyButtons() {
@@ -20,23 +18,8 @@ function initBuyButtons() {
             await updateCartItems(button, quantity, functionToHandleUpdate)
           
             if (shoppingCart.style.visibility == "visible") {
-                loadShoppingCartItemsFromSessionStorage()
+                loadCartItems()
             }
-        })
-    })
-}
-
-
-function initDeleteCartItemsButtons() {
-    let buttons = [...document.querySelectorAll(".delete-cart-item")];
-    buttons.forEach((button) => {
-        button.addEventListener('click', async (event) => {
-            event.preventDefault();
-
-            let functionToHandleDelete = dataHandler.removeItemFromCart;
-
-            await deleteCartItems(button, functionToHandleDelete);
-            loadShoppingCartItemsFromSessionStorage()
         })
     })
 }
@@ -52,39 +35,9 @@ function initCartButtonFunctionality() {
         }
         else {
             shoppingCart.style.visibility = "visible";
-            loadShoppingCartItemsFromSessionStorage();
+            loadCartItems();
         }
     })
-}
-
-
-function loadShoppingCartItemsFromSessionStorage() {
-    let shoppingCartItemsFromSessionStorage = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
-    loadCartItems(shoppingCartItemsFromSessionStorage);
-}
-
-
-function loadCartItems(items) {
-    let itemsFormat = "";
-    let totalCartSumField = document.querySelector(".main-color-text");
-    let totalCartSum = 0;
-    const formatShoppingCartItemBuilder = htmlFactory(htmlTemplates.formatShoppingCartItem);
-
-    if (items != null) {
-        for (let i = 0; i < items.length; i++) {
-            const formatShoppingCartItem = formatShoppingCartItemBuilder(items[i]);
-
-            itemsFormat += formatShoppingCartItem;
-            totalCartSum += items[i].Product.DefaultPrice * items[i].Quantity;
-        }
-    }
-    else {
-        itemsFormat = "The shopping cart is empty.";
-    }
-
-    totalCartSumField.innerHTML = formatter.format(totalCartSum);
-    shoppingCartItemsContainer.innerHTML = itemsFormat;
-    initDeleteCartItemsButtons();
 }
 
 
