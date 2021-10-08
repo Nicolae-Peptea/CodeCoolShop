@@ -511,6 +511,11 @@ a {
 .filled-cart-item-delete:focus{
     outline:none;
 }
+
+.text-danger {
+    display: block;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

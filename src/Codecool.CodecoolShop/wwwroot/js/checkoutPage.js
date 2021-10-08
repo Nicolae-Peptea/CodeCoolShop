@@ -4,10 +4,12 @@ import { dataHandler } from "/js/dataHandler.js";
 let countriesApiUrl = "https://countriesnow.space/api/v0.1/countries";
 
 async function getCountriesApi() {
-    let getCountriesFromApiHandler = dataHandler.getData;
-    let apiData = await getCountriesFromApiHandler(countriesApiUrl);
-    let countries = apiData.data;
-    localStorage.setItem("countries", JSON.stringify(countries));
+    if (!localStorage.getItem("countries")) {
+        let getCountriesFromApiHandler = dataHandler.getData;
+        let apiData = await getCountriesFromApiHandler(countriesApiUrl);
+        let countries = apiData.data;
+        localStorage.setItem("countries", JSON.stringify(countries));
+    }
 }
 
 function displayCartQuantityInForm() {
@@ -17,12 +19,8 @@ function displayCartQuantityInForm() {
 }
 
 
-function displayItemsFromCart() {
-    let shoppingCartItemsFromSessionStorage = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
-    loadItemsinCheckoutPageItemsContainer(shoppingCartItemsFromSessionStorage);
-}
-
-function loadItemsinCheckoutPageItemsContainer(items) {
+function loadItemsinCheckoutPageItemsContainer() {
+    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
     let checkoutPageItemsContainer = document.querySelector(".list-group.mb-3");
     let itemsFormat = "";
     let totalCartSum = 0;
@@ -41,22 +39,25 @@ function loadItemsinCheckoutPageItemsContainer(items) {
 }
 
 function initIntlPhoneNumber() {
-    const phoneInputField = document.querySelector("#phone");
+    const phoneInputField = document.querySelector(".phone input");
     const phoneInput = window.intlTelInput(phoneInputField, {
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
-    phoneInputField.addEventListener("change", () => {
-        const invalidFeedbackContainer = document.querySelector(".mb-3.phone").querySelector(".invalid-feedback");
+    phoneInputField.addEventListener("input", () => {
+        const invalidFeedbackContainer = document
+            .querySelector(".mb-3.phone")
+            .querySelector(".invalid-feedback");
         const SelectedCountryData = (phoneInput.getSelectedCountryData()).name;
         const isValidNumber = phoneInput.isValidNumber();
         invalidFeedbackContainer.style.display = "block";
 
-        if (isValidNumber) {
+        if (isValidNumber || phoneInputField.value == "") {
             invalidFeedbackContainer.innerHTML = "";
         }
         else {
-            invalidFeedbackContainer.innerHTML = `Ivalid phone number format for <strong>${SelectedCountryData}</strong>! (Country code + Number).`;
+            invalidFeedbackContainer.innerHTML =
+                `Ivalid phone number format for <strong>${SelectedCountryData}</strong>!`;
         }
 
     });
@@ -64,9 +65,9 @@ function initIntlPhoneNumber() {
 
 function initCountriesInSelector() {
     let countries = JSON.parse(localStorage.getItem("countries"));
-    let countrySelector = document.querySelector("#country");
+    let countrySelector = document.querySelector("#Country");
     let format = "";
-    format += `<option value="choose">Choose...</option>`;
+    format += `<option value="">Choose...</option>`;
     for (let i = 0; i < countries.length; i++) {
         format += `<option value="${countries[i].country}">${countries[i].country}</option>`;
     }
@@ -75,88 +76,51 @@ function initCountriesInSelector() {
 }
 
 function initCountrySelectorOnChangeFunctionality() {
-    let countrySelector = document.querySelector("#country");
+    let countrySelector = document.querySelector("#Country");
     countrySelector.addEventListener("change", (event) => {
         event.preventDefault();
-        initCitiesInSelector();
+
+        let countryName = countrySelector.value;
+        if (countryName != "") {
+            let countries = JSON.parse(localStorage.getItem("countries"));
+            let countryCities = countries.filter(obj => {
+                return obj.country === countryName;
+            })[0].cities;
+
+            initCitiesInSelector(countryCities);
+        }
+        else {
+            initCitiesInSelector(-1);
+        }
     })
 }
 
-function initCitiesInSelector() {
-    let countries = JSON.parse(localStorage.getItem("countries"));
-    let countrySelector = document.getElementById("country");
-    let citySelector = document.getElementById("city");
-    let countryName = countrySelector.value;
-    let countryCities = countries.filter(obj => {
-        return obj.country === countryName;
-    })[0].cities;
+function initCitiesInSelector(countryCities = -1) {
+    let citySelector = document.getElementById("City");
+
     let format = "";
     format += `<option value="choose">Choose...</option>`;
-    for (let i = 0; i < countryCities.length; i++) {
-        format += `<option value="${countryCities[i]}">${countryCities[i]}</option>`;
+    if (countryCities != -1) {
+        for (let i = 0; i < countryCities.length; i++) {
+            format += `<option value="${countryCities[i]}">${countryCities[i]}</option>`;
+        }
     }
+
     citySelector.innerHTML = format;
 }
 
-function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
-
-function validate() {
-    const email = $("#email").val();
-
-    if (validateEmail(email)) {
-        $("#email").css("border", "2px solid green");
-        $(".mb-3.email").children(".invalid-feedback").css("display", "");
-    } else {
-        $(".mb-3.email").children(".invalid-feedback").css("display", "block");
-        $("#email").css("border", "2px solid red");
-    }
-    return false;
-}
 
 function initGoToPaymentEvent() {
-    let fieldsContainerParents = [...document.querySelectorAll("div.mb-3")];
     $(".btn").on("click", () => {
-        event.preventDefault();
-        let counter = 0;
-        fieldsContainerParents.forEach((container) => {
-            if (container.querySelector("input")) {
-                if (container.querySelector("input").value == "") {
-                    container.querySelector(".invalid-feedback").style.display = "block";
-                    counter++;
-                }
-                else {
-                    container.querySelector(".invalid-feedback").style.display = "";
-                    container.querySelector("input").style.border = "2px solid green";
-                }
-            }
-            else if (container.querySelector("select")) {
-                if (container.querySelector("select").value == "Choose...") {
-                    container.querySelector(".invalid-feedback").style.display = "block";
-                    counter++;
-                }
-                else {
-                    container.querySelector(".invalid-feedback").style.display = "";
-                    container.querySelector("select").style.border = "2px solid green";
-                }
-            }
-        })
-        if (counter == 0) {
-            console.log("Going to payment");
-        }
+        console.log("Going to payment");
+        
     });
 }
 
 
-$("#email").on("change", validate);
-
+await getCountriesApi();
 displayCartQuantityInForm();
-displayItemsFromCart();
+loadItemsinCheckoutPageItemsContainer();
 initIntlPhoneNumber();
-if (!localStorage.getItem("countries")) {
-    await getCountriesApi();
-}
 initCountriesInSelector();
-initGoToPaymentEvent();
+initGoToPaymentEvent()

@@ -2,7 +2,7 @@
     ViewData["Title"] = "Checkout Details";
 }
 
-<div class="checkout-page-container" id="cartProductsPage"></div>
+@model Codecool.CodecoolShop.Models.BillingModel
 
 <div class="row">
     <div class="col-md-4 order-md-2 mb-4">
@@ -14,84 +14,136 @@
     </div>
     <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Billing address</h4>
-        <form class="needs-validation" novalidate="">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="firstName">First name <span class="text-muted">*</span></label>
-                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                    <div class="invalid-feedback">
-                        Valid first name is required.
-                    </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="lastName">Last name <span class="text-muted">*</span></label>
-                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-                    <div class="invalid-feedback">
-                        Valid last name is required.
-                    </div>
-                </div>
+        @using (Html.BeginForm())
+        {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(model => model.FirstName,
+                                @Html.DisplayNameFor(model => model.FirstName) + " *")
+
+                @Html.EditorFor(model => model.FirstName, new
+                    {
+                        htmlAttributes =
+                        new { @class = "form-control", placeholder = "Ex: John" }
+                    })
+
+                @Html.ValidationMessageFor(model => model.FirstName, "",
+                new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(model => model.LastName,
+                                @Html.DisplayNameFor(model => model.LastName) + " *")
+
+                @Html.EditorFor(model => model.LastName, new
+                    {
+                        htmlAttributes =
+                        new { @class = "form-control", placeholder = "Ex: Doe" }
+                    })
+
+                @Html.ValidationMessageFor(model => model.LastName, "",
+                new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3 email">
+                @Html.LabelFor(model => model.Email,
+                                @Html.DisplayNameFor(model => model.Email) + " *")
+
+                @Html.EditorFor(model => model.Email, new
+                    {
+                        htmlAttributes =
+                        new { @class = "form-control", placeholder = "Ex: you@example.com" }
+                    })
+
+                @Html.ValidationMessageFor(model => model.Email, "",
+                new { @class = "text-danger" })
             </div>
 
-            <div class="row">
-                <div class="col-md-6 mb-3 email">
-                    <label for="email">Email <span class="text-muted">*</span></label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
-                    <div class="invalid-feedback">
-                        Please enter a valid email address for shipping updates.
-                    </div>
-                </div>
+            <div class="col-md-6 mb-3 phone">
+                @Html.LabelFor(model => model.PhoneNumber,
+                                @Html.DisplayNameFor(model => model.PhoneNumber) + " *")
 
-                <div class="col-md-6 mb-3 phone">
-                    <label for="phone">Phone Number <span class="text-muted">*</span></label>
-                    <input type="tel" class="form-control" id="phone" placeholder="you@example.com" required>
-                    <div class="invalid-feedback">
-                        Please enter a valid email address for shipping updates.
-                    </div>
-                </div>
-            </div>
+                @Html.EditorFor(model => model.PhoneNumber, new
+                    {
+                        htmlAttributes =
+                        new { @class = "form-control", placeholder = "Include Country Code" }
+                    })
 
-            <div class="mb-3 address">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-                <div class="invalid-feedback">
-                    Please enter your shipping address.
-                </div>
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "",
+                new { @class = "text-danger" })
+                <div class="invalid-feedback"></div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-5 mb-3">
-                    <label for="country">Country <span class="text-muted">*</span></label>
-                    <select class="custom-select d-block w-100" id="country" required>
-                        <option value="">Choose...</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Please select a valid country.
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="city">City <span class="text-muted">*</span></label>
-                    <select class="custom-select d-block w-100" id="city" required>
-                        <option value="">Choose...</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Please provide a valid city.
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="zip">Zip Code <span class="text-muted">*</span></label>
-                    <input type="text" class="form-control" id="zip" placeholder="" required/>
-                    <div class="invalid-feedback">
-                        Zip code required.
-                    </div>
-                </div>
+        <div class="mb-3 address">
+            @Html.LabelFor(model => model.Address,
+                                @Html.DisplayNameFor(model => model.Address) + " *")
+
+            @Html.EditorFor(model => model.Address, new
+                {
+                    htmlAttributes =
+                    new { @class = "form-control", placeholder = "Ex: 1234 Main St" }
+                })
+
+            @Html.ValidationMessageFor(model => model.Address, "",
+            new { @class = "text-danger" })
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(model => model.Country,
+                                @Html.DisplayNameFor(model => model.Country) + " *")
+
+                @Html.DropDownListFor(model => model.Country,
+                                        new List<SelectListItem>(),
+                                        new { @class = "custom-select d-block w-100" })
+
+                @Html.ValidationMessageFor(model => model.Country, "",
+                    new { @class = "text-danger" })
             </div>
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Go to Payment</button>
-        </form>
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(model => model.City,
+                                @Html.DisplayNameFor(model => model.City) + " *")
+
+                @Html.DropDownListFor(model => model.City,
+                                        new List<SelectListItem>(), new { @class = "custom-select d-block w-100" })
+
+                @Html.ValidationMessageFor(model => model.City, "",
+                    new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(model => model.ZipCode,
+                                @Html.DisplayNameFor(model => model.ZipCode) + " *")
+
+                @Html.EditorFor(model => model.ZipCode, new
+                    { htmlAttributes =
+                        new { @class = "form-control",
+                            placeholder = @Html.DisplayNameFor(model => model.ZipCode)}
+                    })
+
+                @Html.ValidationMessageFor(model => model.ZipCode, "",
+                new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Go to Payment</button>
+        }
     </div>
 </div>
 
 @section Scripts {
     <script type="module" src="~/js/checkoutPage.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
 }
