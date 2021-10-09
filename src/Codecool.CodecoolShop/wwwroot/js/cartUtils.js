@@ -65,7 +65,7 @@ export function initCartButtonFunctionality() {
 }
 
 
-function loadShoppingCartPage() {
+export function loadShoppingCartPage() {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
 
     if (items) {
@@ -133,12 +133,11 @@ function initDeleteShoppingCartItemsButtonsFunctionality() {
             await deleteCartItems(button, dataHandler.removeItemFromCart);
             
             let filledCart = document.querySelector("#filled-cart");
-
+            if (shoppingCart.style.visibility == "visible") {
+                loadCartItems();
+            }
             if (filledCart) {
                 loadShoppingCartPage();
-                if (shoppingCart.style.visibility == "visible") {
-                    loadCartItems();
-                }
             }
         })
     })
