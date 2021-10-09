@@ -52,7 +52,10 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void RemoveItem(int productId)
         {
-            data.Remove(data.Single(item => item.Product.Id == productId));
+            if (data.Any(item => item.Product.Id == productId))
+            {
+                data.Remove(data.Single(item => item.Product.Id == productId));
+            }
         }
 
         public Item Get(int id)

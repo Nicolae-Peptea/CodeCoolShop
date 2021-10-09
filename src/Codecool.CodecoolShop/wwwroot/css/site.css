@@ -118,7 +118,7 @@ a {
   
 .shopping-cart-header {
     border-bottom: 1px solid #E8E8E8;
-    padding-bottom: 15px;
+    padding-bottom: 30px;
 }
 
 .shopping-cart-total {
@@ -129,6 +129,7 @@ a {
     padding: 20px 0 0 0;
     max-height: 266px;
     overflow: auto;
+    margin-top: 10px;
 }
 
 .shopping-cart-items li {
