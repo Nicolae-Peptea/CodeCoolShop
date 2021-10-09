@@ -37,13 +37,13 @@ function formatShoppingCartItemBuilder(item) {
             <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
             <span class="item-name">${item.Product.Name}</span>
             <div class="cart-details-container">
-            <div class=".cart-items-right">
-            <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
-            <span class="item-quantity">x ${item.Quantity}</span>
-            </div>
-            <div class=".cart-items-left">
-            <button class="delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
-             </div>
+                <div class=".cart-items-right">
+                    <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+                    <span class="item-quantity">x ${item.Quantity}</span>
+                </div>
+                <div class=".cart-items-left">
+                    <button class="delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
+                </div>
             </div>
         </li>`;
 }
@@ -65,7 +65,7 @@ function formatShoppingCartPageItemBuilder(item) {
                     <button class="increase-quantity" name="increase-quantity" type="submit"data-product-id="${item.Product.Id}"><i class="arrow up"></i></button>
                 </div>
 
-                <button class="filled-cart-item-delete" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
+                <button class="filled-cart-item-delete delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
 
                 <span class="filled-cart-item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
             </div>
@@ -95,7 +95,7 @@ function filledCartFormatBuilder() {
             <div class="shopping-cart-summary">
                 <div class="shopping-cart-page-total">
                     <span class="total-left"><strong>Total:</strong></span>
-                    <span class="total-right"></span>
+                    <span class="total-right total-cart-amount"></span>
                 </div>
                 <button onclick="location.href='/Product/Checkout'">Proceed to Checkout</button>
             </div>
