@@ -3,7 +3,7 @@
     loadCartItems,
 } from "/js/cartUtils.js";
 
-let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
+let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
 let shoppingCart = document.querySelector(".shopping-cart");
 
