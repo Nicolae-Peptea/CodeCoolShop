@@ -79,7 +79,9 @@
                     <p class="card-text">Category: @element.ProductCategory.Department</p>
                     <p class="card-text">Supplier: @element.Supplier.Name</p>
                     <p class="card-text text-center"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
-                    <a href="" id="add-to-cart" data-product-id="@element.Id" type="button" class="btn btn-primary">Add To Cart</a>
+                    <a href="" id="add-to-cart" data-product-id="@element.Id" data-product-name="@element.Name" type="button"
+                       data-price="@element.DefaultPrice" data-currency="@element.Currency" class="btn btn-primary">Add To Cart
+                    </a>
                 </div>
             </div>
         }
