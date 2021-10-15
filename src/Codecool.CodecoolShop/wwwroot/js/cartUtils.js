@@ -108,15 +108,16 @@ function cartItemsLoader(template, itemsContainerClass, totalCartContainerClass)
     let itemsFormat = "";
     let totalCartSum = 0;
 
-    for (let i = 0; i < items.length; i++) {
-        const formatShoppingCartItem = itemsFormatBuilder(items[i]);
+    for (let item of items) {
+        const formatShoppingCartItem = itemsFormatBuilder(item);
 
         itemsFormat += formatShoppingCartItem;
-        totalCartSum += items[i].Product.DefaultPrice * items[i].Quantity;
+        totalCartSum += item.productPrice * item.productQuantity;
     }
 
     let shoppingCartItemsContainer = document.querySelector(itemsContainerClass);
     shoppingCartItemsContainer.innerHTML = itemsFormat;
+
     let totalCartSumField = document.querySelector(totalCartContainerClass);
     totalCartSumField.innerHTML = formatter.format(totalCartSum);
     initDeleteShoppingCartItemsButtonsFunctionality();
@@ -191,17 +192,56 @@ function updateCart(response) {
             field.innerHTML = itemsNumber != 0 ? itemsNumber : "";
         })
 
-        setSessionStorage(itemsNumber, response);
+        AddItemToSessionStorage(itemsNumber, response);
     }
 }
 
 
-function setSessionStorage(totalItems, jsonResonse) {
-    if (totalItems === 0) {
-        sessionStorage.clear();
+//function setSessionStorage(totalItems, jsonResonse) {
+//    if (totalItems === 0) {
+//        sessionStorage.clear();
+//    }
+//    else {
+//        sessionStorage.setItem("shoppingCartQuantity", totalItems);
+//        sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
+//    }
+//}
+
+
+export function AddItemToSessionStorage(htmlElement, quantity) {
+
+    const itemtoAdd = createItemToStoreInSessionStorage(htmlElement)
+    const sessionStorageItems = sessionStorage.getItem("shoppingCartItems");
+    let sessionStorageItemsAsObjects = [];
+    if (sessionStorageItems !== null) {
+        sessionStorageItemsAsObjects = JSON.parse(sessionStorageItems);
+    }
+
+    const itemInSessionStorage = sessionStorageItemsAsObjects
+        .filter(element => element.productId === itemtoAdd.productId);
+
+    if (itemInSessionStorage.length > 0) {
+        itemInSessionStorage[0].productQuantity += quantity;
     }
     else {
-        sessionStorage.setItem("shoppingCartQuantity", totalItems);
-        sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
+        sessionStorageItemsAsObjects.push(itemtoAdd);
+    }
+
+    sessionStorage.setItem("shoppingCartItems", JSON.stringify(sessionStorageItemsAsObjects));
+}
+
+function createItemToStoreInSessionStorage(htmlElement) {
+
+    const productId = htmlElement.getAttribute(["data-product-id"])
+    const productName = htmlElement.getAttribute(["data-product-name"])
+    const productPrice = htmlElement.getAttribute(["data-price"])
+    const productCurrency = htmlElement.getAttribute(["data-currency"])
+
+    return {
+        "productId": productId,
+        "productName": productName,
+        "productPrice": productPrice,
+        "productCurrency": productCurrency,
+        "productQuantity": 1,
     }
 }

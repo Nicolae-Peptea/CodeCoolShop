@@ -34,15 +34,15 @@ export function htmlFactory(template) {
 function formatShoppingCartItemBuilder(item) {
     return `
         <li class="clearfix">
-            <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
-            <span class="item-name">${item.Product.Name}</span>
+            <img src="/img/${item.productName}.jpg" alt="${item.productName}" />
+            <span class="item-name">${item.productName}</span>
             <div class="cart-details-container">
                 <div class=".cart-items-right">
-                    <span class="item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
-                    <span class="item-quantity">x ${item.Quantity}</span>
+                    <span class="item-price">${formatter.format(item.productPrice * item.productQuantity)}</span>
+                    <span class="item-quantity">x ${item.productQuantity}</span>
                 </div>
                 <div class=".cart-items-left">
-                    <button class="delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
+                    <button class="delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
                 </div>
             </div>
         </li>`;

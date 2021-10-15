@@ -1,6 +1,7 @@
 ﻿import {
     updateCartItems, showCartQuantityAfterLoading,
-    loadCartItems, initCartButtonFunctionality
+    loadCartItems, initCartButtonFunctionality,
+    AddItemToSessionStorage,
 } from "/js/cartUtils.js";
 import { dataHandler } from "/js/dataHandler.js";
 
@@ -13,10 +14,16 @@ function initBuyButtons() {
     buyButtons.forEach((button) => {
         button.addEventListener("click", async (event) => {
             event.preventDefault();
+            console.log(event.target);
+            const htmlElement = event.target;
+            const quantity = 1;
+            AddItemToSessionStorage(htmlElement, quantity);
+            
 
-            let quantity = 1;
-            let functionToHandleUpdate = dataHandler.addNewItemToCart;
-            await updateCartItems(button, quantity, functionToHandleUpdate)
+
+
+            //let functionToHandleUpdate = dataHandler.addNewItemToCart;
+            //await updateCartItems(button, quantity, functionToHandleUpdate)
 
             if (shoppingCart.style.visibility == "visible") {
                 loadCartItems()
