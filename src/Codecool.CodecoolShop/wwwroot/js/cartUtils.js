@@ -1,5 +1,4 @@
 ﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
-import { dataHandler } from "/js/dataHandler.js";
 
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 let shoppingCart = document.querySelector(".shopping-cart");
@@ -7,29 +6,88 @@ let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
 let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
 
 
-export async function updateCartItems(htmlWithAttribute, quantity, functionToUpdate) {
-    let productId = htmlWithAttribute.getAttribute("data-product-id");
-    let data = await functionToUpdate(productId, quantity);
+export function initClickEventOnButtons(button, quantity) {
 
-    updateCart(data);
+    button.addEventListener('click', () => {
+        event.preventDefault();
+        updateCart(button, quantity);
+
+        let filledCart = document.querySelector("#filled-cart");
+        if (shoppingCart.style.visibility == "visible") {
+            loadCartItems();
+        }
+        if (filledCart) {
+            loadShoppingCartPage();
+        }
+    })
 }
 
 
-export async function deleteCartItems(htmlWithAttribute, functionToUpdate) {
+export function updateCart(htmlElement, quantity) {
 
-    let productId = htmlWithAttribute.getAttribute("data-product-id");
-    let data = await functionToUpdate(productId);
+    const itemtoAdd = createItemForSessionStorage(htmlElement)
+    const sessionStorageItems = sessionStorage.getItem("shoppingCartItems");
+    let cartItems = [];
 
-    updateCart(data);
+    if (sessionStorageItems !== null) {
+        cartItems = JSON.parse(sessionStorageItems);
+    }
+
+    const itemAlreadyInCart = cartItems
+        .filter(item => item.productId === itemtoAdd.productId);
+
+    if (itemAlreadyInCart.length > 0) {
+        itemAlreadyInCart[0].productQuantity += quantity;
+        cartItems = cartItems.filter(item => item.productQuantity > 0);
+    }
+    else {
+        cartItems.push(itemtoAdd);
+    }
+
+    setSessionStorage(cartItems);
+    showCartQuantityAfterLoading();
+}
+
+
+function setSessionStorage(items) {
+
+    if (items.length > 0) {
+        sessionStorage.setItem("shoppingCartItems", JSON.stringify(items));
+    } else {
+        sessionStorage.clear();
+    }
 }
 
 
 export function showCartQuantityAfterLoading() {
-    let itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
-    let shoppingCartQuantity = sessionStorage.getItem("shoppingCartQuantity");
+    const itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
+    const shoppingCartItems = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    let quantity = 0;
+
+    if (shoppingCartItems !== null) {
+        shoppingCartItems.forEach(item => quantity += item.productQuantity)
+    }
+
     itemsInShoppingCartFields.forEach((element) => {
-        element.innerHTML = shoppingCartQuantity;
+        element.innerHTML = quantity;
     })
+}
+
+
+function createItemForSessionStorage(htmlElement) {
+
+    const productId = htmlElement.getAttribute(["data-product-id"])
+    const productName = htmlElement.getAttribute(["data-product-name"])
+    const productPrice = htmlElement.getAttribute(["data-price"])
+    const productCurrency = htmlElement.getAttribute(["data-currency"])
+
+    return {
+        "productId": productId,
+        "productName": productName,
+        "productPrice": productPrice,
+        "productCurrency": productCurrency,
+        "productQuantity": 1,
+    }
 }
 
 
@@ -44,61 +102,6 @@ export function loadCartItems() {
         totalCartSumField.innerHTML = formatter.format(0);
         shoppingCartItemsContainer.innerHTML = "The shopping cart is empty.";
     }
-}
-
-
-export function initCartButtonFunctionality() {
-    let cartButton = document.querySelector("#cart");
-
-    cartButton.addEventListener('click', async function () {
-        event.preventDefault();
-        let visibility = shoppingCart.style.visibility;
-        if (visibility == "visible") {
-            shoppingCart.style.visibility = "hidden";
-            shoppingCartItemsContainer.innerHTML = "";
-        }
-        else {
-            shoppingCart.style.visibility = "visible";
-            loadCartItems();
-        }
-    })
-}
-
-
-export function loadShoppingCartPage() {
-    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
-
-    if (items) {
-        loadFilledCartPage();
-    }
-    else {
-        loadEmptyCartPage();
-    }
-}
-
-
-function loadFilledCartPage() {
-    const filledCartFormatBuilder = htmlFactory(htmlTemplates.filledCartFormat);
-    const filledCartFormat = filledCartFormatBuilder();
-
-    shoppingCartPageContainer.innerHTML = filledCartFormat;
-    loadItemsInShoppingCartPageContainer();
-    initQuantityModifyingButtons();
-}
-
-
-function loadItemsInShoppingCartPageContainer() {
-    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
-    if (items) {
-        cartItemsLoader(htmlTemplates.formatShoppingCartPageItem, "#filled-cart > .items", ".total-cart-amount");
-    }
-}
-
-
-function loadEmptyCartPage() {
-    const emptyCartFormatBuilder = htmlFactory(htmlTemplates.emptyCartFormat);
-    const emptyCartFormat = emptyCartFormatBuilder();
-    shoppingCartPageContainer.innerHTML = emptyCartFormat;
 }
 
 
@@ -128,20 +131,46 @@ function initDeleteShoppingCartItemsButtonsFunctionality() {
     let buttons = [...document.querySelectorAll(".delete-cart-item")];
 
     buttons.forEach((button) => {
-        button.addEventListener('click', async (event) => {
-            event.preventDefault();
-
-            await deleteCartItems(button, dataHandler.removeItemFromCart);
-            
-            let filledCart = document.querySelector("#filled-cart");
-            if (shoppingCart.style.visibility == "visible") {
-                loadCartItems();
-            }
-            if (filledCart) {
-                loadShoppingCartPage();
-            }
-        })
+        const quantity = getItemQuantity(button) * - 1;
+        initClickEventOnButtons(button, quantity);
     })
+}
+
+
+function getItemQuantity(htmlElement) {
+
+    const sessionStorageObjects = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    const productId = htmlElement.getAttribute("data-product-id");
+
+    const [first] = sessionStorageObjects
+        .filter(element => element.productId === productId);
+
+    return first.productQuantity;
+}
+
+
+
+export function loadShoppingCartPage() {
+    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    (items) ? loadFilledCartPage() : loadEmptyCartPage();
+}
+
+
+function loadFilledCartPage() {
+    const filledCartFormatBuilder = htmlFactory(htmlTemplates.filledCartFormat);
+    const filledCartFormat = filledCartFormatBuilder();
+
+    shoppingCartPageContainer.innerHTML = filledCartFormat;
+    loadItemsInShoppingCartPageContainer();
+    initQuantityModifyingButtons();
+}
+
+
+function loadItemsInShoppingCartPageContainer() {
+    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    if (items) {
+        cartItemsLoader(htmlTemplates.formatShoppingCartPageItem, "#filled-cart > .items", ".total-cart-amount");
+    }
 }
 
 
@@ -150,98 +179,27 @@ function initQuantityModifyingButtons() {
     let decreaseQuantityButtons = [...document.querySelectorAll(".decrease-quantity")];
 
     increaseQuantityButtons.forEach((button) => {
-        button.addEventListener('click', async function () {
-            event.preventDefault();
-
-            const increaseQuantity = 1;
-            updateCartQuantity(button, increaseQuantity);
-        })
+        const increaseQuantity = 1;
+        initClickEventOnButtons(button, increaseQuantity);
     })
+
     decreaseQuantityButtons.forEach((button) => {
-        button.addEventListener('click', async function () {
-            event.preventDefault();
-
-            const decreaseQuantity = -1;
-            updateCartQuantity(button, decreaseQuantity);
-        })
+        const increaseQuantity = -1;
+        initClickEventOnButtons(button, increaseQuantity);
     })
 }
 
 
-async function updateCartQuantity(htmlElement, quantity) {
-    const functionToUpdate = dataHandler.addNewItemToCart;
-    await updateCartItems(htmlElement, quantity, functionToUpdate);
-
-    loadShoppingCartPage();
-    if (shoppingCart.style.visibility == "visible") {
-        loadCartItems();
-    }
+function loadEmptyCartPage() {
+    const emptyCartFormatBuilder = htmlFactory(htmlTemplates.emptyCartFormat);
+    const emptyCartFormat = emptyCartFormatBuilder();
+    shoppingCartPageContainer.innerHTML = emptyCartFormat;
 }
 
 
-function updateCart(response) {
-    if (response) {
-        let itemsNumber = 0;
-        let totalItemsInShoppingCart = [...document.querySelectorAll(".badge")];
-
-        response.forEach((element) => {
-            itemsNumber += element.Quantity;
-        })
-
-        totalItemsInShoppingCart.forEach((field) => {
-            field.innerHTML = itemsNumber != 0 ? itemsNumber : "";
-        })
-
-        AddItemToSessionStorage(itemsNumber, response);
-    }
-}
 
 
-//function setSessionStorage(totalItems, jsonResonse) {
-//    if (totalItems === 0) {
-//        sessionStorage.clear();
-//    }
-//    else {
-//        sessionStorage.setItem("shoppingCartQuantity", totalItems);
-//        sessionStorage.setItem("shoppingCartItems", JSON.stringify(jsonResonse));
-//    }
-//}
 
 
-export function AddItemToSessionStorage(htmlElement, quantity) {
 
-    const itemtoAdd = createItemToStoreInSessionStorage(htmlElement)
-    const sessionStorageItems = sessionStorage.getItem("shoppingCartItems");
-    let sessionStorageItemsAsObjects = [];
-    if (sessionStorageItems !== null) {
-        sessionStorageItemsAsObjects = JSON.parse(sessionStorageItems);
-    }
 
-    const itemInSessionStorage = sessionStorageItemsAsObjects
-        .filter(element => element.productId === itemtoAdd.productId);
-
-    if (itemInSessionStorage.length > 0) {
-        itemInSessionStorage[0].productQuantity += quantity;
-    }
-    else {
-        sessionStorageItemsAsObjects.push(itemtoAdd);
-    }
-
-    sessionStorage.setItem("shoppingCartItems", JSON.stringify(sessionStorageItemsAsObjects));
-}
-
-function createItemToStoreInSessionStorage(htmlElement) {
-
-    const productId = htmlElement.getAttribute(["data-product-id"])
-    const productName = htmlElement.getAttribute(["data-product-name"])
-    const productPrice = htmlElement.getAttribute(["data-price"])
-    const productCurrency = htmlElement.getAttribute(["data-currency"])
-
-    return {
-        "productId": productId,
-        "productName": productName,
-        "productPrice": productPrice,
-        "productCurrency": productCurrency,
-        "productQuantity": 1,
-    }
-}

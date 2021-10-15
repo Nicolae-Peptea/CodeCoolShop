@@ -52,22 +52,22 @@ function formatShoppingCartPageItemBuilder(item) {
     return `
         <div class="filled-cart-item">
             <div class="filled-cart-item-left">
-                <img src="/img/${item.Product.Name}.jpg" alt="${item.Product.Name}" />
+                <img src="/img/${item.productName}.jpg" alt="${item.productName}" />
             </div>
             <div class="filled-cart-item-right">
                 <a class="filled-cart-item-name"
-                    href="" title="${item.Product.Name}">${item.Product.Name}
+                    href="" title="${item.productName}">${item.productName}
                 </a>
 
                 <div class="filled-cart-item-quantity">
-                    <button class="decrease-quantity" name="decrease-quantity" type="submit" data-product-id="${item.Product.Id}"><i class="arrow down"></i></button>
-                    <p><strong>${item.Quantity} ${item.Quantity == 1 ? "Piece" : "Pieces"}</strong></p>
-                    <button class="increase-quantity" name="increase-quantity" type="submit"data-product-id="${item.Product.Id}"><i class="arrow up"></i></button>
+                    <button class="decrease-quantity" name="decrease-quantity" type="submit" data-product-id="${item.productId}"><i class="arrow down"></i></button>
+                    <p><strong>${item.productQuantity} ${item.productQuantity == 1 ? "Piece" : "Pieces"}</strong></p>
+                    <button class="increase-quantity" name="increase-quantity" type="submit"data-product-id="${item.productId}"><i class="arrow up"></i></button>
                 </div>
 
-                <button class="filled-cart-item-delete delete-cart-item" data-product-id="${item.Product.Id}"><i class="fa fa-trash-o"></i></button>
+                <button class="filled-cart-item-delete delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
 
-                <span class="filled-cart-item-price">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+                <span class="filled-cart-item-price">${formatter.format(item.productPrice * item.productQuantity)}</span>
             </div>
         </div>`;
 }
