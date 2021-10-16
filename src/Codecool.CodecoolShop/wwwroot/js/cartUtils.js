@@ -1,18 +1,17 @@
 ﻿import { htmlFactory, htmlTemplates } from "/js/htmlFactory.js";
 
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
-let shoppingCart = document.querySelector(".shopping-cart");
-let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
 let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
 
 
 export function initClickEventOnButtons(button, quantity) {
-
     button.addEventListener('click', () => {
         event.preventDefault();
         updateCart(button, quantity);
 
+        let shoppingCart = document.querySelector(".shopping-cart");
         let filledCart = document.querySelector("#filled-cart");
+
         if (shoppingCart.style.visibility == "visible") {
             loadCartItems();
         }
@@ -69,7 +68,7 @@ export function showCartQuantityAfterLoading() {
     }
 
     itemsInShoppingCartFields.forEach((element) => {
-        element.innerHTML = quantity;
+        element.innerHTML = quantity ? quantity : "";
     })
 }
 
@@ -95,12 +94,13 @@ export function loadCartItems() {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
 
     if (items != null) {
+        attachTemplateToDropdownCart(htmlTemplates.filledDropdownCartBody);
         cartItemsLoader(htmlTemplates.formatShoppingCartItem, ".shopping-cart-items", ".main-color-text");
+        $(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
     }
     else {
-        let totalCartSumField = document.querySelector(".main-color-text");
-        totalCartSumField.innerHTML = formatter.format(0);
-        shoppingCartItemsContainer.innerHTML = "The shopping cart is empty.";
+        attachTemplateToDropdownCart(htmlTemplates.emptyDropdownCartBody);
+        $(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
     }
 }
 
@@ -149,6 +149,13 @@ function getItemQuantity(htmlElement) {
 }
 
 
+export function attachTemplateToDropdownCart(template) {
+    let shoppingCart = document.querySelector(".shopping-cart");
+    const cartDropdownBuilder = htmlFactory(template);
+    const cartDropdownBodyTemplate = cartDropdownBuilder();
+    shoppingCart.innerHTML = cartDropdownBodyTemplate;
+}
+
 
 export function loadShoppingCartPage() {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
@@ -195,11 +202,3 @@ function loadEmptyCartPage() {
     const emptyCartFormat = emptyCartFormatBuilder();
     shoppingCartPageContainer.innerHTML = emptyCartFormat;
 }
-
-
-
-
-
-
-
-

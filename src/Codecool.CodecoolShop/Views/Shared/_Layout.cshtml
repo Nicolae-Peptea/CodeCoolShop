@@ -36,10 +36,13 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container main-container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
 
         <div class="shopping-cart">
-            <div class="shopping-cart-header">
+            @*<div class="shopping-cart-header">
                 <div class="shopping-cart-total">
                     <span class="lighter-text">Total:</span>
                     <span class="main-color-text total-cart-amount"></span>
@@ -48,12 +51,8 @@
 
             <ul class="shopping-cart-items fixed-content"></ul>
 
-            <a class="button" asp-area="" asp-controller="Product" asp-action="Cart">Go to Cart</a>
+            <a class="button" asp-area="" asp-controller="Product" asp-action="Cart">Go to Cart</a>*@
         </div>
-
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
     </div>
 
     <footer class="border-top footer text-muted">

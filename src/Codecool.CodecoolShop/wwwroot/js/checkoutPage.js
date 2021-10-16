@@ -113,7 +113,6 @@ function initCitiesInSelector(countryCities = -1) {
 function initGoToPaymentEvent() {
     $(".btn").on("click", () => {
         console.log("Going to payment");
-        
     });
 }
 

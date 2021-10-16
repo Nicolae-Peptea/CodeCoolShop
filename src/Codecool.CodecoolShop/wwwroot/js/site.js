@@ -1,9 +1,9 @@
 ﻿import {
     initClickEventOnButtons, showCartQuantityAfterLoading,
-    loadCartItems,
+    loadCartItems, attachTemplateToDropdownCart
 } from "/js/cartUtils.js";
+import { htmlTemplates } from "/js/htmlFactory.js";
 
-let shoppingCartItemsContainer = document.querySelector(".shopping-cart-items");
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
 let shoppingCart = document.querySelector(".shopping-cart");
 
@@ -19,19 +19,26 @@ function initBuyButtons() {
 function initCartButtonFunctionality() {
     let cartButton = document.querySelector("#cart");
 
-    cartButton.addEventListener('click', async function () {
+    cartButton.addEventListener('click', () => {
         event.preventDefault();
-        let visibility = shoppingCart.style.visibility;
-        if (visibility == "visible") {
+
+        if (shoppingCart.childNodes.length > 1) {
+            shoppingCart.innerHTML = "";
             shoppingCart.style.visibility = "hidden";
-            shoppingCartItemsContainer.innerHTML = "";
         }
         else {
-            shoppingCart.style.visibility = "visible";
-            loadCartItems();
+            loadDropdownCart();
         }
     })
 }
+
+function loadDropdownCart() {
+    shoppingCart.style.visibility = "visible";
+    attachTemplateToDropdownCart(htmlTemplates.filledDropdownCartBody);
+    loadCartItems();
+    $(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
+}
+
 
 showCartQuantityAfterLoading();
 initCartButtonFunctionality();
