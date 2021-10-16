@@ -139,6 +139,6 @@ function filledDropdownCartBuilder() {
 
 function emptyDropdownCartBuilder() {
     return `<div class="triangle"></div>
-            The shopping cart is empty.
+            <p class="card-text text-center">The shopping cart is empty.</p>
             <a class="button">Go to Cart</a>`;
 }
