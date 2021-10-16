@@ -71,71 +71,61 @@ a {
     box-sizing: border-box;
 }
 
+/* Dropdown cart style
+-------------------------------------------------- */
 .shopping-cart {
+    background: white;
+    border: 1px solid rgba(0,0,0,.05);
+    border-radius: 5px;
+    box-shadow: 0 5px 10px #888888;
     visibility: hidden;
     margin: 10px 0;
-    background: #DEE3ED;
     width: 320px;
     max-height: 434px;
     position: absolute;
-    border-radius: 3px;
-    padding: 20px;
+    padding: 4px;
     z-index: 50;
-    right: 5%;
+    margin-left: 55%;
     top: 8%;
-}
-
-@media screen and (min-width: 1000px) {
-    .shopping-cart {
-        right: 15%;
-    }
-}
-
-@media screen and (max-width: 840px) {
-    .shopping-cart {
-        right: 5%;
-    }
-}
-
-@media screen and (max-width: 766px) {
-    .shopping-cart {
-        right: 15%;
-    }
-}
-
-@media screen and (max-width: 715px) {
-    .shopping-cart {
-        right: 10%;
-    }
 }
 
 @media screen and (max-width: 575px) {
     .shopping-cart {
         top: 18%;
-        left: 5%;
+        margin-left: 5%;
     }
-}
-  
-.shopping-cart-header {
-    border-bottom: 1px solid #E8E8E8;
-    padding-bottom: 30px;
+
+    .shopping-cart > .triangle,
+    .shopping-cart > .triangle:after {
+        margin-left: -40%;
+    }
 }
 
 .shopping-cart-total {
+    border-bottom: 1px solid #E8E8E8;
+    border-top: 1px solid #E8E8E8;
+    font-size: 85%;
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    padding: 5px;
+}
+
+.shopping-cart-total .total-cart-amount {
     float: right;
 }
 
 .shopping-cart-items {
-    padding: 20px 0 0 0;
-    max-height: 266px;
+    padding: 1px 0 0 0;
+    max-height: 200px;
     overflow: auto;
     margin-top: 10px;
 }
 
 .shopping-cart-items li {
-    margin: 0 0 18px 0;
+    box-shadow: 0 1px 5px #888888;
+    margin: 2px 0;
     list-style-type: none;
-    padding: 0;
+    padding: 2px 0;
 }
 
 .shopping-cart-items img {
@@ -144,32 +134,51 @@ a {
 }
     
 .shopping-cart-items .item-name {
+    color: #888;
     display: block;
+    font-size: 12px;
     padding-top: 10px;
-    font-size: 16px;
+
 }
     
 .shopping-cart-items .item-price {
     color: #6394F8;
+    font-size: 14px;
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-weight: 700;
     margin-right: 8px;
 }
     
 .shopping-cart-items .item-quantity {
     color: #ABB0BE;
+    font-size: 14px;
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-weight: 700;
 }
 
-.shopping-cart:after {
-    bottom: 100%;
-    left: 89%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
+.shopping-cart>.triangle,
+.shopping-cart>.triangle:after {
+    left: 50%;
     position: absolute;
-    pointer-events: none;
-    border-bottom-color: #DEE3ED;
-    border-width: 8px;
-    margin-left: -8px;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px;
+    border-top-width: 0;
+    border-color: transparent;
+}
+
+.shopping-cart > .triangle {
+    top: -10px;
+    border-bottom-color: rgba(0,0,0,.05);
+}
+
+.shopping-cart>.triangle:after {
+    top: 11px;
+    margin: -10px;
+    content: " ";
+    border-bottom-color: #fff;
 }
 
 .cart-icon {
@@ -188,11 +197,14 @@ a {
     display: block;
     border-radius: 3px;
     font-size: 16px;
-    margin: 25px 0 15px 0;
+    font-weight: 700;
+    margin: 10px 0 5px 0;
 }
 
 .shopping-cart .button:hover {
     background: #7FA6F7;
+    box-shadow: 0 1px 2px #888888;
+    cursor: pointer;
 }
 
 
@@ -203,13 +215,17 @@ a {
 }
 
 .clearfix img {
-    height: 70px;
+    height: 50px;
 }
 
 .clearfix:after {
     content: "";
     display: table;
     clear: both;
+}
+
+.clearfix button {
+    float: right;
 }
 
 /* Cart page style
@@ -380,7 +396,6 @@ a {
 }
 
 .shopping-cart-summary button:hover {
-    /*background: #6394F8;*/
     background-image: linear-gradient(to bottom right,#3482dd,#1763bc);
 }
 
@@ -456,17 +471,23 @@ a {
     display: grid;
     grid-gap: 5px;
     grid-template-columns: repeat(4, 1fr);
+    height: 70%;
     width: 100%;
 }
 
 .card {
-    height: 540px;
     max-width: 350px;
+    height: inherit;
 }
+
 .card img {
     align-self: center;
-    height: 33%;
+    height: 50%;
     padding-top: 10px;
+}
+
+.card-title {
+    font-size: 1.1rem;
 }
 
 .card-body a {

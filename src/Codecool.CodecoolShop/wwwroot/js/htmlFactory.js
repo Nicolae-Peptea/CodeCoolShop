@@ -7,6 +7,8 @@ export const htmlTemplates = {
     filledCartFormat: 4,
     formatCheckoutPageCartItem: 5,
     formatCheckoutPageCartTotal: 6,
+    filledDropdownCartBody: 7,
+    emptyDropdownCartBody: 8,
 };
 
 export function htmlFactory(template) {
@@ -23,6 +25,10 @@ export function htmlFactory(template) {
             return checkoutPageCartItemBuilder;
         case htmlTemplates.formatCheckoutPageCartTotal:
             return checkoutPageCartTotalBuilder;
+        case htmlTemplates.filledDropdownCartBody:
+            return filledDropdownCartBuilder;
+        case htmlTemplates.emptyDropdownCartBody:
+            return emptyDropdownCartBuilder;
         default:
             console.error("Undefined template: " + template);
             return () => {
@@ -35,16 +41,14 @@ function formatShoppingCartItemBuilder(item) {
     return `
         <li class="clearfix">
             <img src="/img/${item.productName}.jpg" alt="${item.productName}" />
-            <span class="item-name">${item.productName}</span>
+            
             <div class="cart-details-container">
-                <div class=".cart-items-right">
-                    <span class="item-price">${formatter.format(item.productPrice * item.productQuantity)}</span>
-                    <span class="item-quantity">x ${item.productQuantity}</span>
-                </div>
-                <div class=".cart-items-left">
-                    <button class="delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
-                </div>
+                <span class="item-name">${item.productName}</span>
+                <span class="item-price">${formatter.format(item.productPrice * item.productQuantity)}</span>
             </div>
+
+            <span class="item-quantity">x ${item.productQuantity}</span>
+            <button class="delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
         </li>`;
 }
 
@@ -119,4 +123,22 @@ function checkoutPageCartTotalBuilder(total) {
             <span>Total (USD)</span>
             <strong>${formatter.format(total)}</strong>
         </li>`;
+}
+
+function filledDropdownCartBuilder() {
+    return `<div class="triangle"></div>
+            <ul class="shopping-cart-items fixed-content"></ul>
+
+            <div class="shopping-cart-total">
+                <span class="lighter-text">Total:</span>
+                <span class="main-color-text total-cart-amount"></span>
+            </div>
+
+            <a class="button">Go to Cart</a>`;
+}
+
+function emptyDropdownCartBuilder() {
+    return `<div class="triangle"></div>
+            The shopping cart is empty.
+            <a class="button">Go to Cart</a>`;
 }
