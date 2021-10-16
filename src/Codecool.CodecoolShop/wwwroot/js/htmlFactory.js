@@ -110,10 +110,10 @@ function checkoutPageCartItemBuilder(item) {
     return `
         <li class="list-group-item d-flex justify-content-between lh-condensed">
             <div>
-                <h6 class="my-0">${item.Product.Name}</h6>
-                <small class="text-muted">x ${item.Quantity}</small>
+                <h6 class="my-0">${item.productName}</h6>
+                <small class="text-muted">x ${item.productQuantity}</small>
             </div>
-            <span class="text-muted">${formatter.format(item.Product.DefaultPrice * item.Quantity)}</span>
+            <span class="text-muted">${formatter.format(item.productPrice * item.productQuantity)}</span>
         </li>`;
 }
 

@@ -31,7 +31,7 @@ function loadItemsinCheckoutPageItemsContainer() {
         const cartItemTemplate = cartItemTemplateBuilder(items[i]);
 
         itemsFormat += cartItemTemplate;
-        totalCartSum += items[i].Product.DefaultPrice * items[i].Quantity;
+        totalCartSum += items[i].productPrice * items[i].productQuantity;
     }
     const cartTotalTemplate = cartTotalTemplateBuilder(totalCartSum);
     itemsFormat += cartTotalTemplate;
