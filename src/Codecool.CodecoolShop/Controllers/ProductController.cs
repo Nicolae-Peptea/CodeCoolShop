@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using Codecool.CodecoolShop.Helpers;
+using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -58,7 +60,18 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public IActionResult Checkout(BillingModel model)
         {
-            return View("Checkout");
+            //return View("Checkout");
+
+            string receiverName = model.FirstName.ToUpper() + " " + model.LastName.ToUpper();
+            string sender = "mihaibuga11@gmail.com";
+
+            Dictionary<string, string> receiver = new Dictionary<string, string>()
+            {
+                {"name", receiverName}, {"email", model.Email},
+            };
+
+            new MailService().Execute(sender, receiver).Wait();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -84,7 +97,6 @@ namespace Codecool.CodecoolShop.Controllers
 
             return orderItemsAsJson;
         }
-
 
         public IActionResult Privacy()
         {
