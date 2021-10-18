@@ -11,7 +11,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         private List<Product> data = new List<Product>();
         private static ProductDaoMemory instance = null;
 
-        private ProductDaoMemory()
+        public ProductDaoMemory()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             data.Add(item);
         }
 
-        public void Remove(int id)
+        public void RemoveItem(int id)
         {
             data.Remove(this.Get(id));
         }
@@ -54,6 +54,13 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
         {
             return data.Where(x => x.ProductCategory.Id == productCategory.Id);
+        }
+
+        public IEnumerable<Product> GetBy(ProductCategory productCategory, 
+            Supplier supplier)
+        {
+            return data.Where(x => x.ProductCategory.Id == productCategory.Id)
+                .Where(x => x.Supplier.Id == supplier.Id);
         }
     }
 }
