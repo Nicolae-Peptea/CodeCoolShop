@@ -33,34 +33,17 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Update(Item item, int quantity)
         {
-            var itemInList = Get(item.Product.Id);
-
-            if (itemInList != null)
-            {
-                itemInList.Quantity += quantity;
-            }
-            else
-            {
-                data.Add(item);
-            }
-
-            if (itemInList != null && itemInList.Quantity == 0)
-            {
-                RemoveItem(item.Product.Id);
-            }
+            throw new NotImplementedException();
         }
 
         public void RemoveItem(int productId)
         {
-            if (data.Any(item => item.Product.Id == productId))
-            {
-                data.Remove(data.Single(item => item.Product.Id == productId));
-            }
+            throw new NotImplementedException();
         }
 
         public Item Get(int id)
         {
-            return data.Find(x => x.Product.Id == id);
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Item> GetAll()

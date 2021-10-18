@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
-using Codecool.CodecoolShop.Helpers;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -30,7 +29,6 @@ namespace Codecool.CodecoolShop.Controllers
                 SupplierDaoMemory.GetInstance());
             CategoryService = new CategoryService(ProductCategoryDaoMemory.GetInstance());
             SupplierService = new SupplierService(SupplierDaoMemory.GetInstance());
-            OrderService = new OrderService(OrderDaoMemory.GetInstance());
         }
 
         public IActionResult Index(int category = 1, int supplier = 0)
@@ -56,33 +54,10 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Checkout(BillingModel model)
+        public IActionResult Checkout(BillingModel model, List<Item> cartItems)
         {
+
             return View("Checkout");
-        }
-
-        [HttpPost]
-        [Route ("/api/update-cart-item")]
-        public string AddItemToCart (int id, int quantity)
-        {
-            Product boughtProduct = ProductService.GetProductById(id);
-            Item item = ItemHelper.GetItem(boughtProduct);
-
-            OrderService.BuyProduct(item, quantity);
-            string orderItemsAsJson = OrderService.GetItemsAsJson();
-
-            return orderItemsAsJson;
-        }
-
-        [HttpDelete]
-        [Route("/api/remove-cart-item")]
-        public string RemoveCartItem(int id)
-        {
-            OrderService.RemoveItem(id);
-
-            string orderItemsAsJson = OrderService.GetItemsAsJson();
-
-            return orderItemsAsJson;
         }
 
 
