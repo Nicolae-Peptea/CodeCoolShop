@@ -35,6 +35,12 @@ namespace Codecool.CodecoolShop.Services
         }
 
 
+        public decimal GetTotal()
+        {
+            return this.order.GetTotalValue();
+        }
+
+
         public string GetItemsAsJson()
         {
             IEnumerable<Item> orderItems = GetAllItems();

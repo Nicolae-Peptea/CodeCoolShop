@@ -61,16 +61,25 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Checkout(BillingModel model)
         {
             //return View("Checkout");
+            Product boughtProduct = ProductService.GetProductById(1);
+            Item item = ItemHelper.GetItem(boughtProduct);
+            OrderService.BuyProduct(item, 1);
 
-            string receiverName = model.FirstName.ToUpper() + " " + model.LastName.ToUpper();
+            boughtProduct = ProductService.GetProductById(2);
+            item = ItemHelper.GetItem(boughtProduct);
+            OrderService.BuyProduct(item, 1);
+
+            boughtProduct = ProductService.GetProductById(3);
+            item = ItemHelper.GetItem(boughtProduct);
+            OrderService.BuyProduct(item, 1);
+
+            List<Item> orderItemsAsJson = OrderService.GetAllItems().ToList();
+            decimal total = OrderService.GetTotal();
+
+            model.Total = total.ToString();
+            model.Items = orderItemsAsJson;
             string sender = "mihaibuga11@gmail.com";
-
-            Dictionary<string, string> receiver = new Dictionary<string, string>()
-            {
-                {"name", receiverName}, {"email", model.Email},
-            };
-
-            new MailService().Execute(sender, receiver).Wait();
+            new MailService().Execute(sender, model).Wait();
             return RedirectToAction("Index");
         }
 

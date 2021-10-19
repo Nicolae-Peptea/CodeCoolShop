@@ -21,9 +21,14 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return instance;
         }
 
-        public int GetTotalValue()
+        public decimal GetTotalValue()
         {
-            throw new NotImplementedException();
+            decimal total = 0;
+            foreach (Item item in data)
+            {
+                total += item.Product.DefaultPrice * item.Quantity;
+            }
+            return total;
         }
 
         public void Add(Item item)
