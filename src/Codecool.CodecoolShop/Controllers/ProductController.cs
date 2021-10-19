@@ -44,11 +44,12 @@ namespace Codecool.CodecoolShop.Controllers
             return View(products.ToList());
         }
 
-
+        [HttpPost]
         public IActionResult Cart()
         {
-            var t = HttpContext.Response;
-            var x = HttpContext.Request;
+            decimal result;
+            decimal.TryParse(HttpContext.Request.Form["total-value"], out result);
+            ViewBag.TotalCart = result * 100;
             return View();
         }
         
@@ -62,7 +63,6 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Charge()
         {
-
             IFormCollection form = HttpContext.Request.Form;
             return View();
             //int CartTotal = 0;
