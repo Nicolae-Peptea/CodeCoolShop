@@ -4,13 +4,7 @@
 
 @{ ViewData["Title"] = "My Cart"; }
 
-<div class="shopping-cart-page-container" id="cartProductsPage"></div>
-
-@section Scripts {
-    <script type="module" src="~/js/cartPage.js" asp-append-version="true"></script>
-}
-
-@*<form class="shopping-cart-page-container" id="cartProductsPage" asp-controller="Product" asp-action="Charge">
+<form class="shopping-cart-page-container" id="cartProductsPage" asp-controller="Product" asp-action="Charge">
     <script id="stripe-integration" src="//checkout.stripe.com/v2/checkout.js"
             class="stripe-button"
             data-key="@Stripe.Value.PublishableKey"
@@ -26,4 +20,4 @@
 
 @section Scripts {
     <script type="module" src="~/js/cartPage.js" asp-append-version="true"></script>
-}*@
+}
