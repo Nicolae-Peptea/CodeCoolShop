@@ -3,7 +3,8 @@
     Layout = "~/Views/Shared/_CheckoutLayout.cshtml";
 }
 
-@model Codecool.CodecoolShop.Models.BillingModel
+@using Microsoft.Extensions.Options;
+@inject IOptions<Codecool.CodecoolShop.Models.StripeSettings> Stripe
 
 <div class="row">
     <div class="col-md-4 order-md-2 mb-4">
@@ -12,10 +13,24 @@
             <span class="badge badge-secondary badge-pill"></span>
         </h4>
         <ul class="list-group mb-3"></ul>
+        <form asp-action="Charge" asp-controller="Product=" post">
+            <script src="//checkout.stripe.com/v2/checkout.js"
+                    class="stripe-button"
+                    data-key="@Stripe.Value.PublishableKey"
+                    data-amount="500"
+                    data-locale="auto"
+                    data-description="Sample Charge"
+                    @*data-zip-code="true"*@
+                    data-billing-address="true"
+                    data-shipping-address="true"
+                    data-name="Code Cool Shop"
+                    @*data-amount="500"*@>
+            </script>
+        </form>
     </div>
-    <div class="col-md-8 order-md-1">
-        <h4 class="mb-3">Billing address</h4>
-        @using (Html.BeginForm())
+    @*<div class="col-md-8 order-md-1">
+        <h4 class="mb-3">Billing address</h4>*@
+    @*@using (Html.BeginForm())
         {
         @Html.AntiForgeryToken()
 
@@ -137,8 +152,8 @@
 
         <hr class="mb-4">
         <button class="btn btn-primary btn-lg btn-block" type="submit">Go to Payment</button>
-        }
-    </div>
+        }*@
+    @*</div>*@
 </div>
 
 @section Scripts {

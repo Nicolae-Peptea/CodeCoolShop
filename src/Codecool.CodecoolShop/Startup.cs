@@ -27,15 +27,14 @@ namespace Codecool.CodecoolShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            StripeConfiguration.ApiKey = Configuration["Stripe:SecretKey"];
             services.AddControllersWithViews();
-            //services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
 
             if (env.IsDevelopment())
             {

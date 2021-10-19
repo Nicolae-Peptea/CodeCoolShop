@@ -96,17 +96,21 @@ export function loadCartItems() {
     if (items != null) {
         attachTemplateToDropdownCart(htmlTemplates.filledDropdownCartBody);
         cartItemsLoader(htmlTemplates.formatShoppingCartItem, ".shopping-cart-items", ".main-color-text");
-        $(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
+
     }
     else {
         attachTemplateToDropdownCart(htmlTemplates.emptyDropdownCartBody);
-        $(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
     }
+
+    $(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
 }
 
 
 function cartItemsLoader(template, itemsContainerClass, totalCartContainerClass) {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+/*    let stripeScript = $("#stripe-integration").attr("data-amount", totalCartSum);*/
+    //aci fac inputul de total
+
     const itemsFormatBuilder = htmlFactory(template);
     let itemsFormat = "";
     let totalCartSum = 0;
@@ -123,6 +127,7 @@ function cartItemsLoader(template, itemsContainerClass, totalCartContainerClass)
 
     let totalCartSumField = document.querySelector(totalCartContainerClass);
     totalCartSumField.innerHTML = formatter.format(totalCartSum);
+    
     initDeleteShoppingCartItemsButtonsFunctionality();
 }
 

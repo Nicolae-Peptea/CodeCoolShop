@@ -41,18 +41,9 @@
             @RenderBody()
         </main>
 
-        <div class="shopping-cart">
-            @*<div class="shopping-cart-header">
-                <div class="shopping-cart-total">
-                    <span class="lighter-text">Total:</span>
-                    <span class="main-color-text total-cart-amount"></span>
-                </div>
-            </div>
-
-            <ul class="shopping-cart-items fixed-content"></ul>
-
-            <a class="button" asp-area="" asp-controller="Product" asp-action="Cart">Go to Cart</a>*@
-        </div>
+        <form class="shopping-cart" asp-action="Cart" asp-controller="Product">
+            <input id="total" type="hidden">
+        </form>
     </div>
 
     <footer class="border-top footer text-muted">

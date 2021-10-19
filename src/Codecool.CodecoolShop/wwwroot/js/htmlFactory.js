@@ -70,7 +70,7 @@ function formatShoppingCartPageItemBuilder(item) {
                 </div>
 
                 <button class="filled-cart-item-delete delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
-
+                
                 <span class="filled-cart-item-price">${formatter.format(item.productPrice * item.productQuantity)}</span>
             </div>
         </div>`;
@@ -101,7 +101,7 @@ function filledCartFormatBuilder() {
                     <span class="total-left"><strong>Total:</strong></span>
                     <span class="total-right total-cart-amount"></span>
                 </div>
-                <button onclick="location.href='/Product/Checkout'">Proceed to Checkout</button>
+                <button id="checkout-button">Proceed to Checkout</button>
             </div>
         </div>`;
 }
@@ -114,6 +114,7 @@ function checkoutPageCartItemBuilder(item) {
                 <small class="text-muted">x ${item.productQuantity}</small>
             </div>
             <span class="text-muted">${formatter.format(item.productPrice * item.productQuantity)}</span>
+            
         </li>`;
 }
 
@@ -134,11 +135,11 @@ function filledDropdownCartBuilder() {
                 <span class="main-color-text total-cart-amount"></span>
             </div>
 
-            <a class="button">Go to Cart</a>`;
+            <button class="button" type="submit">Go to Cart</button>`;
 }
 
 function emptyDropdownCartBuilder() {
     return `<div class="triangle"></div>
             <p class="card-text text-center">The shopping cart is empty.</p>
-            <a class="button">Go to Cart</a>`;
+            <button class="button" type="submit">Go to Cart</button>`;
 }
