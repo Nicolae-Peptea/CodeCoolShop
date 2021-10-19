@@ -102,7 +102,12 @@ export function loadCartItems() {
         attachTemplateToDropdownCart(htmlTemplates.emptyDropdownCartBody);
     }
 
-    $(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
+    $(".shopping-cart .button").on("click", () => {
+        let inputValue = document.querySelector("#total");
+        let total = 0;
+        items.forEach(element => total += element.productQuantity * element.productPrice);
+        inputValue.value = total;
+    });
 }
 
 
