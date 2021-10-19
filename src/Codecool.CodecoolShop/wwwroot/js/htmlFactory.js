@@ -134,7 +134,7 @@ function filledDropdownCartBuilder() {
                 <span class="lighter-text">Total:</span>
                 <span class="main-color-text total-cart-amount"></span>
             </div>
-
+            <input id="total" type="hidden" name="total-value" value="5">
             <button class="button" type="submit">Go to Cart</button>`;
 }
 

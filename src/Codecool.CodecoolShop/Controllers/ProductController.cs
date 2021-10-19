@@ -47,6 +47,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Cart()
         {
+            var t = HttpContext.Response;
             var x = HttpContext.Request;
             return View();
         }
