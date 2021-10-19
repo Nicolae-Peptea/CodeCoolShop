@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Daos
 {
-    public interface IOrderDao : IDao<Item>
+    public interface IOrderDao : IDao<CartItem>
     {
         int GetTotalValue();
     }

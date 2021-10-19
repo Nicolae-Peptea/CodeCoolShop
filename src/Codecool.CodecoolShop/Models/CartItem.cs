@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class Item
+    public class CartItem
     {
         [JsonProperty("productId")]
-        public  int ProductId { get; set; }
+        public int ProductId { get; set; }
 
 
         [JsonProperty("productQunatity")]
-        public int Quantity { get; set; } = 1;
+        public int Quantity { get; set; }
     }
 }

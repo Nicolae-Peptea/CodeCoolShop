@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -43,21 +44,28 @@ namespace Codecool.CodecoolShop.Controllers
             return View(products.ToList());
         }
 
+
         public IActionResult Cart()
         {
+            var x = HttpContext.Request;
+            return View();
+        }
+        
+        [HttpPost]
+        [Route ("/api/checkout")]
+        public IActionResult Checkout(List<CartItem> cartItems)
+        {
+            
             return View();
         }
 
-        public IActionResult Checkout()
-        {
-            return View("Checkout");
-        }
-
-        [HttpPost]
-        public IActionResult Checkout(BillingModel model, List<Item> cartItems)
+        public IActionResult Charge()
         {
 
-            return View("Checkout");
+            IFormCollection form = HttpContext.Request.Form;
+            return View();
+            //int CartTotal = 0;
+            //return Charge(model, CartTotal);
         }
 
 
