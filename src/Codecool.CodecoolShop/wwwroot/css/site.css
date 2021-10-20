@@ -151,9 +151,9 @@ a {
 }
     
 .shopping-cart-items .item-name {
-    color: #888;
+    color: black;
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     padding-top: 10px;
 
 }
@@ -167,7 +167,7 @@ a {
 }
     
 .shopping-cart-items .item-quantity {
-    color: #ABB0BE;
+    color: black;
     font-size: 14px;
     font-family: "Open Sans",Helvetica,Arial,sans-serif;
     font-weight: 700;
@@ -237,16 +237,18 @@ a {
 }
 
 .shopping-cart .button {
+    border: none;
     background: #6394F8;
     color: white;
+    height: 35px;
     text-align: center;
-    padding: 12px;
+    padding: 6px;
     text-decoration: none;
     display: block;
     border-radius: 3px;
     font-size: 16px;
     font-weight: 700;
-    margin: 10px 0 5px 0;
+    margin: 10px auto 5px auto;
 }
 
 .shopping-cart .button:hover {

@@ -136,11 +136,12 @@ function filledDropdownCartBuilder() {
                 <span class="main-color-text total-cart-amount"></span>
             </div>
             <input id="total" type="hidden" name="total-value" value="5">
-            <input class="button" type="submit" value="Go to Cart">`;
+            <input class="button" type="submit" value="Checkout">`;
 }
 
 function emptyDropdownCartBuilder() {
     return `<div class="triangle"></div>
+            <hr>
             <p class="card-text text-center">The shopping cart is empty.</p>
-             <input class="button" type="submit" value="Go to Cart">`;
+            <hr>`;
 }
