@@ -103,6 +103,7 @@ function filledCartFormatBuilder() {
                     <span class="total-right total-cart-amount"></span>
                 </div>
                 <button id="checkout-button">Proceed to Checkout</button>
+                <input id="cart-items" type="hidden" name="cart-items">
             </div>
         </div>`;
 }
@@ -135,7 +136,7 @@ function filledDropdownCartBuilder() {
                 <span class="lighter-text">Total:</span>
                 <span class="main-color-text total-cart-amount"></span>
             </div>
-            <input id="total" type="hidden" name="total-value" value="5">
+            <input id="total" type="hidden" name="total-value">
             <input class="button" type="submit" value="Go to Cart">`;
 }
 
