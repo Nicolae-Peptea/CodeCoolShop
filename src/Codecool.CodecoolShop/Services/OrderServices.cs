@@ -1,6 +1,7 @@
 ﻿using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Models;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,29 +16,50 @@ namespace Codecool.CodecoolShop.Services
             this.order = order;
         }
 
+        public void Add(OrderItem item)
+        {
+            this.order.Add(item);
+        }
+
         public void RemoveItem(int productId)
         {
             this.order.RemoveItem(productId);
         }
 
-        public IEnumerable<OrderDetails> GetAllItems()
+        public IEnumerable<OrderItem> GetAllItems()
         {
             return this.order.GetAll();
         }
 
-        public decimal CalculateOrderTotal(List<CartItem> cartItems, IEnumerable<ShopProduct> productList)
+        public decimal GetTotalOrderValue()
         {
-            decimal orderTotal = 0;
+            return this.order.GetTotalValue();
+        }
 
-            foreach (var cartItem in cartItems)
+        public int GetTotalQuantity()
+        {
+            return this.order.GetTotalQuantity();
+        }
+
+        public IEnumerable<OrderItem> GetOrderItems(List<CartItem> cartItems, IEnumerable<ShopProduct> products)
+        {
+            foreach (ShopProduct product in products)
             {
-                var price = productList
-                    .Where(x => x.Id == cartItem.ProductId).
-                    Select(x => x.DefaultPrice).First();
-
-                orderTotal += price * cartItem.ProductQuantity;
+                foreach (CartItem item in cartItems)
+                {
+                    if (product.Id == item.ProductId)
+                    {
+                        OrderItem orderItem = new OrderItem(product, item.ProductQuantity);
+                        this.Add(orderItem);
+                    }
+                }
             }
-            return orderTotal * 100;
+            return this.order.GetAll();
+        }
+
+        public void EmptyOrder()
+        {
+            this.order.EmptyOrder();
         }
     }
 }
