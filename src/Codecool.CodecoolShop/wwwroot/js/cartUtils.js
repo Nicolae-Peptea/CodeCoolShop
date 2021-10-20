@@ -9,10 +9,10 @@ export function initClickEventOnButtons(button, quantity) {
         event.preventDefault();
         updateCart(button, quantity);
 
-        let shoppingCart = document.querySelector(".shopping-cart");
+        let shoppingCart = document.querySelector(".modal");
         let filledCart = document.querySelector("#filled-cart");
 
-        if (shoppingCart.style.visibility == "visible") {
+        if (shoppingCart.style.display == "block") {
             loadCartItems();
         }
 
@@ -96,7 +96,7 @@ export function loadCartItems() {
 
     if (items != null) {
         attachTemplateToDropdownCart(htmlTemplates.filledDropdownCartBody);
-        cartItemsLoader(htmlTemplates.formatShoppingCartItem, ".shopping-cart-items", ".main-color-text");
+        cartItemsLoader(htmlTemplates.formatShoppingCartItem, "#cartModal > div > div > div.modal-body > table > tbody", "#cartModal > div > div > div.modal-body > div > h5 > span");
         initDeleteShoppingCartItemsButtonsFunctionality();
         initQuantityModifyingButtons();
     }
@@ -104,11 +104,15 @@ export function loadCartItems() {
         attachTemplateToDropdownCart(htmlTemplates.emptyDropdownCartBody);
     }
 
-    $(".shopping-cart .button").on("click", () => {
-        let inputValue = document.querySelector("#total");
+    $("#cartModal > div > div > div.modal-footer.border-top-0.d-flex.justify-content-between > input.button.btn.btn-success").on("click", () => {
+        let inputValue = document.querySelector("input#total");
         let total = 0;
         items.forEach(element => total += element.productQuantity * element.productPrice);
         inputValue.value = total;
+    });
+
+    $(document).ready(function () {
+        $('#cartModal').modal('show');
     });
 }
 
@@ -157,7 +161,7 @@ function getItemQuantity(htmlElement) {
 
 
 export function attachTemplateToDropdownCart(template) {
-    let shoppingCart = document.querySelector(".shopping-cart");
+    let shoppingCart = document.querySelector(".modal");
     const cartDropdownBuilder = htmlFactory(template);
     const cartDropdownBodyTemplate = cartDropdownBuilder();
     shoppingCart.innerHTML = cartDropdownBodyTemplate;
@@ -193,8 +197,8 @@ function loadItemsInShoppingCartPageContainer() {
 
 
 function initQuantityModifyingButtons() {
-    let increaseQuantityButtons = [...document.querySelectorAll(".clearfix-increase-quantity")];
-    let decreaseQuantityButtons = [...document.querySelectorAll(".clearfix-decrease-quantity")];
+    let increaseQuantityButtons = [...document.querySelectorAll(".increase-quantity")];
+    let decreaseQuantityButtons = [...document.querySelectorAll(".decrease-quantity")];
 
     increaseQuantityButtons.forEach((button) => {
         const increaseQuantity = 1;
