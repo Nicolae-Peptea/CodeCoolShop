@@ -113,9 +113,6 @@ export function loadCartItems() {
 
 function cartItemsLoader(template, itemsContainerClass, totalCartContainerClass) {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
-/*    let stripeScript = $("#stripe-integration").attr("data-amount", totalCartSum);*/
-    //aci fac inputul de total
-
     const itemsFormatBuilder = htmlFactory(template);
     let itemsFormat = "";
     let totalCartSum = 0;
