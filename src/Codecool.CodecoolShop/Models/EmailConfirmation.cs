@@ -24,7 +24,7 @@ namespace Codecool.CodecoolShop.Models
 
         public List<OrderItem> Items { get; set; }
 
-        public EmailConfirmation(OrderDetails details)
+        public EmailConfirmation(OrderDetails details, decimal orderTotal, List<OrderItem> orderItems)
         {
             this.FullName = details.StripeBillingName;
             this.Email = details.StripeEmail;
@@ -32,6 +32,8 @@ namespace Codecool.CodecoolShop.Models
             this.Country = details.StripeBillingAddressCountry;
             this.City = details.StripeBillingAddressCity;
             this.ZipCode = details.StripeBillingAddressZip.ToString();
+            this.Total = orderTotal.ToString();
+            this.Items = orderItems;
         }
     }
 }

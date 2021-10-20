@@ -56,5 +56,10 @@ namespace Codecool.CodecoolShop.Services
             }
             return this.order.GetAll();
         }
+
+        public void EmptyOrder()
+        {
+            this.order.EmptyOrder();
+        }
     }
 }

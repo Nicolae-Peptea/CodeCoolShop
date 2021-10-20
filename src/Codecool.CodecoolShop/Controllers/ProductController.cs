@@ -87,13 +87,18 @@ namespace Codecool.CodecoolShop.Controllers
 
             if (charge.Status == "succeeded")
             {
-                string sender = "mihaibuga11@gmail.com";
-                EmailConfirmation model = new EmailConfirmation(order);
-                model.Total = orderTotal.ToString();
-                model.Items = orderItems;
-                new MailService().Execute(sender, model).Wait();
+                EmailConfirmation model = new EmailConfirmation(order, orderTotal, orderItems);
+                new MailService().Execute(model).Wait();
+                OrderServices.EmptyOrder();
+                return RedirectToAction("SuccessfulOrder", new { id = 1});
             }
             return RedirectToAction("Index");
+        }
+
+        public IActionResult SuccessfulOrder(int id)
+        {
+            ViewBag.OrderId = id;
+            return View();
         }
 
         public IActionResult Privacy()

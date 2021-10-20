@@ -9,7 +9,9 @@ namespace Codecool.CodecoolShop.Services
 {
     public class MailService: IMailService
     {
-        public async Task Execute(string fromEmail, EmailConfirmation model)
+        private string _sender = "mihaibuga11@gmail.com";
+
+        public async Task Execute(EmailConfirmation model)
         {
             var apiKey = "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";
             var templateId = "d-71a1079ff2da488b8c1dda86487ba50d";
@@ -19,7 +21,7 @@ namespace Codecool.CodecoolShop.Services
             sendGridMessage.SetTemplateId(templateId);
 
             var senderName = "Codecool Shop";
-            sendGridMessage.SetFrom(fromEmail, senderName);
+            sendGridMessage.SetFrom(_sender, senderName);
 
             string receiverName = model.FullName;
             sendGridMessage.AddTo(model.Email, receiverName);
