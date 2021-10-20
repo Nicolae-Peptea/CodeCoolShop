@@ -8,7 +8,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class OrderDaoMemory : IOrderDao
     {
-        private List<Order> data = new List<Order>();
+        private List<OrderDetails> data = new List<OrderDetails>();
         private static OrderDaoMemory instance = null;
 
         public static OrderDaoMemory GetInstance()
@@ -26,12 +26,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             throw new NotImplementedException();
         }
 
-        public void Add(Order item)
+        public void Add(OrderDetails order)
         {
-            throw new NotImplementedException();
+            data.Add(order);
         }
 
-        public void Update(Order item, int quantity)
+        public void Update(OrderDetails item, int quantity)
         {
             throw new NotImplementedException();
         }
@@ -41,12 +41,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             throw new NotImplementedException();
         }
 
-        public Order Get(int id)
+        public OrderDetails Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Order> GetAll()
+        public IEnumerable<OrderDetails> GetAll()
         {
             return data;
         }

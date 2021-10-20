@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class Product : BaseModel
+    public class ShopProduct : BaseModel
     {
         public string Currency { get; set; }
         public decimal DefaultPrice { get; set; }
