@@ -45,7 +45,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public OrderItem Get(int id)
         {
-            return data.Find(item => item.ProductId == id);
+            return data.Find(item => item.Product.Id == id);
         }
 
         public IEnumerable<OrderItem> GetAll()
@@ -60,7 +60,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public decimal GetTotalValue()
         {
-            return data.Select(item => item.ProductPrice * item.Quantity).Sum();
+            return data.Select(item => item.Product.DefaultPrice * item.Quantity).Sum();
+        }
+
+        public void EmptyOrder()
+        {
+            data = new List<OrderItem>();
         }
     }
 }

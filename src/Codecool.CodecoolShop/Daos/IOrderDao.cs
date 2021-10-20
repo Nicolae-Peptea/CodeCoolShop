@@ -6,5 +6,6 @@ namespace Codecool.CodecoolShop.Daos
     {
         decimal GetTotalValue();
         int GetTotalQuantity();
+        void EmptyOrder();
     }
 }
