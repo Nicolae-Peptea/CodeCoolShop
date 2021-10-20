@@ -15,6 +15,7 @@ export function initClickEventOnButtons(button, quantity) {
         if (shoppingCart.style.visibility == "visible") {
             loadCartItems();
         }
+
         if (filledCart) {
             loadShoppingCartPage();
         }
@@ -96,7 +97,8 @@ export function loadCartItems() {
     if (items != null) {
         attachTemplateToDropdownCart(htmlTemplates.filledDropdownCartBody);
         cartItemsLoader(htmlTemplates.formatShoppingCartItem, ".shopping-cart-items", ".main-color-text");
-
+        initDeleteShoppingCartItemsButtonsFunctionality();
+        initQuantityModifyingButtons();
     }
     else {
         attachTemplateToDropdownCart(htmlTemplates.emptyDropdownCartBody);
@@ -129,8 +131,6 @@ function cartItemsLoader(template, itemsContainerClass, totalCartContainerClass)
 
     let totalCartSumField = document.querySelector(totalCartContainerClass);
     totalCartSumField.innerHTML = formatter.format(totalCartSum);
-    
-    initDeleteShoppingCartItemsButtonsFunctionality();
 }
 
 
@@ -176,7 +176,6 @@ function loadFilledCartPage() {
 
     shoppingCartPageContainer.innerHTML = filledCartFormat;
     loadItemsInShoppingCartPageContainer();
-    initQuantityModifyingButtons();
 }
 
 
@@ -189,8 +188,8 @@ function loadItemsInShoppingCartPageContainer() {
 
 
 function initQuantityModifyingButtons() {
-    let increaseQuantityButtons = [...document.querySelectorAll(".increase-quantity")];
-    let decreaseQuantityButtons = [...document.querySelectorAll(".decrease-quantity")];
+    let increaseQuantityButtons = [...document.querySelectorAll(".clearfix-increase-quantity")];
+    let decreaseQuantityButtons = [...document.querySelectorAll(".clearfix-decrease-quantity")];
 
     increaseQuantityButtons.forEach((button) => {
         const increaseQuantity = 1;
