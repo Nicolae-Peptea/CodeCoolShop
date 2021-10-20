@@ -7,13 +7,13 @@ using Codecool.CodecoolShop.Models;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class ProductService
+    public class ProductServices
     {
         private readonly IProductDao productDao;
         private readonly IProductCategoryDao productCategoryDao;
         private readonly ISupplierDao productSupplierDao;
 
-        public ProductService(IProductDao productDao, 
+        public ProductServices(IProductDao productDao, 
             IProductCategoryDao productCategoryDao,
             ISupplierDao productSupplierDao)
         {
@@ -27,19 +27,19 @@ namespace Codecool.CodecoolShop.Services
             return this.productCategoryDao.Get(categoryId);
         }
 
-        public IEnumerable<Product> GetProductsForCategory(int categoryId)
+        public IEnumerable<ShopProduct> GetProductsForCategory(int categoryId)
         {
             ProductCategory category = this.productCategoryDao.Get(categoryId);
             return this.productDao.GetBy(category);
         }
 
-        public IEnumerable<Product> GetProductsForSupplier(int supplierId)
+        public IEnumerable<ShopProduct> GetProductsForSupplier(int supplierId)
         {
             Supplier supplier = this.productSupplierDao.Get(supplierId);
             return this.productDao.GetBy(supplier);
         }
 
-        public IEnumerable<Product> GetProductsForCategoryAndSupplier(int categoryId, 
+        public IEnumerable<ShopProduct> GetProductsForCategoryAndSupplier(int categoryId, 
             int supplierId)
         {
             ProductCategory category = this.productCategoryDao.Get(categoryId);
@@ -47,20 +47,19 @@ namespace Codecool.CodecoolShop.Services
             return this.productDao.GetBy(category, supplier);
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<ShopProduct> GetAllProducts()
         {
             return this.productDao.GetAll();
         }
 
-
-        public Product GetProductById(int id)
+        public ShopProduct GetProductById(int id)
         {
            return productDao.Get(id);
         }
 
-        public IEnumerable<Product> GetSortedProducts(int category, int supplier)
+        public IEnumerable<ShopProduct> GetSortedProducts(int category, int supplier)
         {
-            IEnumerable<Product> products;
+            IEnumerable<ShopProduct> products;
 
             if (category != 0 && supplier == 0)
             {

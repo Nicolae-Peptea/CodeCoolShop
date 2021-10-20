@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class Order
+    public class OrderDetails : BaseModel
     {
         public string StripeEmail { get; set; }
         public string StripeToken { get; set; }

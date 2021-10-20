@@ -12,26 +12,28 @@ using Codecool.CodecoolShop.Services;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Codecool.CodecoolShop.Helpers;
+using Stripe;
 
 namespace Codecool.CodecoolShop.Controllers
 {
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
-        public ProductService ProductService { get; set; }
+        public ProductServices ProductService { get; set; }
         public CategoryService CategoryService { get; set; }
         public SupplierService SupplierService { get; set; }
-        public OrderService OrderService { get; set; }
+        public OrderServices OrderService { get; set; }
 
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
-            ProductService = new ProductService(
+            ProductService = new ProductServices(
                 ProductDaoMemory.GetInstance(),
                 ProductCategoryDaoMemory.GetInstance(),
                 SupplierDaoMemory.GetInstance());
             CategoryService = new CategoryService(ProductCategoryDaoMemory.GetInstance());
             SupplierService = new SupplierService(SupplierDaoMemory.GetInstance());
+            OrderService = new OrderServices(OrderDaoMemory.GetInstance());
         }
 
         public IActionResult Index(int category = 1, int supplier = 0)
@@ -41,7 +43,7 @@ namespace Codecool.CodecoolShop.Controllers
             ViewBag.CurrentCategory = category;
             ViewBag.CurrentSupplier = supplier;
 
-            IEnumerable<Product> products = ProductService.GetSortedProducts(category, supplier);
+            IEnumerable<ShopProduct> products = ProductService.GetSortedProducts(category, supplier);
 
             return View(products.ToList());
         }
@@ -56,15 +58,35 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Charge(Order order)
+        public IActionResult Charge(OrderDetails order)
         {
-            IFormCollection form = HttpContext.Request.Form;
-            var cartItems = HttpContext.Request.Form["cartItems"];
-            var deserialize = JsonHelper.Deserialize <List<CartItem>>(order.CartItems);
+            List<CartItem> cartIems = JsonHelper.Deserialize <List<CartItem>>(order.CartItems);
+            IEnumerable<ShopProduct> products = ProductService.GetAllProducts();
 
+            var customers = new CustomerService();
+            var charges = new ChargeService();
+
+            long orderTotal = (long)OrderService.CalculateOrderTotal(cartIems, products);
+
+            var customer = customers.Create(new CustomerCreateOptions
+            {
+                Email = order.StripeEmail,
+                Name = order.StripeBillingName,
+            });
+
+            var charge = charges.Create(new ChargeCreateOptions
+            {
+                Amount = orderTotal,
+                Description = "Test Payment",
+                Currency = "usd",
+                Source = order.StripeToken,
+            });
+
+            if (charge.Status == "succeded")
+            {
+
+            }
             return View("Index");
-            //int CartTotal = 0;
-            //return Charge(model, CartTotal);
         }
 
 
