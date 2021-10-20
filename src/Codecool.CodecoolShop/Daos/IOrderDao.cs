@@ -1,13 +1,10 @@
 ﻿using Codecool.CodecoolShop.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Daos
 {
-    public interface IOrderDao : IDao<OrderDetails>
+    public interface IOrderDao : IDao<OrderItem>
     {
-        int GetTotalValue();
+        decimal GetTotalValue();
+        int GetTotalQuantity();
     }
 }

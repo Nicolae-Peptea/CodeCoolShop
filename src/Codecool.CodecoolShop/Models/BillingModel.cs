@@ -43,5 +43,9 @@ namespace Codecool.CodecoolShop.Models
         [Required]
         [Display(Name = "Zip Code")]
         public string ZipCode { get; set; }
+
+        public string Total { get; set; }
+
+        public List<OrderItem> Items { get; set; }
     }
 }
