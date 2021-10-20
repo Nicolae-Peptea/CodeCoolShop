@@ -166,16 +166,21 @@ export function attachTemplateToDropdownCart(template) {
 
 export function loadShoppingCartPage() {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
-    (items) ? loadFilledCartPage() : loadEmptyCartPage();
+    (items) ? loadFilledCartPage(items) : loadEmptyCartPage();
 }
 
 
-function loadFilledCartPage() {
+function loadFilledCartPage(cartItems) {
     const filledCartFormatBuilder = htmlFactory(htmlTemplates.filledCartFormat);
     const filledCartFormat = filledCartFormatBuilder();
 
     shoppingCartPageContainer.innerHTML = filledCartFormat;
     loadItemsInShoppingCartPageContainer();
+
+    $("#checkout-button").on("click", () => {
+        let inputValue = document.querySelector("#cart-items");
+        inputValue.value = JSON.stringify(cartItems);
+    });
 }
 
 

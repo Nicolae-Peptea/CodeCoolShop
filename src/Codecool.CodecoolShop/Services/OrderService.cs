@@ -19,7 +19,7 @@ namespace Codecool.CodecoolShop.Services
             this.order.RemoveItem(productId);
         }
 
-        public IEnumerable<CartItem> GetAllItems()
+        public IEnumerable<Order> GetAllItems()
         {
             return this.order.GetAll();
         }
@@ -27,7 +27,7 @@ namespace Codecool.CodecoolShop.Services
 
         public string GetItemsAsJson()
         {
-            IEnumerable<CartItem> orderItems = GetAllItems();
+            IEnumerable<Order> orderItems = GetAllItems();
             string orderItemsAsJson = JsonConvert.SerializeObject(orderItems);
 
             return orderItemsAsJson;

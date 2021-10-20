@@ -4,7 +4,7 @@
 
 @{ ViewData["Title"] = "My Cart"; }
 
-<form class="shopping-cart-page-container" id="cartProductsPage" asp-controller="Product" asp-action="Charge">
+<form class="shopping-cart-page-container" id="cartProductsPage" asp-controller="Product" asp-action="Charge" method="post">
     <script id="stripe-integration" src="//checkout.stripe.com/v2/checkout.js"
             class="stripe-button"
             data-key="@Stripe.Value.PublishableKey"

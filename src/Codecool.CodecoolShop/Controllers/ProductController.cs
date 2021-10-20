@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Codecool.CodecoolShop.Helpers;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -52,19 +54,15 @@ namespace Codecool.CodecoolShop.Controllers
             ViewBag.TotalCart = result * 100;
             return View();
         }
-        
-        [HttpPost]
-        [Route ("/api/checkout")]
-        public IActionResult Checkout(List<CartItem> cartItems)
-        {
-            
-            return View();
-        }
 
-        public IActionResult Charge()
+        [HttpPost]
+        public IActionResult Charge(Order order)
         {
             IFormCollection form = HttpContext.Request.Form;
-            return View();
+            var cartItems = HttpContext.Request.Form["cartItems"];
+            var deserialize = JsonHelper.Deserialize <List<CartItem>>(order.CartItems);
+
+            return View("Index");
             //int CartTotal = 0;
             //return Charge(model, CartTotal);
         }
