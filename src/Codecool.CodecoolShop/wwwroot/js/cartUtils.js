@@ -8,6 +8,15 @@ export function getStorage() {
     return sessionStorage.getItem("shoppingCartItems");
 }
 
+export function getStorageItem(id) {
+    let items = JSON.parse(getStorage());
+    let item = null;
+    if (items !== null) {
+        [item] = items.filter(item => item.productId === id);
+    }
+    return item;
+}
+
 
 export function initClickEventOnButtons(button, quantity) {
     button.addEventListener('click', () => {
@@ -38,11 +47,10 @@ export function updateCart(htmlElement, quantity) {
         cartItems = JSON.parse(sessionStorageItems);
     }
 
-    const itemAlreadyInCart = cartItems
-        .filter(item => item.productId === itemtoAdd.productId);
+    const itemAlreadyInCart = getStorageItem(itemtoAdd.productId);
 
-    if (itemAlreadyInCart.length > 0) {
-        itemAlreadyInCart[0].productQuantity += quantity;
+    if (itemAlreadyInCart !== null) {
+        itemAlreadyInCart.productQuantity += quantity;
         cartItems = cartItems.filter(item => item.productQuantity > 0);
     }
     else {
@@ -213,8 +221,7 @@ function initQuantityModifyingButtons() {
             updateCart(button, increaseQuantity);
 
             let id = button.getAttribute('data-product-id');
-            let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
-            let [cartItem] = items.filter(item => item.productId === id);
+            let cartItem = getStorageItem(id);
 
             let htmlItem = document.querySelector(`tr[data-product-id="${id}"]`);
             let currentQuantity = htmlItem.querySelector("td .item-quantity");
