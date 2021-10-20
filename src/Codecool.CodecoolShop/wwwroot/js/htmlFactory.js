@@ -103,7 +103,7 @@ function filledCartFormatBuilder() {
                     <span class="total-right total-cart-amount"></span>
                 </div>
                 <button id="checkout-button">Proceed to Checkout</button>
-                <input id="cart-items" type="hidden" name="cart-items">
+                <input id="cart-items" type="hidden" name="cartItems">
             </div>
         </div>`;
 }
@@ -116,7 +116,6 @@ function checkoutPageCartItemBuilder(item) {
                 <small class="text-muted">x ${item.productQuantity}</small>
             </div>
             <span class="text-muted">${formatter.format(item.productPrice * item.productQuantity)}</span>
-            
         </li>`;
 }
 
