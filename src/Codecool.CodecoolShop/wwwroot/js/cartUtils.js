@@ -79,13 +79,13 @@ function createItemForSessionStorage(htmlElement) {
     const productId = htmlElement.getAttribute(["data-product-id"])
     const productName = htmlElement.getAttribute(["data-product-name"])
     const productPrice = htmlElement.getAttribute(["data-price"])
-    const productCurrency = htmlElement.getAttribute(["data-currency"])
+    //const productCurrency = htmlElement.getAttribute(["data-currency"])
 
     return {
         "productId": productId,
         "productName": productName,
         "productPrice": productPrice,
-        "productCurrency": productCurrency,
+        //"productCurrency": productCurrency,
         "productQuantity": 1,
     }
 }
@@ -202,7 +202,25 @@ function initQuantityModifyingButtons() {
 
     increaseQuantityButtons.forEach((button) => {
         const increaseQuantity = 1;
-        initClickEventOnButtons(button, increaseQuantity);
+        //initClickEventOnButtons(button, increaseQuantity);
+        button.addEventListener("click", () => {
+            event.preventDefault();
+            updateCart(button, increaseQuantity);
+
+            let id = button.getAttribute('data-product-id');
+            let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+            let [cartItem] = items.filter(item => item.productId === id);
+
+            let htmlItem = document.querySelector(`tr[data-product-id="${id}"]`);
+            let currentQuantity = htmlItem.querySelector("td .item-quantity");
+            let currenTotal = htmlItem.querySelector("td#total");
+            let x = cartItem.productQuantity;
+            let y = cartItem.productPrice;
+            let resu = parseFloat(x) * parseFloat(y);
+            currentQuantity.innerHTML = " " + cartItem.productQuantity;
+            currenTotal.innerHTML = formatter.format(parseFloat(cartItem.productQuantity) * parseFloat(cartItem.productPrice));
+            console.log(document.querySelector("span.price"));
+        })
     })
 
     decreaseQuantityButtons.forEach((button) => {

@@ -38,7 +38,7 @@ export function htmlFactory(template) {
 }
 
 function formatShoppingCartItemBuilder(item) {
-    return `<tr>
+    return `<tr data-product-id="${item.productId}">
                 <td id="img">
                 <img src="/img/${item.productName}.jpg" class="img-fluid img-thumbnail" alt="${item.productName}">
                 </td>
@@ -51,7 +51,8 @@ function formatShoppingCartItemBuilder(item) {
                 </td>
                 <td id="total">${formatter.format(item.productPrice * item.productQuantity)}</td>
                 <td id="actions">
-                    <button class="delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
+                    <button class="delete-cart-item" data-product-id="${item.productId}" data-product-name="${item.productName}" 
+                       data-price="${item.productPrice}"><i class="fa fa-trash-o"></i></button>
                 </td>
             </tr>`;
 }

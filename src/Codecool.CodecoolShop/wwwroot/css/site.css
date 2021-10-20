@@ -495,6 +495,21 @@ td#qty button {
     display: block;
 }
 
+/* Successful order page style
+-------------------------------------------------- */
+#order-successful {
+    margin-top: 20vw;
+    height: 350px;
+    padding-top: 150px;
+    position: relative;
+    text-align: center;
+}
+
+#order-successful .message {
+    font-size: 30px;
+    margin: 20px 0;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
