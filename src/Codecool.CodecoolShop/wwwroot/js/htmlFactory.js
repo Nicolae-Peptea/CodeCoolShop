@@ -38,23 +38,22 @@ export function htmlFactory(template) {
 }
 
 function formatShoppingCartItemBuilder(item) {
-    return `
-        <li class="clearfix">
-            <img src="/img/${item.productName}.jpg" alt="${item.productName}" />
-            
-            <div class="cart-details-container">
-                <span class="item-name">${item.productName}</span>
-                <span class="item-price">${formatter.format(item.productPrice * item.productQuantity)}</span>
-            </div>
-
-            <div class="clearfix-quantity">
-                <button class="clearfix-decrease-quantity" name="decrease-quantity" type="submit" data-product-id="${item.productId}">-</button>
-                <span class="item-quantity">x ${item.productQuantity}</span>
-                <button class="clearfix-increase-quantity" name="increase-quantity" type="submit"data-product-id="${item.productId}">+</button>
-            </div>
-
-            <button class="delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
-        </li>`;
+    return `<tr>
+                <td id="img">
+                <img src="/img/${item.productName}.jpg" class="img-fluid img-thumbnail" alt="${item.productName}">
+                </td>
+                <td id="name">${item.productName}</td>
+                <td id="price">${formatter.format(item.productPrice)}</td>
+                <td class="qty" id="qty">
+                    <button class="decrease-quantity" name="decrease-quantity" type="submit" data-product-id="${item.productId}">-</button>
+                    <span class="item-quantity">${item.productQuantity}</span>
+                    <button class="increase-quantity" name="increase-quantity" type="submit"data-product-id="${item.productId}">+</button>
+                </td>
+                <td id="total">${formatter.format(item.productPrice * item.productQuantity)}</td>
+                <td id="actions">
+                    <button class="delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
+                </td>
+            </tr>`;
 }
 
 function formatShoppingCartPageItemBuilder(item) {
@@ -129,20 +128,59 @@ function checkoutPageCartTotalBuilder(total) {
 }
 
 function filledDropdownCartBuilder() {
-    return `<div class="triangle"></div>
-            <ul class="shopping-cart-items fixed-content"></ul>
+    let modalBody = `<table class="table table-image">
+                        <thead>
+                        <tr>
+                            <th id="img" scope="col"></th>
+                            <th id="name" scope="col">Name</th>
+                            <th id="price" scope="col">Price</th>
+                            <th id="qty" scope="col">Qty</th>
+                            <th id="total" scope="col">Total</th>
+                            <th id="actions" scope="col">Actions</th>
+                        </tr>
+                        </thead>
 
-            <div class="shopping-cart-total">
-                <span class="lighter-text">Total:</span>
-                <span class="main-color-text total-cart-amount"></span>
-            </div>
-            <input id="total" type="hidden" name="total-value">
-            <input class="button" type="submit" value="Checkout">`;
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-end">
+                        <h5>Total: <span class="price text-success"></span></h5>
+                    </div>`;
+    return modalCartBuilder(modalBody, true);
 }
 
 function emptyDropdownCartBuilder() {
-    return `<div class="triangle"></div>
-            <hr>
-            <p class="card-text text-center">The shopping cart is empty.</p>
-            <hr>`;
+    let modalBody = `<p class="card-text text-center">The shopping cart is empty.</p>`;
+    return modalCartBuilder(modalBody);
+}
+
+function addModalCheckoutButton() {
+    return `<input id="total" type="hidden" name="total-value">
+            <input class="button btn btn-success" type="submit" value="Checkout">`;
+}
+
+function modalCartBuilder(modalBody, filled = false) {
+    return `<div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
+                <div class="modal-content">
+
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Your Shopping Cart
+                        </h5>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        ${modalBody}
+                    </div>
+
+                    <div class="modal-footer border-top-0 d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        ${filled ? addModalCheckoutButton() : ""}
+                    </div>
+                </div>
+            </div>`;
 }

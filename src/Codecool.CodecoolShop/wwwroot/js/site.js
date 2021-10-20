@@ -34,10 +34,9 @@ function initCartButtonFunctionality() {
 }
 
 function loadDropdownCart() {
-    shoppingCart.style.visibility = "visible";
     attachTemplateToDropdownCart(htmlTemplates.filledDropdownCartBody);
     loadCartItems();
-    $(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
+    //$(".shopping-cart > .button").on("click", () => { location.href = "/Product/Cart"; });
 }
 
 
