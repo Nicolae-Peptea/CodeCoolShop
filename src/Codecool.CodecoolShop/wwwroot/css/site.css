@@ -171,6 +171,37 @@ a {
     font-size: 14px;
     font-family: "Open Sans",Helvetica,Arial,sans-serif;
     font-weight: 700;
+    vertical-align: middle;
+}
+
+.clearfix-quantity {
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    margin: 3px 0;
+}
+
+.clearfix-quantity button {
+    display: inline-block;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px;
+    background: #eee;
+    font-weight: 700;
+}
+
+.clearfix-decrease-quantity {
+    margin-right: -4px;
+    border-radius: 8px 0 0 8px;
+}
+
+.clearfix-increase-quantity {
+    margin-left: -4px;
+    border-radius: 0 8px 8px 0;
 }
 
 .shopping-cart>.triangle,
