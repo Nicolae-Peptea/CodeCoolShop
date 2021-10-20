@@ -8,7 +8,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class OrderDaoMemory : IOrderDao
     {
-        private List<OrderDetails> data = new List<OrderDetails>();
+        private List<OrderItem> data = new List<OrderItem>();
         private static OrderDaoMemory instance = null;
 
         public static OrderDaoMemory GetInstance()
@@ -21,40 +21,46 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return instance;
         }
 
-        public int GetTotalValue()
+        public void Add(OrderItem order)
         {
-            throw new NotImplementedException();
+            var itemInList = Get(order.Product.Id);
+
+            if (itemInList != null)
+            {
+                itemInList.Quantity += 1;
+            }
+            else
+            {
+                data.Add(order);
+            }
         }
 
-        public void Add(OrderDetails order)
+        public void RemoveItem(int id)
         {
-            data.Add(order);
+            if (this.Get(id) != null)
+            {
+                data.Remove(this.Get(id));
+            }
         }
 
-        public void Update(OrderDetails item, int quantity)
+        public OrderItem Get(int id)
         {
-            throw new NotImplementedException();
+            return data.Find(item => item.ProductId == id);
         }
 
-        public void RemoveItem(int productId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public OrderDetails Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<OrderDetails> GetAll()
+        public IEnumerable<OrderItem> GetAll()
         {
             return data;
         }
 
         public int GetTotalQuantity()
         {
-            return 0;
-            //return data.Select(x => x.Quantity).Sum();
+            return data.Select(item => item.Quantity).Sum();
+        }
+
+        public decimal GetTotalValue()
+        {
+            return data.Select(item => item.ProductPrice * item.Quantity).Sum();
         }
     }
 }
