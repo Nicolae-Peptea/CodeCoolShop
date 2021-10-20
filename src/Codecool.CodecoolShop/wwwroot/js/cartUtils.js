@@ -4,6 +4,11 @@ let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'U
 let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
 
 
+export function getStorage() {
+    return sessionStorage.getItem("shoppingCartItems");
+}
+
+
 export function initClickEventOnButtons(button, quantity) {
     button.addEventListener('click', () => {
         event.preventDefault();
@@ -26,7 +31,7 @@ export function initClickEventOnButtons(button, quantity) {
 export function updateCart(htmlElement, quantity) {
 
     const itemtoAdd = createItemForSessionStorage(htmlElement)
-    const sessionStorageItems = sessionStorage.getItem("shoppingCartItems");
+    const sessionStorageItems = getStorage();
     let cartItems = [];
 
     if (sessionStorageItems !== null) {
@@ -92,7 +97,7 @@ function createItemForSessionStorage(htmlElement) {
 
 
 export function loadCartItems() {
-    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    let items = JSON.parse(getStorage());
 
     if (items != null) {
         attachTemplateToDropdownCart(htmlTemplates.filledDropdownCartBody);
@@ -118,7 +123,7 @@ export function loadCartItems() {
 
 
 function cartItemsLoader(template, itemsContainerClass, totalCartContainerClass) {
-    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    let items = JSON.parse(getStorage());
     const itemsFormatBuilder = htmlFactory(template);
     let itemsFormat = "";
     let totalCartSum = 0;
@@ -150,7 +155,7 @@ function initDeleteShoppingCartItemsButtonsFunctionality() {
 
 function getItemQuantity(htmlElement) {
 
-    const sessionStorageObjects = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    const sessionStorageObjects = JSON.parse(getStorage());
     const productId = htmlElement.getAttribute("data-product-id");
 
     const [first] = sessionStorageObjects
@@ -169,7 +174,7 @@ export function attachTemplateToDropdownCart(template) {
 
 
 export function loadShoppingCartPage() {
-    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    let items = JSON.parse(getStorage());
     (items) ? loadFilledCartPage(items) : loadEmptyCartPage();
 }
 
@@ -189,7 +194,7 @@ function loadFilledCartPage(cartItems) {
 
 
 function loadItemsInShoppingCartPageContainer() {
-    let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
+    let items = JSON.parse(getStorage());
     if (items) {
         cartItemsLoader(htmlTemplates.formatShoppingCartPageItem, "#filled-cart > .items", ".total-cart-amount");
     }

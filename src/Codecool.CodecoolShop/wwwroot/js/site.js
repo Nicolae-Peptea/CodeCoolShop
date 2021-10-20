@@ -5,7 +5,6 @@
 import { htmlTemplates } from "/js/htmlFactory.js";
 
 let buyButtons = [...document.querySelectorAll("#add-to-cart")];
-
 let shoppingCart = document.querySelector(".shopping-cart");
 
 
