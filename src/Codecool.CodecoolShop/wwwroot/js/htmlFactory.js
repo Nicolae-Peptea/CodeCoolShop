@@ -69,12 +69,8 @@ function formatShoppingCartPageItemBuilder(item) {
                 </a>
 
                 <div class="filled-cart-item-quantity">
-                    <button class="decrease-quantity" name="decrease-quantity" type="submit" data-product-id="${item.productId}"><i class="arrow down"></i></button>
-                    <p><strong>${item.productQuantity} ${item.productQuantity == 1 ? "Piece" : "Pieces"}</strong></p>
-                    <button class="increase-quantity" name="increase-quantity" type="submit"data-product-id="${item.productId}"><i class="arrow up"></i></button>
+                    <p><strong>${item.productQuantity} x ${formatter.format(item.productPrice)}</strong></p>
                 </div>
-
-                <button class="filled-cart-item-delete delete-cart-item" data-product-id="${item.productId}"><i class="fa fa-trash-o"></i></button>
                 
                 <span class="filled-cart-item-price">${formatter.format(item.productPrice * item.productQuantity)}</span>
             </div>
