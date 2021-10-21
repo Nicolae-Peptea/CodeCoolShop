@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Codecool.CodecoolShop.Helpers;
 using Stripe;
+using Serilog;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -40,6 +41,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Index(int category = 1, int supplier = 0)
         {
+            Log.Information("User is on the main page");
             ViewBag.Categories = CategoryService.GetCategories();
             ViewBag.Suppliers = SupplierService.GetSuppliers();
             ViewBag.CurrentCategory = category;
@@ -53,6 +55,7 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public IActionResult Cart()
         {
+            Log.Information("User initialized checkout process");
             decimal result;
             decimal.TryParse(HttpContext.Request.Form["total-value"], out result);
             ViewBag.TotalCart = result * 100;
@@ -77,21 +80,27 @@ namespace Codecool.CodecoolShop.Controllers
                 Name = order.StripeBillingName,
             });
 
-            var charge = charges.Create(new ChargeCreateOptions
+            try
             {
-                Amount = (long)orderTotal,
-                Description = "Test Payment",
-                Currency = "usd",
-                Source = order.StripeToken,
-            });
+                var charge = charges.Create(new ChargeCreateOptions
+                {
+                    Amount = (long)orderTotal,
+                    Description = "Test Payment",
+                    Currency = "usd",
+                    Source = order.StripeToken,
+                });
 
-            if (charge.Status == "succeeded")
-            {
+                Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new EmailConfirmation(order, orderTotal, orderItems);
                 new MailService().Execute(model).Wait();
                 OrderServices.EmptyOrder();
-                return RedirectToAction("SuccessfulOrder", new { id = 1});
+                return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Failed the checkout process due to payment");
+            }
+
             return RedirectToAction("Index");
         }
 

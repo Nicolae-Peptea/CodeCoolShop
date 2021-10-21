@@ -1,6 +1,7 @@
 ﻿using Codecool.CodecoolShop.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -31,7 +32,11 @@ namespace Codecool.CodecoolShop.Services
             var response = await client.SendEmailAsync(sendGridMessage);
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
             {
-                Console.WriteLine("Email sent successfully to: " + model.Email);
+                Log.Information("Email sent successfully to: " + model.Email);
+            }
+            else
+            {
+                Log.Information("Email failed to send to: " + model.Email);
             }
         }
     }
