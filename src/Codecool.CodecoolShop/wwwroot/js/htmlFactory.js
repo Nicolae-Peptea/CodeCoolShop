@@ -178,7 +178,6 @@ function modalCartBuilder(modalBody, filled = false) {
                     </div>
 
                     <div class="modal-footer border-top-0 d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         ${filled ? addModalCheckoutButton() : ""}
                     </div>
                 </div>

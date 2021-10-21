@@ -265,7 +265,11 @@ td#actions {
     padding-top: 0rem;
 }
 
-    /* Dropdown cart quantity style
+.modal-footer {
+    margin-left: auto;
+}
+
+/* Dropdown cart quantity style
 -------------------------------------------------- */
 td#qty button {
     display: inline-block;
