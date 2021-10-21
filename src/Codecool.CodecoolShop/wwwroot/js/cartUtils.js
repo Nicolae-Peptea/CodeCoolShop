@@ -17,14 +17,6 @@ export function getStorage() {
 }
 
 
-export function initClickEventOnButtons(button, quantity) {
-    button.addEventListener('click', () => {
-        event.preventDefault();
-        updateCart(button, quantity);
-    })
-}
-
-
 export function updateCart(htmlElement, quantity) {
 
     const itemtoAdd = createItemForSessionStorage(htmlElement)

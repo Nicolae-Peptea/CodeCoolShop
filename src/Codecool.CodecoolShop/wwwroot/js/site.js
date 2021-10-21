@@ -1,32 +1,35 @@
-﻿import {
-    initClickEventOnButtons, displayCartQuantityOnDesignatedFields,
+﻿import {displayCartQuantityOnDesignatedFields, updateCart,
     loadCartModal
 } from "/js/cartUtils.js";
 
-let buyButtons = [...document.querySelectorAll("#add-to-cart")];
+
+$("body").on("click", "#cart", () => {
+    event.preventDefault();
+
+    $(document).ready(function () {
+        $('#cartModal').modal('show');
+    });
+
+    loadCartModal();
+});
+
 
 function initBuyButtons() {
     const quantity = 1;
+    let buyButtons = [...document.querySelectorAll("#add-to-cart")];
     buyButtons.forEach((button) => {
         initClickEventOnButtons(button, quantity);
     })
 }
 
-function initCartButtonFunctionality() {
-    let cartButton = document.querySelector("#cart");
 
-    cartButton.addEventListener('click', () => {
+function initClickEventOnButtons(button, quantity) {
+    button.addEventListener('click', () => {
         event.preventDefault();
-
-        $(document).ready(function () {
-            $('#cartModal').modal('show');
-        });
-
-        loadCartModal();
+        updateCart(button, quantity);
     })
 }
 
 
 displayCartQuantityOnDesignatedFields();
-initCartButtonFunctionality();
 initBuyButtons();
