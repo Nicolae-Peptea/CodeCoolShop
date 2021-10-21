@@ -39,7 +39,7 @@ export function updateCart(htmlElement, quantity) {
     }
 
     setSessionStorage(cartItems);
-    showCartQuantityAfterLoading();
+    displayCartQuantityOnDesignatedFields();
 }
 
 
@@ -53,7 +53,7 @@ function setSessionStorage(items) {
 }
 
 
-export function showCartQuantityAfterLoading() {
+export function displayCartQuantityOnDesignatedFields() {
     const itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
     const shoppingCartItems = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
     let quantity = 0;
@@ -101,7 +101,7 @@ function loadFilledCartModal() {
     let itemsContainerClass = "#cartModal > div > div > div.modal-body > table > tbody";
     let totalCartContainerClass = "#cartModal > div > div > div.modal-body > div > h5 > span";
 
-    attachTemplateToDropdownCart(filledModalBodyTemplate);
+    attachTemplateToCartModal(filledModalBodyTemplate);
     cartItemsLoader(itemTemplate, itemsContainerClass, totalCartContainerClass);
     initQuantityModifyingButtons();
 
@@ -116,7 +116,7 @@ function loadFilledCartModal() {
 
 function loadEmptyCartModal() {
     let emptyModalBodyTemplate = htmlTemplates.emptyDropdownCartBody;
-    attachTemplateToDropdownCart(emptyModalBodyTemplate);
+    attachTemplateToCartModal(emptyModalBodyTemplate);
 }
 
 
@@ -141,7 +141,7 @@ function cartItemsLoader(template, itemsContainerClass, totalCartContainerClass)
 }
 
 
-export function attachTemplateToDropdownCart(template) {
+export function attachTemplateToCartModal(template) {
     let shoppingCart = document.querySelector(".modal");
     const cartDropdownBuilder = htmlFactory(template);
     const cartDropdownBodyTemplate = cartDropdownBuilder();
