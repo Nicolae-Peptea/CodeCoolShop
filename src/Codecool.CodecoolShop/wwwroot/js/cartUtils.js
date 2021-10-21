@@ -100,6 +100,7 @@ function loadFilledCartModal() {
     let itemTemplate = htmlTemplates.formatShoppingCartItem;
     let itemsContainerClass = "#cartModal > div > div > div.modal-body > table > tbody";
     let totalCartContainerClass = "#cartModal > div > div > div.modal-body > div > h5 > span";
+    let items = JSON.parse(getStorage())
 
     attachTemplateToCartModal(filledModalBodyTemplate);
     cartItemsLoader(itemTemplate, itemsContainerClass, totalCartContainerClass);
