@@ -13,17 +13,6 @@ export function initClickEventOnButtons(button, quantity) {
     button.addEventListener('click', () => {
         event.preventDefault();
         updateCart(button, quantity);
-
-        let shoppingCart = document.querySelector(".modal");
-        let filledCart = document.querySelector("#filled-cart");
-
-        if (shoppingCart.style.display == "block") {
-            loadCartModal();
-        }
-
-        if (filledCart) {
-            loadShoppingCartPage();
-        }
     })
 }
 
@@ -50,7 +39,7 @@ export function updateCart(htmlElement, quantity) {
     }
 
     setSessionStorage(cartItems);
-    showCartQuantityAfterLoading();
+    displayCartQuantityOnDesignatedFields();
 }
 
 
@@ -64,7 +53,7 @@ function setSessionStorage(items) {
 }
 
 
-export function showCartQuantityAfterLoading() {
+export function displayCartQuantityOnDesignatedFields() {
     const itemsInShoppingCartFields = [...document.querySelectorAll(".badge")];
     const shoppingCartItems = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
     let quantity = 0;
@@ -112,7 +101,7 @@ function loadFilledCartModal() {
     let itemsContainerClass = "#cartModal > div > div > div.modal-body > table > tbody";
     let totalCartContainerClass = "#cartModal > div > div > div.modal-body > div > h5 > span";
 
-    attachTemplateToDropdownCart(filledModalBodyTemplate);
+    attachTemplateToCartModal(filledModalBodyTemplate);
     cartItemsLoader(itemTemplate, itemsContainerClass, totalCartContainerClass);
     initQuantityModifyingButtons();
 
@@ -127,7 +116,7 @@ function loadFilledCartModal() {
 
 function loadEmptyCartModal() {
     let emptyModalBodyTemplate = htmlTemplates.emptyDropdownCartBody;
-    attachTemplateToDropdownCart(emptyModalBodyTemplate);
+    attachTemplateToCartModal(emptyModalBodyTemplate);
 }
 
 
@@ -152,7 +141,7 @@ function cartItemsLoader(template, itemsContainerClass, totalCartContainerClass)
 }
 
 
-export function attachTemplateToDropdownCart(template) {
+export function attachTemplateToCartModal(template) {
     let shoppingCart = document.querySelector(".modal");
     const cartDropdownBuilder = htmlFactory(template);
     const cartDropdownBodyTemplate = cartDropdownBuilder();
@@ -195,21 +184,17 @@ function initQuantityModifyingButtons() {
     let deleteItemButtons = [...document.querySelectorAll(".delete-cart-item")];
 
     increaseQuantityButtons.forEach((button) => {
-        const increaseQuantity = 1;
-        initQuantityModifyingButton(button, increaseQuantity);
+        const quantity = 1;
+        initQuantityModifyingButton(button, quantity);
     })
 
     decreaseQuantityButtons.forEach((button) => {
-        const decreaseQuantity = -1;
-        initQuantityModifyingButton(button, decreaseQuantity);
+        const quantity = -1;
+        initQuantityModifyingButton(button, quantity);
     })
 
     deleteItemButtons.forEach((button) => {
-        button.addEventListener("click", (button) => {
-            event.preventDefault();
-            console.log(button);
-            deleteShoppingCartItemsButtonsFunctionality(button);
-        })
+        deleteShoppingCartItemsButtonsFunctionality(button);
     })
 }
 
@@ -260,20 +245,23 @@ function loadEmptyCartPage() {
 
 //Section: Delete cart item
 function deleteShoppingCartItemsButtonsFunctionality(button) {
-    console.log(button);
-    let quantity = getItemQuantity(button) * (- 1);
-    updateCart(button, quantity);
+    button.addEventListener("click", () => {
+        event.preventDefault();
+        let quantity = getItemQuantity(event.currentTarget) * (- 1);
+        updateCart(button, quantity);
+        let isStorageEmpty = getStorage() !== null;
 
-    if (getStorage() !== null) {
-        deleteCartItem();
-    }
-    else {
-        loadEmptyCartModal();
-    }
+        if (isStorageEmpty) {
+            deleteCartItem(event.currentTarget);
+        }
+        else {
+            loadEmptyCartModal();
+        }
+    })
 }
 
 
-function deleteCartItem() {
+function deleteCartItem(button) {
     let id = button.getAttribute('data-product-id');
     let htmlItem = document.querySelector(`tr[data-product-id="${id}"]`);
     htmlItem.remove();
