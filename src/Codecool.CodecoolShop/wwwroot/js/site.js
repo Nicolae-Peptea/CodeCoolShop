@@ -1,5 +1,5 @@
 ﻿import {
-    initClickEventOnButtons, showCartQuantityAfterLoading,
+    initClickEventOnButtons, displayCartQuantityOnDesignatedFields,
     loadCartModal
 } from "/js/cartUtils.js";
 
@@ -27,6 +27,6 @@ function initCartButtonFunctionality() {
 }
 
 
-showCartQuantityAfterLoading();
+displayCartQuantityOnDesignatedFields();
 initCartButtonFunctionality();
 initBuyButtons();
