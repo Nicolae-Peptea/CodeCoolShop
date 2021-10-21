@@ -13,17 +13,6 @@ export function initClickEventOnButtons(button, quantity) {
     button.addEventListener('click', () => {
         event.preventDefault();
         updateCart(button, quantity);
-
-        let shoppingCart = document.querySelector(".modal");
-        let filledCart = document.querySelector("#filled-cart");
-
-        if (shoppingCart.style.display == "block") {
-            loadCartModal();
-        }
-
-        if (filledCart) {
-            loadShoppingCartPage();
-        }
     })
 }
 
