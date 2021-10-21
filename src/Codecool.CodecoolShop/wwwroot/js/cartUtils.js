@@ -195,21 +195,17 @@ function initQuantityModifyingButtons() {
     let deleteItemButtons = [...document.querySelectorAll(".delete-cart-item")];
 
     increaseQuantityButtons.forEach((button) => {
-        const increaseQuantity = 1;
-        initQuantityModifyingButton(button, increaseQuantity);
+        const quantity = 1;
+        initQuantityModifyingButton(button, quantity);
     })
 
     decreaseQuantityButtons.forEach((button) => {
-        const decreaseQuantity = -1;
-        initQuantityModifyingButton(button, decreaseQuantity);
+        const quantity = -1;
+        initQuantityModifyingButton(button, quantity);
     })
 
     deleteItemButtons.forEach((button) => {
-        button.addEventListener("click", (button) => {
-            event.preventDefault();
-            console.log(button);
-            deleteShoppingCartItemsButtonsFunctionality(button);
-        })
+        deleteShoppingCartItemsButtonsFunctionality(button);
     })
 }
 
@@ -260,20 +256,23 @@ function loadEmptyCartPage() {
 
 //Section: Delete cart item
 function deleteShoppingCartItemsButtonsFunctionality(button) {
-    console.log(button);
-    let quantity = getItemQuantity(button) * (- 1);
-    updateCart(button, quantity);
+    button.addEventListener("click", () => {
+        event.preventDefault();
+        let quantity = getItemQuantity(event.currentTarget) * (- 1);
+        updateCart(button, quantity);
+        let isStorageEmpty = getStorage() !== null;
 
-    if (getStorage() !== null) {
-        deleteCartItem();
-    }
-    else {
-        loadEmptyCartModal();
-    }
+        if (isStorageEmpty) {
+            deleteCartItem(event.currentTarget);
+        }
+        else {
+            loadEmptyCartModal();
+        }
+    })
 }
 
 
-function deleteCartItem() {
+function deleteCartItem(button) {
     let id = button.getAttribute('data-product-id');
     let htmlItem = document.querySelector(`tr[data-product-id="${id}"]`);
     htmlItem.remove();
