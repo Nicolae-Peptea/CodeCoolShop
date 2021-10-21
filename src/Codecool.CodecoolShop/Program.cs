@@ -26,7 +26,7 @@ namespace Codecool.CodecoolShop
 
             try
             {
-                Log.Information("Codecool Shop starting up");
+                Log.Information("Codecool Shop App starting up");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
