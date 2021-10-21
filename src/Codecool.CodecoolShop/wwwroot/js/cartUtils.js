@@ -3,6 +3,14 @@
 let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
 let shoppingCartPageContainer = document.querySelector(".shopping-cart-page-container");
 
+$("body").on("click", "#cartModal > div > div > div.modal-footer.border-top-0.d-flex.justify-content-between > input.button.btn.btn-success", () => {
+    let items = JSON.parse(getStorage())
+    let inputValue = document.querySelector("input#total");
+    let total = 0;
+    items.forEach(element => total += element.productQuantity * element.productPrice);
+    inputValue.value = total;
+});
+
 
 export function getStorage() {
     return sessionStorage.getItem("shoppingCartItems");
@@ -105,14 +113,6 @@ function loadFilledCartModal() {
     attachTemplateToCartModal(filledModalBodyTemplate);
     cartItemsLoader(itemTemplate, itemsContainerClass, totalCartContainerClass);
     initQuantityModifyingButtons();
-
-    $("#cartModal > div > div > div.modal-footer.border-top-0.d-flex.justify-content-between > input.button.btn.btn-success")
-        .on("click", () => {
-            let inputValue = document.querySelector("input#total");
-            let total = 0;
-            items.forEach(element => total += element.productQuantity * element.productPrice);
-            inputValue.value = total;
-        });
 }
 
 function loadEmptyCartModal() {
@@ -162,11 +162,6 @@ function loadFilledCartPage(cartItems) {
 
     shoppingCartPageContainer.innerHTML = filledCartFormat;
     loadItemsInShoppingCartPageContainer();
-
-    $("#checkout-button").on("click", () => {
-        let inputValue = document.querySelector("#cart-items");
-        inputValue.value = JSON.stringify(cartItems);
-    });
 }
 
 
