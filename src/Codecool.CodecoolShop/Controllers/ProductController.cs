@@ -62,7 +62,7 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public IActionResult Charge(OrderDetails order)
         {
-            List<CartItem> cartItems = JsonHelper.Deserialize <List<CartItem>>(order.CartItems);
+            List<CartItem> cartItems = JsonHelper.Deserialize<List<CartItem>>(order.CartItems);
             IEnumerable<ShopProduct> products = ProductService.GetAllProducts();
 
             List<Models.OrderItem> orderItems = OrderServices.GetOrderItems(cartItems, products).ToList();
