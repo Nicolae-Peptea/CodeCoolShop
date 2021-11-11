@@ -34,6 +34,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public IEnumerable<Category> GetAll()
         {
+            var x = _context.Categories;
             return _context.Categories;
         }
     }

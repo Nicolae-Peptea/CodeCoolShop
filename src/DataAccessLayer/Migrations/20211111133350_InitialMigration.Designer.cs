@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CodeCoolShopContext))]
-    [Migration("20211111103032_InitialMigration")]
+    [Migration("20211111133350_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,21 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.",
+                            Name = "Tablet"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "A mobile phone, cellular phone, cell phone, cellphone, handphone, or hand phone, sometimes shortened to simply mobile, cell or just phone.",
+                            Name = "Phone"
+                        });
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Customer", b =>
@@ -131,6 +145,44 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.",
+                            Name = "Amazon Fire",
+                            Price = 49.9m,
+                            SupplierId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 1,
+                            Description = "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.",
+                            Name = "Lenovo IdeaPad Miix 700",
+                            Price = 479.0m,
+                            SupplierId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 1,
+                            Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.",
+                            Name = "Amazon Fire HD 8",
+                            Price = 89.0m,
+                            SupplierId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 2,
+                            Description = "The iPhone 12 is a new iPhone model developed by Apple Inc. It is part of a device family that was announced during a special event on October 13, 2020 to succeed the iPhone 11 line.",
+                            Name = "Apple iPhone 12 Pro Max",
+                            Price = 1239.0m,
+                            SupplierId = 3
+                        });
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.ProductOrder", b =>
@@ -170,7 +222,27 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Supplier");
+                    b.ToTable("Suppliers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Digital content and services",
+                            Name = "Amazon"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Computers",
+                            Name = "Lenovo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Consumer electronics, computer software, and online services.",
+                            Name = "Apple"
+                        });
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Order", b =>
