@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Stripe;
 using Serilog;
+using Stripe;
+using DataAccessLayer.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 namespace Codecool.CodecoolShop
 {
@@ -30,6 +29,13 @@ namespace Codecool.CodecoolShop
         {
             services.AddControllersWithViews();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.AddTransient<IMailService, MailService>();
+
+            //services.AddDbContext<CodeCoolShopContext>();
+            string connectionString = Configuration.GetConnectionString("CodeCoolShop");
+            services.AddDbContext<CodeCoolShopContext>(options =>
+             options.UseSqlServer(connectionString)
+         );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,14 +78,14 @@ namespace Codecool.CodecoolShop
             IProductCategoryDao productCategoryDataStore = ProductCategoryDaoMemory.GetInstance();
             ISupplierDao supplierDataStore = SupplierDaoMemory.GetInstance();
 
-            Supplier amazon = new Supplier{Name = "Amazon", Description = "Digital content and services"};
+            Supplier amazon = new Supplier { Name = "Amazon", Description = "Digital content and services" };
             supplierDataStore.Add(amazon);
-            Supplier lenovo = new Supplier{Name = "Lenovo", Description = "Computers"};
+            Supplier lenovo = new Supplier { Name = "Lenovo", Description = "Computers" };
             supplierDataStore.Add(lenovo);
             Supplier apple = new Supplier { Name = "Apple", Description = "Consumer electronics, computer software, and online services." };
             supplierDataStore.Add(apple);
 
-            ProductCategory tablet = new ProductCategory {Name = "Tablet", Department = "Hardware", Description = "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display." };
+            ProductCategory tablet = new ProductCategory { Name = "Tablet", Department = "Hardware", Description = "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display." };
             productCategoryDataStore.Add(tablet);
             ProductCategory phone = new ProductCategory { Name = "Phone", Department = "Hardware", Description = "A mobile phone, cellular phone, cell phone, cellphone, handphone, or hand phone, sometimes shortened to simply mobile, cell or just phone." };
             productCategoryDataStore.Add(phone);
