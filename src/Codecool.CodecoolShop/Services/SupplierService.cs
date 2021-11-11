@@ -1,5 +1,6 @@
 ﻿using Codecool.CodecoolShop.Daos;
-using Codecool.CodecoolShop.Models;
+//using Codecool.CodecoolShop.Models;
+using DataAccessLayer.Model;
 using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Services

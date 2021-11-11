@@ -9,7 +9,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     {
         private readonly CodeCoolShopContext _context;
 
-        private SupplierDaoDb(CodeCoolShopContext context)
+        public SupplierDaoDb(CodeCoolShopContext context)
         {
             _context = context;
         }

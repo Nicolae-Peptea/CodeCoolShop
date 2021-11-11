@@ -1,6 +1,7 @@
 using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
+//using DataAccessLayer.Model;
 using Codecool.CodecoolShop.Services;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +20,8 @@ namespace Codecool.CodecoolShop.Controllers
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
-        public ProductServices ProductService { get; set; }
+        //public ProductServices ProductService { get; set; }
+        public ProductServicesDb ProductService { get; set; }
         public CategoryService CategoryService { get; set; }
         public SupplierService SupplierService { get; set; }
         public OrdersServices OrdersServices { get; set; }
@@ -28,15 +30,20 @@ namespace Codecool.CodecoolShop.Controllers
 
         public CartItem MyProperty { get; set; }
 
-        public ProductController(ILogger<ProductController> logger, IMailService mailService, CodeCoolShopContext ctx)
+        public ProductController(ILogger<ProductController> logger, 
+            IMailService mailService, CodeCoolShopContext context)
         {
             _logger = logger;
-            ProductService = new ProductServices(
-                ProductDaoMemory.GetInstance(),
-                ProductCategoryDaoMemory.GetInstance(),
-                SupplierDaoMemory.GetInstance());
-            CategoryService = new CategoryService(ProductCategoryDaoMemory.GetInstance());
-            SupplierService = new SupplierService(SupplierDaoMemory.GetInstance());
+            var productDao = new ProductDaoDb(context);
+            var categoryDao = new ProductCategoryDaoDb(context);
+            var supplierDao = new SupplierDaoDb(context);
+            //ProductService = new ProductServices(
+            //    ProductDaoMemory.GetInstance(),
+            //    ProductCategoryDaoMemory.GetInstance(),
+            //    SupplierDaoMemory.GetInstance());
+            ProductService = new ProductServicesDb(productDao, categoryDao, supplierDao);
+            CategoryService = new CategoryService(categoryDao);
+            SupplierService = new SupplierService(supplierDao);
             OrdersServices = new OrdersServices(OrdersDaoMemory.GetInstance());
             OrderServices = new OrderServices(OrderDaoMemory.GetInstance());
             EmailService = mailService;
@@ -51,7 +58,8 @@ namespace Codecool.CodecoolShop.Controllers
             ViewBag.CurrentCategory = category;
             ViewBag.CurrentSupplier = supplier;
 
-            IEnumerable<ShopProduct> products = ProductService.GetSortedProducts(category, supplier);
+            //IEnumerable<ShopProduct> products = ProductService.GetSortedProducts(category, supplier);
+            IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetSortedProducts(category, supplier);
 
             return View(products.ToList());
         }
@@ -70,9 +78,9 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Charge(OrderDetails order)
         {
             List<CartItem> cartItems = JsonHelper.Deserialize<List<CartItem>>(order.CartItems);
-            IEnumerable<ShopProduct> products = ProductService.GetAllProducts();
+            IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetAllProducts();
 
-            List<Models.OrderItem> orderItems = OrderServices.GetOrderItems(cartItems, products).ToList();
+            //List<Models.OrderItem> orderItems = OrderServices.GetOrderItems(cartItems, products).ToList();
             decimal orderTotal = OrderServices.GetTotalOrderValue();
 
             var customers = new CustomerService();
@@ -95,8 +103,8 @@ namespace Codecool.CodecoolShop.Controllers
                 });
 
                 Log.Information("Successful checkout process - payment complete");
-                EmailConfirmation model = new EmailConfirmation(order, orderTotal, orderItems);
-                EmailService.Execute(model).Wait();
+                //EmailConfirmation model = new EmailConfirmation(order, orderTotal, orderItems);
+                //EmailService.Execute(model).Wait();
                 OrderServices.EmptyOrder();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
