@@ -1,64 +1,65 @@
-using Codecool.CodecoolShop.Models;
-using System.Collections.Generic;
-using System.Linq;
+//using Codecool.CodecoolShop.Models;
 
-namespace Codecool.CodecoolShop.Daos.Implementations
-{
-    public class ProductDaoMemory : IProductDao
-    {
-        private List<ShopProduct> data = new List<ShopProduct>();
-        private static ProductDaoMemory instance = null;
+//using System.Collections.Generic;
+//using System.Linq;
 
-        public ProductDaoMemory()
-        {
-        }
+//namespace Codecool.CodecoolShop.Daos.Implementations
+//{
+//    public class ProductDaoMemory : IProductDao
+//    {
+//        private List<ShopProduct> data = new List<ShopProduct>();
+//        private static ProductDaoMemory instance = null;
 
-        public static ProductDaoMemory GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new ProductDaoMemory();
-            }
+//        public ProductDaoMemory()
+//        {
+//        }
 
-            return instance;
-        }
+//        public static ProductDaoMemory GetInstance()
+//        {
+//            if (instance == null)
+//            {
+//                instance = new ProductDaoMemory();
+//            }
 
-        public void Add(ShopProduct item)
-        {
-            item.Id = data.Count + 1;
-            data.Add(item);
-        }
+//            return instance;
+//        }
 
-        public void RemoveItem(int id)
-        {
-            data.Remove(this.Get(id));
-        }
+//        public void Add(ShopProduct item)
+//        {
+//            item.Id = data.Count + 1;
+//            data.Add(item);
+//        }
 
-        public ShopProduct Get(int id)
-        {
-            return data.Find(x => x.Id == id);
-        }
+//        public void RemoveItem(int id)
+//        {
+//            data.Remove(this.Get(id));
+//        }
 
-        public IEnumerable<ShopProduct> GetAll()
-        {
-            return data;
-        }
+//        public ShopProduct Get(int id)
+//        {
+//            return data.Find(x => x.Id == id);
+//        }
 
-        public IEnumerable<ShopProduct> GetBy(Supplier supplier)
-        {
-            return data.Where(x => x.Supplier.Id == supplier.Id);
-        }
+//        public IEnumerable<ShopProduct> GetAll()
+//        {
+//            return data;
+//        }
 
-        public IEnumerable<ShopProduct> GetBy(ProductCategory productCategory)
-        {
-            return data.Where(x => x.ProductCategory.Id == productCategory.Id);
-        }
+//        public IEnumerable<ShopProduct> GetBy(Supplier supplier)
+//        {
+//            return data.Where(x => x.Supplier.Id == supplier.Id);
+//        }
 
-        public IEnumerable<ShopProduct> GetBy(ProductCategory productCategory,
-            Supplier supplier)
-        {
-            return data.Where(x => x.ProductCategory.Id == productCategory.Id)
-                .Where(x => x.Supplier.Id == supplier.Id);
-        }
-    }
-}
+//        public IEnumerable<ShopProduct> GetBy(ProductCategory productCategory)
+//        {
+//            return data.Where(x => x.ProductCategory.Id == productCategory.Id);
+//        }
+
+//        public IEnumerable<ShopProduct> GetBy(ProductCategory productCategory,
+//            Supplier supplier)
+//        {
+//            return data.Where(x => x.ProductCategory.Id == productCategory.Id)
+//                .Where(x => x.Supplier.Id == supplier.Id);
+//        }
+//    }
+//}

@@ -40,7 +40,7 @@ namespace Codecool.CodecoolShop.Controllers
             OrdersServices = new OrdersServices(OrdersDaoMemory.GetInstance());
             OrderServices = new OrderServices(OrderDaoMemory.GetInstance());
             EmailService = mailService;
-            
+
         }
 
         public IActionResult Index(int category = 1, int supplier = 0)
