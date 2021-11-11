@@ -23,7 +23,6 @@ namespace Codecool.CodecoolShop.Controllers
         public ProductServicesDb ProductService { get; set; }
         public CategoryService CategoryService { get; set; }
         public SupplierService SupplierService { get; set; }
-        public OrdersServices OrdersServices { get; set; }
         public OrderServices OrderServices { get; set; }
         public IMailService EmailService { get; set; }
 
@@ -40,7 +39,6 @@ namespace Codecool.CodecoolShop.Controllers
             ProductService = new ProductServicesDb(productDao, categoryDao, supplierDao);
             CategoryService = new CategoryService(categoryDao);
             SupplierService = new SupplierService(supplierDao);
-            OrdersServices = new OrdersServices(OrdersDaoMemory.GetInstance());
             OrderServices = new OrderServices(OrderDaoMemory.GetInstance());
             EmailService = mailService;
         }
