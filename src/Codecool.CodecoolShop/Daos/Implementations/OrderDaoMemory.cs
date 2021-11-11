@@ -58,7 +58,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public decimal GetTotalValue()
         {
-            return data.Select(item => item.Product.DefaultPrice * item.Quantity).Sum();
+            return data.Select(item => item.Product.Price * item.Quantity).Sum();
         }
 
         public void EmptyOrder()
