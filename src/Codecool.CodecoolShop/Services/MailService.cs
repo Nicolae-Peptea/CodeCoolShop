@@ -2,13 +2,11 @@
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Serilog;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class MailService: IMailService
+    public class MailService : IMailService
     {
         private string _sender = "mihaibuga11@gmail.com";
 

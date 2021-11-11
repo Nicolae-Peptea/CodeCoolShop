@@ -1,8 +1,6 @@
-using System;
+using Codecool.CodecoolShop.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Codecool.CodecoolShop.Models;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
@@ -56,7 +54,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return data.Where(x => x.ProductCategory.Id == productCategory.Id);
         }
 
-        public IEnumerable<ShopProduct> GetBy(ProductCategory productCategory, 
+        public IEnumerable<ShopProduct> GetBy(ProductCategory productCategory,
             Supplier supplier)
         {
             return data.Where(x => x.ProductCategory.Id == productCategory.Id)

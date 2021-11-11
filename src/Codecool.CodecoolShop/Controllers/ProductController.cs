@@ -1,19 +1,18 @@
+using Codecool.CodecoolShop.Daos.Implementations;
+using Codecool.CodecoolShop.Helpers;
+using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Services;
+using DataAccessLayer.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using Codecool.CodecoolShop.Daos;
-using Codecool.CodecoolShop.Daos.Implementations;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Codecool.CodecoolShop.Models;
-using Codecool.CodecoolShop.Services;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using Codecool.CodecoolShop.Helpers;
-using Stripe;
-using Serilog;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -25,8 +24,11 @@ namespace Codecool.CodecoolShop.Controllers
         public SupplierService SupplierService { get; set; }
         public OrdersServices OrdersServices { get; set; }
         public OrderServices OrderServices { get; set; }
+        public IMailService EmailService { get; set; }
 
-        public ProductController(ILogger<ProductController> logger)
+        public CartItem MyProperty { get; set; }
+
+        public ProductController(ILogger<ProductController> logger, IMailService mailService, CodeCoolShopContext ctx)
         {
             _logger = logger;
             ProductService = new ProductServices(
@@ -37,6 +39,8 @@ namespace Codecool.CodecoolShop.Controllers
             SupplierService = new SupplierService(SupplierDaoMemory.GetInstance());
             OrdersServices = new OrdersServices(OrdersDaoMemory.GetInstance());
             OrderServices = new OrderServices(OrderDaoMemory.GetInstance());
+            EmailService = mailService;
+            
         }
 
         public IActionResult Index(int category = 1, int supplier = 0)
@@ -92,7 +96,7 @@ namespace Codecool.CodecoolShop.Controllers
 
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new EmailConfirmation(order, orderTotal, orderItems);
-                new MailService().Execute(model).Wait();
+                EmailService.Execute(model).Wait();
                 OrderServices.EmptyOrder();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
