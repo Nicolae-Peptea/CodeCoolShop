@@ -1,12 +1,5 @@
 ﻿using DataAccessLayer.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Data
 {
@@ -43,7 +36,7 @@ namespace DataAccessLayer.Data
             var pr2 = new Product { Id = 2, Name = "Lenovo IdeaPad Miix 700", Price = 479.0m, Description = "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", CategoryId = 1, SupplierId = 2 };
             var pr3 = new Product { Id = 3, Name = "Amazon Fire HD 8", Price = 89.0m, Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", CategoryId = 1, SupplierId = 1 };
             var pr4 = new Product { Id = 4, Name = "Apple iPhone 12 Pro Max", Price = 1239.0m, Description = "The iPhone 12 is a new iPhone model developed by Apple Inc. It is part of a device family that was announced during a special event on October 13, 2020 to succeed the iPhone 11 line.", CategoryId = 2, SupplierId = 3 };
-            
+
             builder.Entity<Supplier>().HasData(amazon, lenovo, apple);
             builder.Entity<Category>().HasData(tablet, phone);
             builder.Entity<Product>().HasData(pr1, pr2, pr3, pr4);

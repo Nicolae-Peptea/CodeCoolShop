@@ -1,33 +1,24 @@
 using Codecool.CodecoolShop.Daos.Implementations;
-using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
-//using DataAccessLayer.Model;
 using Codecool.CodecoolShop.Services;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using Stripe;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Codecool.CodecoolShop.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ILogger<ProductController> _logger;
         public ProductServicesDb ProductService { get; set; }
         public CategoryService CategoryService { get; set; }
         public SupplierService SupplierService { get; set; }
 
-        public ProductController(ILogger<ProductController> logger, 
-            CodeCoolShopContext context)
+        public ProductController(CodeCoolShopContext context)
         {
-            _logger = logger;
             ProductDaoDb productDao = new(context);
             ProductCategoryDaoDb categoryDao = new(context);
             SupplierDaoDb supplierDao = new(context);
