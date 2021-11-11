@@ -30,8 +30,8 @@ namespace Codecool.CodecoolShop
 
             string connectionString = Configuration.GetConnectionString("CodeCoolShop");
             services.AddDbContext<CodeCoolShopContext>(options =>
-             options.UseSqlServer(connectionString)
-         );
+                options.UseSqlServer(connectionString)
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

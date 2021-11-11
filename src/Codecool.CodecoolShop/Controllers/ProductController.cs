@@ -4,7 +4,6 @@ using Codecool.CodecoolShop.Services;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Collections.Generic;
 using System.Diagnostics;
