@@ -39,7 +39,8 @@ namespace Codecool.CodecoolShop.Services
             return this.order.GetTotalQuantity();
         }
 
-        public IEnumerable<OrderItem> GetOrderItems(List<CartItem> cartItems, IEnumerable<Product> products)
+        public IEnumerable<OrderItem> GetOrderItems(List<CartItem> cartItems, 
+            IEnumerable<Product> products)
         {
             foreach (Product product in products)
             {
@@ -47,7 +48,7 @@ namespace Codecool.CodecoolShop.Services
                 {
                     if (product.Id == item.ProductId)
                     {
-                        OrderItem orderItem = new OrderItem(product, item.ProductQuantity);
+                        OrderItem orderItem = new(product, item.ProductQuantity);
                         this.Add(orderItem);
                     }
                 }

@@ -1,13 +1,15 @@
+using DataAccessLayer.Model;
+
 namespace Codecool.CodecoolShop.Models
 {
     public class ShopProduct : BaseModel
     {
         public string Currency { get; set; }
         public decimal DefaultPrice { get; set; }
-        public ProductCategory ProductCategory { get; set; }
+        public Category ProductCategory { get; set; }
         public Supplier Supplier { get; set; }
 
-        public void SetProductCategory(ProductCategory productCategory)
+        public void SetProductCategory(Category productCategory)
         {
             ProductCategory = productCategory;
             ProductCategory.Products.Add(this);
