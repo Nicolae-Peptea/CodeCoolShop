@@ -1,4 +1,5 @@
-using Codecool.CodecoolShop.Models;
+//using Codecool.CodecoolShop.Models;
+using DataAccessLayer.Model;
 
 namespace Codecool.CodecoolShop.Daos
 {
