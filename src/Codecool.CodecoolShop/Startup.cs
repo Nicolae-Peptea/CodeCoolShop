@@ -1,14 +1,14 @@
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Stripe;
-using DataAccessLayer.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Codecool.CodecoolShop
 {

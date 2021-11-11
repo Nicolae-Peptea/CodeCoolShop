@@ -1,5 +1,5 @@
-using DataAccessLayer.Model;
 using DataAccessLayer.Data;
+using DataAccessLayer.Model;
 using System.Collections.Generic;
 using System.Linq;
 

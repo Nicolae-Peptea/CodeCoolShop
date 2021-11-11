@@ -2,5 +2,5 @@ using DataAccessLayer.Model;
 
 namespace Codecool.CodecoolShop.Daos
 {
-    public interface ISupplierDao : IDao<Supplier> {}
+    public interface ISupplierDao : IDao<Supplier> { }
 }

@@ -39,7 +39,7 @@ namespace Codecool.CodecoolShop.Services
         //    return this.order.GetTotalQuantity();
         //}
 
-        public List<OrderItem> GetOrderItems(List<ProductOrder> cartItems, 
+        public List<OrderItem> GetOrderItems(List<ProductOrder> cartItems,
             IEnumerable<Product> products)
         {
             List<OrderItem> orderItems = new();
