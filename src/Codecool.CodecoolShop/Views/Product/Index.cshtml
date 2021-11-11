@@ -3,14 +3,15 @@
 }
 
 @*@model List<Codecool.CodecoolShop.Models.ShopProduct>*@
-@model List<DataAccessLayer.Model.Product>
+@*@model List<DataAccessLayer.Model.Product>*@
+@model ViewModel
 
 <form asp-area="" asp-controller="Product" asp-action="Index">
     <div class="sort-control-group">
         <div class="sort-control-item">
             <label for="sort_by_category">Sort by Category:</label>
             <select name="category">
-                @if (ViewBag.CurrentCategory == 0)
+                @if (Model.CurrentCategory == 0)
                 {
                     <option value="0" selected>All</option>
                 }
@@ -18,9 +19,9 @@
                 {
                     <option value="0">All</option>
                 }
-                @foreach (var category in ViewBag.Categories)
+                @foreach (var category in Model.Categories)
                 {
-                    @if (ViewBag.CurrentCategory == category.Id)
+                    @if (Model.CurrentCategory == category.Id)
                     {
                         <option value="@category.Id" selected>@category.Name</option>
                     }
@@ -34,7 +35,7 @@
         <div class="sort-control-item">
             <label for="sort_by_suppliers">Sort by Suppliers:</label>
             <select name="supplier">
-                @if (ViewBag.CurrentSupplier == 0)
+                @if (Model.CurrentSupplier == 0)
                 {
                     <option value="0" selected>All</option>
                 }
@@ -42,9 +43,9 @@
                 {
                     <option value="0">All</option>
                 }
-                @foreach (var supplier in ViewBag.Suppliers)
+                @foreach (var supplier in Model.Suppliers)
                 {
-                    @if (ViewBag.CurrentSupplier == supplier.Id)
+                    @if (Model.CurrentSupplier == supplier.Id)
                     {
                         <option value="@supplier.Id" selected>@supplier.Name</option>
                     }
@@ -64,16 +65,31 @@
 
 
     <div class="cards">
-        @foreach (var element in Model)
+        @*@foreach (var element in Model)
+            {
+                <div class="card">
+                    <img src="img/@(element.Name).jpg">
+
+                    <div class="card-body">
+                        <h5 class="card-title">@element.Name</h5>
+                        <p class="card-text"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
+                        <a href="" id="add-to-cart" data-product-id="@element.Id" data-product-name="@element.Name" type="button"
+                           data-price="@element.DefaultPrice" data-currency="@element.Currency" class="btn btn-primary">
+                            Add To Cart
+                        </a>
+                    </div>
+                </div>
+            }*@
+        @foreach (var element in Model.Products)
         {
             <div class="card">
                 <img src="img/@(element.Name).jpg">
 
                 <div class="card-body">
                     <h5 class="card-title">@element.Name</h5>
-                    <p class="card-text"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
+                    <p class="card-text"><strong>Price: @element.Price.ToString("C2")</strong></p>
                     <a href="" id="add-to-cart" data-product-id="@element.Id" data-product-name="@element.Name" type="button"
-                       data-price="@element.DefaultPrice" data-currency="@element.Currency" class="btn btn-primary">
+                       data-price="@element.Price" class="btn btn-primary">
                         Add To Cart
                     </a>
                 </div>

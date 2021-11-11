@@ -53,15 +53,20 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Index(int category = 1, int supplier = 0)
         {
             Log.Information("User is on the main page");
-            ViewBag.Categories = CategoryService.GetCategories();
-            ViewBag.Suppliers = SupplierService.GetSuppliers();
-            ViewBag.CurrentCategory = category;
-            ViewBag.CurrentSupplier = supplier;
+            //ViewBag.Categories = CategoryService.GetCategories();
+            //ViewBag.Suppliers = SupplierService.GetSuppliers();
+            //ViewBag.CurrentCategory = category;
+            //ViewBag.CurrentSupplier = supplier;
+            IEnumerable<DataAccessLayer.Model.Category> categories = CategoryService.GetCategories();
+            IEnumerable<DataAccessLayer.Model.Supplier> suppliers = SupplierService.GetSuppliers();
 
             //IEnumerable<ShopProduct> products = ProductService.GetSortedProducts(category, supplier);
             IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetSortedProducts(category, supplier);
 
-            return View(products.ToList());
+            var viewModel = new ViewModel(categories, suppliers, products, category, supplier);
+
+            //return View(products.ToList());
+            return View(viewModel);
         }
 
         [HttpPost]
