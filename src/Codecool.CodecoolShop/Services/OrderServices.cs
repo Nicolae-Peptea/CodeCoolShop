@@ -14,51 +14,53 @@ namespace Codecool.CodecoolShop.Services
             this.order = order;
         }
 
-        public void Add(OrderItem item)
+        //public void Add(OrderItem item)
+        //{
+        //    this.order.Add(item);
+        //}
+
+        //public void RemoveItem(int productId)
+        //{
+        //    this.order.RemoveItem(productId);
+        //}
+
+        //public IEnumerable<OrderItem> GetAllItems()
+        //{
+        //    return this.order.GetAll();
+        //}
+
+        public decimal GetTotalOrderValue(List<OrderItem> orderItems)
         {
-            this.order.Add(item);
+            return this.order.GetTotalValue(orderItems);
         }
 
-        public void RemoveItem(int productId)
-        {
-            this.order.RemoveItem(productId);
-        }
+        //public int GetTotalQuantity()
+        //{
+        //    return this.order.GetTotalQuantity();
+        //}
 
-        public IEnumerable<OrderItem> GetAllItems()
-        {
-            return this.order.GetAll();
-        }
-
-        public decimal GetTotalOrderValue()
-        {
-            return this.order.GetTotalValue();
-        }
-
-        public int GetTotalQuantity()
-        {
-            return this.order.GetTotalQuantity();
-        }
-
-        public IEnumerable<OrderItem> GetOrderItems(List<CartItem> cartItems, 
+        public List<OrderItem> GetOrderItems(List<ProductOrder> cartItems, 
             IEnumerable<Product> products)
         {
+            List<OrderItem> orderItems = new();
+
             foreach (Product product in products)
             {
-                foreach (CartItem item in cartItems)
+                foreach (ProductOrder item in cartItems)
                 {
                     if (product.Id == item.ProductId)
                     {
-                        OrderItem orderItem = new(product, item.ProductQuantity);
-                        this.Add(orderItem);
+                        OrderItem orderItem = new(product, item.Quantity);
+                        orderItems.Add(orderItem);
                     }
                 }
             }
-            return this.order.GetAll();
+            return orderItems;
         }
 
-        public void EmptyOrder()
-        {
-            this.order.EmptyOrder();
-        }
+        //public void EmptyOrder()
+        //{
+        //    this.order.EmptyOrder();
+        //}
     }
 }

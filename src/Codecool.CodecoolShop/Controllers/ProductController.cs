@@ -26,8 +26,6 @@ namespace Codecool.CodecoolShop.Controllers
         public OrderServices OrderServices { get; set; }
         public IMailService EmailService { get; set; }
 
-        public CartItem MyProperty { get; set; }
-
         public ProductController(ILogger<ProductController> logger, 
             IMailService mailService, CodeCoolShopContext context)
         {
@@ -35,11 +33,12 @@ namespace Codecool.CodecoolShop.Controllers
             ProductDaoDb productDao = new(context);
             ProductCategoryDaoDb categoryDao = new(context);
             SupplierDaoDb supplierDao = new(context);
+            OrderDaoDb orderDao = new(context);
 
             ProductService = new ProductServicesDb(productDao, categoryDao, supplierDao);
             CategoryService = new CategoryService(categoryDao);
             SupplierService = new SupplierService(supplierDao);
-            OrderServices = new OrderServices(OrderDaoMemory.GetInstance());
+            OrderServices = new OrderServices(orderDao);
             EmailService = mailService;
         }
 
@@ -69,11 +68,14 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public IActionResult Charge(OrderDetails order)
         {
-            List<CartItem> cartItems = JsonHelper.Deserialize<List<CartItem>>(order.CartItems);
+            List<DataAccessLayer.Model.ProductOrder> cartItems = JsonHelper
+                .Deserialize<List<DataAccessLayer.Model.ProductOrder>>(order.CartItems);
             IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetAllProducts();
 
-            List<Models.OrderItem> orderItems = OrderServices.GetOrderItems(cartItems, products).ToList();
-            decimal orderTotal = OrderServices.GetTotalOrderValue();
+            List<Models.OrderItem> orderItems = OrderServices
+                .GetOrderItems(cartItems, products);
+
+            decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
 
             CustomerService customers = new();
             ChargeService charges = new();
@@ -97,7 +99,7 @@ namespace Codecool.CodecoolShop.Controllers
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
                 EmailService.Execute(model).Wait();
-                OrderServices.EmptyOrder();
+                //OrderServices.EmptyOrder();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)

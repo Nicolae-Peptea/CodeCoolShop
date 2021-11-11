@@ -12,7 +12,7 @@ namespace Codecool.CodecoolShop.Models
         public void SetProductCategory(Category productCategory)
         {
             ProductCategory = productCategory;
-            ProductCategory.Products.Add(this);
+            //ProductCategory.Products.Add(this);
         }
     }
 }
