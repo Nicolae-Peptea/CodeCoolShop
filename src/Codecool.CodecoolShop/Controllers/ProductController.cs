@@ -33,9 +33,9 @@ namespace Codecool.CodecoolShop.Controllers
             IMailService mailService, CodeCoolShopContext context)
         {
             _logger = logger;
-            var productDao = new ProductDaoDb(context);
-            var categoryDao = new ProductCategoryDaoDb(context);
-            var supplierDao = new SupplierDaoDb(context);
+            ProductDaoDb productDao = new(context);
+            ProductCategoryDaoDb categoryDao = new(context);
+            SupplierDaoDb supplierDao = new(context);
 
             ProductService = new ProductServicesDb(productDao, categoryDao, supplierDao);
             CategoryService = new CategoryService(categoryDao);
@@ -53,7 +53,7 @@ namespace Codecool.CodecoolShop.Controllers
             IEnumerable<DataAccessLayer.Model.Supplier> suppliers = SupplierService.GetSuppliers();
             IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetSortedProducts(category, supplier);
 
-            var viewModel = new ViewModel(categories, suppliers, products, category, supplier);
+            ViewModel viewModel = new(categories, suppliers, products, category, supplier);
 
             return View(viewModel);
         }
@@ -74,11 +74,11 @@ namespace Codecool.CodecoolShop.Controllers
             List<CartItem> cartItems = JsonHelper.Deserialize<List<CartItem>>(order.CartItems);
             IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetAllProducts();
 
-            //List<Models.OrderItem> orderItems = OrderServices.GetOrderItems(cartItems, products).ToList();
+            List<Models.OrderItem> orderItems = OrderServices.GetOrderItems(cartItems, products).ToList();
             decimal orderTotal = OrderServices.GetTotalOrderValue();
 
-            var customers = new CustomerService();
-            var charges = new ChargeService();
+            CustomerService customers = new();
+            ChargeService charges = new();
 
             var customer = customers.Create(new CustomerCreateOptions
             {
@@ -97,8 +97,8 @@ namespace Codecool.CodecoolShop.Controllers
                 });
 
                 Log.Information("Successful checkout process - payment complete");
-                //EmailConfirmation model = new EmailConfirmation(order, orderTotal, orderItems);
-                //EmailService.Execute(model).Wait();
+                EmailConfirmation model = new(order, orderTotal, orderItems);
+                EmailService.Execute(model).Wait();
                 OrderServices.EmptyOrder();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }

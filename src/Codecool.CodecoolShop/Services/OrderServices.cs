@@ -1,5 +1,6 @@
 ﻿using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Models;
+using DataAccessLayer.Model;
 using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Services
@@ -38,9 +39,9 @@ namespace Codecool.CodecoolShop.Services
             return this.order.GetTotalQuantity();
         }
 
-        public IEnumerable<OrderItem> GetOrderItems(List<CartItem> cartItems, IEnumerable<ShopProduct> products)
+        public IEnumerable<OrderItem> GetOrderItems(List<CartItem> cartItems, IEnumerable<Product> products)
         {
-            foreach (ShopProduct product in products)
+            foreach (Product product in products)
             {
                 foreach (CartItem item in cartItems)
                 {
