@@ -25,6 +25,10 @@ namespace DataAccessLayer.Data
 
         public DbSet<ProductOrder> ProductOrders { get; set; }
 
+        public DbSet<Supplier> Suppliers { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ProductOrder>().HasKey(t => new { t.ProductId, t.OrderId });
