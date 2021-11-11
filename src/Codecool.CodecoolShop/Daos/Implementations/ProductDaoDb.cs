@@ -18,11 +18,13 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             item.Id = _context.Products.Count() + 1;
             _context.Products.Add(item);
+            _context.SaveChangesAsync();
         }
 
         public void RemoveItem(int id)
         {
             _context.Products.Remove(this.Get(id));
+            _context.SaveChangesAsync();
         }
 
         public Product Get(int id)
