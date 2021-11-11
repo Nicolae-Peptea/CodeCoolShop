@@ -20,7 +20,6 @@ namespace Codecool.CodecoolShop.Controllers
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
-        //public ProductServices ProductService { get; set; }
         public ProductServicesDb ProductService { get; set; }
         public CategoryService CategoryService { get; set; }
         public SupplierService SupplierService { get; set; }
@@ -37,35 +36,25 @@ namespace Codecool.CodecoolShop.Controllers
             var productDao = new ProductDaoDb(context);
             var categoryDao = new ProductCategoryDaoDb(context);
             var supplierDao = new SupplierDaoDb(context);
-            //ProductService = new ProductServices(
-            //    ProductDaoMemory.GetInstance(),
-            //    ProductCategoryDaoMemory.GetInstance(),
-            //    SupplierDaoMemory.GetInstance());
+
             ProductService = new ProductServicesDb(productDao, categoryDao, supplierDao);
             CategoryService = new CategoryService(categoryDao);
             SupplierService = new SupplierService(supplierDao);
             OrdersServices = new OrdersServices(OrdersDaoMemory.GetInstance());
             OrderServices = new OrderServices(OrderDaoMemory.GetInstance());
             EmailService = mailService;
-
         }
 
         public IActionResult Index(int category = 1, int supplier = 0)
         {
             Log.Information("User is on the main page");
-            //ViewBag.Categories = CategoryService.GetCategories();
-            //ViewBag.Suppliers = SupplierService.GetSuppliers();
-            //ViewBag.CurrentCategory = category;
-            //ViewBag.CurrentSupplier = supplier;
+
             IEnumerable<DataAccessLayer.Model.Category> categories = CategoryService.GetCategories();
             IEnumerable<DataAccessLayer.Model.Supplier> suppliers = SupplierService.GetSuppliers();
-
-            //IEnumerable<ShopProduct> products = ProductService.GetSortedProducts(category, supplier);
             IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetSortedProducts(category, supplier);
 
             var viewModel = new ViewModel(categories, suppliers, products, category, supplier);
 
-            //return View(products.ToList());
             return View(viewModel);
         }
 
