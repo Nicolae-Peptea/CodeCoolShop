@@ -1,7 +1,10 @@
 ﻿using Codecool.CodecoolShop.Daos;
+using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using DataAccessLayer.Model;
+using Stripe;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Codecool.CodecoolShop.Services
 {
@@ -11,9 +14,12 @@ namespace Codecool.CodecoolShop.Services
         private readonly IProductOrder _productOrder;
         private readonly IProductDao _product;
 
-        public OrderServices(IOrderDao order)
+        public OrderServices(IOrderDao order, IProductDao product, IProductOrder productOrder)
         {
-            this._order = order;
+            _order = order;
+            _product = product;
+            _productOrder = productOrder;
+
         }
 
         //public void Add(OrderItem item)
@@ -31,38 +37,47 @@ namespace Codecool.CodecoolShop.Services
         //    return this.order.GetAll();
         //}
 
-        public decimal GetTotalOrderValue(List<OrderItem> orderItems)
+        public decimal GetTotalOrderValue(List<ProductOrder> orderItems)
         {
-            return this._order.GetTotalValue(orderItems);
+            return orderItems.Select(item => item.PricePerProduct * item.Quantity).Sum();
         }
 
-        //public int GetTotalQuantity()
-        //{
-        //    return this.order.GetTotalQuantity();
-        //}
 
-        public List<OrderItem> GetOrderItems(List<ProductOrder> cartItems,
-            IEnumerable<Product> products)
+        public List<ProductOrder> UpdateProductOrderPriceFromJson(OrderDetails order)
         {
-            List<OrderItem> orderItems = new();
+            List<ProductOrder> orderItems = JsonHelper.Deserialize<List<ProductOrder>>(order.CartItems);
 
-            foreach (Product product in products)
+            foreach (var item in orderItems)
             {
-                foreach (ProductOrder item in cartItems)
-                {
-                    if (product.Id == item.ProductId)
-                    {
-                        OrderItem orderItem = new(product, item.Quantity);
-                        orderItems.Add(orderItem);
-                    }
-                }
+                item.Product = _product.Get(item.ProductId);
+                item.PricePerProduct = item.Product.Price;
             }
+
             return orderItems;
         }
 
-        //public void EmptyOrder()
-        //{
-        //    this.order.EmptyOrder();
-        //}
+        public void CreateCustomer(OrderDetails order)
+        {
+            CustomerService customers = new();
+
+            customers.Create(new CustomerCreateOptions
+            {
+                Email = order.StripeEmail,
+                Name = order.StripeBillingName,
+            });
+        }
+
+        public void ChargeCustomer(OrderDetails order, decimal orderTotal)
+        {
+            ChargeService charges = new();
+
+            charges.Create(new ChargeCreateOptions
+            {
+                Amount = (long)orderTotal * 100,
+                Description = "Test Payment",
+                Currency = "usd",
+                Source = order.StripeToken,
+            });
+        }
     }
 }
