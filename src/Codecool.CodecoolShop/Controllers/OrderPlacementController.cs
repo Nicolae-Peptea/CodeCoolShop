@@ -1,5 +1,4 @@
 ﻿using Codecool.CodecoolShop.Daos.Implementations;
-using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using DataAccessLayer.Data;
@@ -34,6 +33,7 @@ namespace Codecool.CodecoolShop.Controllers
             decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
             
             OrderServices.CreateCustomer(order);
+            int customerId = 4;
 
             try
             {
@@ -41,8 +41,9 @@ namespace Codecool.CodecoolShop.Controllers
 
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
-                EmailService.Execute(model).Wait();
-                //aci o sa se salveze in db
+                EmailService.SendEmail(model).Wait();
+                OrderServices.Add(customerId);
+
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)

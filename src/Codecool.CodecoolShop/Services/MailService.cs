@@ -10,7 +10,7 @@ namespace Codecool.CodecoolShop.Services
     {
         private string _sender = "mihaibuga11@gmail.com";
 
-        public async Task Execute(EmailConfirmation model)
+        public async Task SendEmail(EmailConfirmation model)
         {
             var apiKey = "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";
             var templateId = "d-71a1079ff2da488b8c1dda86487ba50d";

@@ -14,36 +14,27 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             _context = context;
         }
 
-        //public void Add(OrderItem order)
-        //{
-        //    var itemInList = Get(order.Product.Id);
+        public void Add(Order order)
+        {
+            //order.Id = _context.Orders.Count() + 1;
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+        }
 
-        //    if (itemInList != null)
-        //    {
-        //        itemInList.Quantity += 1;
-        //    }
-        //    else
-        //    {
-        //        data.Add(order);
-        //    }
-        //}
+        public Order Get(int id)
+        {
+            return _context.Orders.Where(product => product.Id == id).FirstOrDefault();
+        }
 
-        //public OrderItem Get(int id)
-        //{
-        //    return data.Find(item => item.Product.Id == id);
-        //}
+        public IEnumerable<Order> GetAll()
+        {
+            return _context.Orders;
+        }
 
-        //public IEnumerable<OrderItem> GetAll()
-        //{
-        //    return data;
-        //}
-
-        //public void Delete(int id)
-        //{
-        //    if (this.Get(id) != null)
-        //    {
-        //        data.Remove(this.Get(id));
-        //    }
-        //}
+        public void RemoveItem(int id)
+        {
+            _context.Orders.Remove(this.Get(id));
+            _context.SaveChanges();
+        }
     }
 }

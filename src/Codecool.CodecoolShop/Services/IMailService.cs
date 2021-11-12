@@ -5,6 +5,6 @@ namespace Codecool.CodecoolShop.Services
 {
     public interface IMailService
     {
-        Task Execute(EmailConfirmation model);
+        Task SendEmail(EmailConfirmation model);
     }
 }
