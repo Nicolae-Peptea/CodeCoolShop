@@ -1,5 +1,4 @@
-﻿using Codecool.CodecoolShop.Models;
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data;
 using DataAccessLayer.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +28,6 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         //    }
         //}
 
-        //public void RemoveItem(int id)
-        //{
-        //    if (this.Get(id) != null)
-        //    {
-        //        data.Remove(this.Get(id));
-        //    }
-        //}
-
         //public OrderItem Get(int id)
         //{
         //    return data.Find(item => item.Product.Id == id);
@@ -47,20 +38,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         //    return data;
         //}
 
-        //public int GetTotalQuantity()
+        //public void Delete(int id)
         //{
-        //    return data.Select(item => item.Quantity).Sum();
-        //}
-
-        public decimal GetTotalValue(List<OrderItem> orderItems)
-        {
-            return orderItems.Select(item => item.Product.Price * item.Quantity).Sum();
-        }
-
-
-        //public void EmptyOrder()
-        //{
-        //    data = new List<OrderItem>();
+        //    if (this.Get(id) != null)
+        //    {
+        //        data.Remove(this.Get(id));
+        //    }
         //}
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DataAccessLayer.Model;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Codecool.CodecoolShop.Models
@@ -43,6 +44,6 @@ namespace Codecool.CodecoolShop.Models
 
         public string Total { get; set; }
 
-        public List<OrderItem> Items { get; set; }
+        public List<ProductOrder> Items { get; set; }
     }
 }
