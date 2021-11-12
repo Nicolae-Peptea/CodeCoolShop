@@ -7,11 +7,13 @@ namespace Codecool.CodecoolShop.Services
 {
     public class OrderServices
     {
-        private readonly IOrderDao order;
+        private readonly IOrderDao _order;
+        private readonly IProductOrder _productOrder;
+        private readonly IProductDao _product;
 
         public OrderServices(IOrderDao order)
         {
-            this.order = order;
+            this._order = order;
         }
 
         //public void Add(OrderItem item)
@@ -31,7 +33,7 @@ namespace Codecool.CodecoolShop.Services
 
         public decimal GetTotalOrderValue(List<OrderItem> orderItems)
         {
-            return this.order.GetTotalValue(orderItems);
+            return this._order.GetTotalValue(orderItems);
         }
 
         //public int GetTotalQuantity()
