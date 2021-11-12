@@ -3,6 +3,7 @@ using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using DataAccessLayer.Model;
 using Stripe;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,20 +23,28 @@ namespace Codecool.CodecoolShop.Services
 
         }
 
-        //public void Add(OrderItem item)
-        //{
-        //    this.order.Add(item);
-        //}
+        public void Add(int customerId)
+        {
+            DataAccessLayer.Model.Order newOrder = new();
+            newOrder.OrderPlaced = DateTime.Now;
+            newOrder.CustomerId = customerId;
+            _order.Add(newOrder);
+        }
 
-        //public void RemoveItem(int productId)
-        //{
-        //    this.order.RemoveItem(productId);
-        //}
+        public DataAccessLayer.Model.Order Get(int id)
+        {
+            return _order.Get(id);
+        }
 
-        //public IEnumerable<OrderItem> GetAllItems()
-        //{
-        //    return this.order.GetAll();
-        //}
+        public void RemoveItem(int id)
+        {
+            _order.RemoveItem(id);
+        }
+
+        public IEnumerable<DataAccessLayer.Model.Order> GetAllItems()
+        {
+            return _order.GetAll();
+        }
 
         public decimal GetTotalOrderValue(List<ProductOrder> orderItems)
         {
