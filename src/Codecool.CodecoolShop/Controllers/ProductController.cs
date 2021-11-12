@@ -27,7 +27,7 @@ namespace Codecool.CodecoolShop.Controllers
             SupplierService = new SupplierService(supplierDao);
         }
 
-        public IActionResult Index(int category = 1, int supplier = 0)
+        public IActionResult Index(int category = 0, int supplier = 0)
         {
             Log.Information("User is on the main page");
 
