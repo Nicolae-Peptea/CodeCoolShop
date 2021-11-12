@@ -29,8 +29,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public Product Get(int id)
         {
-            var products = GetAll().ToList();
-            return products.Find(product => product.Id == id);
+            return _context.Products.Where(product => product.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<Product> GetAll()

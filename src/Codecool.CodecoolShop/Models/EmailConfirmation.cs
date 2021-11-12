@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DataAccessLayer.Model;
+using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Models
 {
@@ -18,9 +19,9 @@ namespace Codecool.CodecoolShop.Models
 
         public string Total { get; set; }
 
-        public List<OrderItem> Items { get; set; }
+        public List<ProductOrder> Items { get; set; }
 
-        public EmailConfirmation(OrderDetails details, decimal orderTotal, List<OrderItem> orderItems)
+        public EmailConfirmation(OrderDetails details, decimal orderTotal, List<ProductOrder> orderItems)
         {
             this.FullName = details.StripeBillingName;
             this.Email = details.StripeEmail;

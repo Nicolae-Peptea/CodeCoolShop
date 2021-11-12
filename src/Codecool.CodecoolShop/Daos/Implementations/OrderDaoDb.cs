@@ -1,5 +1,6 @@
 ﻿using Codecool.CodecoolShop.Models;
 using DataAccessLayer.Data;
+using DataAccessLayer.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -55,6 +56,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             return orderItems.Select(item => item.Product.Price * item.Quantity).Sum();
         }
+
 
         //public void EmptyOrder()
         //{

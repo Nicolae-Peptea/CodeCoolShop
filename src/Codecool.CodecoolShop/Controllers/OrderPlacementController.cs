@@ -13,57 +13,36 @@ namespace Codecool.CodecoolShop.Controllers
 {
     public class OrderPlacementController : Controller
     {
-        public ProductServicesDb ProductService { get; set; }
-        public OrderServices OrderServices { get; set; }
-        public IMailService EmailService { get; set; }
+        public ProductServicesDb ProductService { get; private set; }
+        public OrderServices OrderServices { get; private set; }
+        public IMailService EmailService { get; private set; }
 
         public OrderPlacementController(IMailService mailService, CodeCoolShopContext context)
         {
             ProductDaoDb productDao = new(context);
-            ProductCategoryDaoDb categoryDao = new(context);
-            SupplierDaoDb supplierDao = new(context);
-            OrderDaoDb orderDao = new(context);
+            ProductOrderDaoDb productOrderDao = new(context);
+            OrderDaoDb orderDao = new(context); 
 
-            ProductService = new ProductServicesDb(productDao, categoryDao, supplierDao);
-            OrderServices = new OrderServices(orderDao);
+            OrderServices = new OrderServices(orderDao, productDao, productOrderDao);
             EmailService = mailService;
         }
 
         [HttpPost]
         public IActionResult Index(OrderDetails order)
         {
-            List<DataAccessLayer.Model.ProductOrder> cartItems = JsonHelper
-                .Deserialize<List<DataAccessLayer.Model.ProductOrder>>(order.CartItems);
-            IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetAllProducts();
-
-            List<Models.OrderItem> orderItems = OrderServices
-                .GetOrderItems(cartItems, products);
-
+            List<DataAccessLayer.Model.ProductOrder> orderItems = OrderServices.UpdateProductOrderPriceFromJson(order);
             decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
-
-            CustomerService customers = new();
-            ChargeService charges = new();
-
-            var customer = customers.Create(new CustomerCreateOptions
-            {
-                Email = order.StripeEmail,
-                Name = order.StripeBillingName,
-            });
+            
+            OrderServices.CreateCustomer(order);
 
             try
             {
-                var charge = charges.Create(new ChargeCreateOptions
-                {
-                    Amount = (long)orderTotal,
-                    Description = "Test Payment",
-                    Currency = "usd",
-                    Source = order.StripeToken,
-                });
+                OrderServices.ChargeCustomer(order, orderTotal);
 
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
                 EmailService.Execute(model).Wait();
-                //OrderServices.EmptyOrder();
+                //aci o sa se salveze in db
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)
