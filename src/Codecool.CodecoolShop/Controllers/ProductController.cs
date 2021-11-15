@@ -1,8 +1,5 @@
-using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Models;
-using Codecool.CodecoolShop.Services;
 using Codecool.CodecoolShop.Services.Interfaces;
-using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;

@@ -5,7 +5,6 @@ using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using Stripe;
 using System;
 using System.Collections.Generic;
 
@@ -20,7 +19,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             ProductDaoDb productDao = new(context);
             ProductOrderDaoDb productOrderDao = new(context);
-            OrderDaoDb orderDao = new(context); 
+            OrderDaoDb orderDao = new(context);
 
             OrderServices = new OrderServices(orderDao, productDao, productOrderDao);
             EmailService = mailService;
@@ -31,7 +30,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             List<DataAccessLayer.Model.ProductOrder> orderItems = OrderServices.UpdateProductOrderPriceFromJson(order);
             decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
-            
+
             OrderServices.CreateCustomer(order);
             int customerId = 4;
 
