@@ -1,0 +1,23 @@
+﻿@using Microsoft.Extensions.Options;
+@inject IOptions<Codecool.CodecoolShop.Models.StripeSettings> Stripe
+
+
+@{ ViewData["Title"] = "My Cart"; }
+
+<form class="shopping-cart-page-container" id="cartProductsPage" asp-controller="OrderPlacement" asp-action="Index" method="post">
+    <script id="stripe-integration" src="//checkout.stripe.com/v2/checkout.js"
+            class="stripe-button"
+            data-key="@Stripe.Value.PublishableKey"
+            data-amount="@ViewBag.TotalCart"
+            data-locale="auto"
+            data-description="Sample Charge"
+            data-billing-address="true"
+            data-shipping-address="true"
+            data-name="Code Cool Shop"
+            data-label="Pay Cart">
+    </script>
+</form>
+
+@section Scripts {
+    <script type="module" src="~/js/cartPage.js" asp-append-version="true"></script>
+}

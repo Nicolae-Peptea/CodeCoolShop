@@ -1,0 +1,561 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.navbar-collapse ul.navbar-right {
+    margin-bottom: 0
+}
+
+.navbar-right {
+    padding: 0;
+}
+
+.filled-cart-item-quantity {
+    max-width: 160px;
+    width: 100%;
+}
+
+.navbar-right li {
+    display: inline;
+    margin: 0;
+}
+
+.navbar-right li a {
+    color: #777777;
+    text-decoration: none;
+}
+
+.navbar-right li a:hover {
+    color: black;
+}
+
+.badge {
+    background-color: #6394F8;
+    border-radius: 10px;
+    color: white;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1;
+    padding: 3px 7px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+/* Main page style
+-------------------------------------------------- */
+    /* Sort control group style
+-------------------------------------------------- */
+.sort-control-group {
+    border-bottom: 1px solid #e5e5e5;
+    border-radius: 3px;
+    border-width: 1px;
+    display: block;
+    margin: 5px 0;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+.sort-control-item {
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    width: fit-content;
+}
+
+.sort-control-item select {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: #fff;
+    border-color: #ccc;
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+    max-width: 150px;
+    min-width: 130px;
+    padding: 5px 10px;
+}
+
+.sort-control-group button {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: #F1F1F1;
+    border-color: #ccc;
+    color: #666;
+    font-size: 16px;
+    width: 60px;
+    padding: 5px 10px;
+}
+
+.sort-control-group button:hover {
+    background-color: #E5E5E5;
+    cursor: pointer;
+    color: #444;
+}
+
+    /* Cards grid style
+-------------------------------------------------- */
+.cards {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(4, 1fr);
+    height: 300px;
+    width: 100%;
+}
+
+.card {
+    max-width: 350px;
+    height: inherit;
+}
+
+.card img {
+    align-self: center;
+    height: 50%;
+    padding-top: 10px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+}
+
+.card-body a {
+    background: linear-gradient(to right,#4a60c1 10%,#3985e0);
+    border-width: 0;
+    border-radius: 3px;
+    display: block;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 5px 10px;
+    position: absolute;
+    width: 96%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 5px;
+}
+
+.card-body a:hover {
+    background: linear-gradient(to right,#3A50AF 10%,#3178CE);
+    cursor: pointer;
+}
+
+/* Dropdown cart style
+-------------------------------------------------- */
+
+    /* Dropdown cart item style
+-------------------------------------------------- */
+.table-image thead td,
+.table-image thead th {
+    border: 0;
+    color: #666;
+    font-size: 1.05rem;
+}
+
+.table-image thead td,
+.table-image thead th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table th {
+    font-size: 90%;
+    font-weight: 700;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#cartModal > div > div > div.modal-body > table > tbody {
+    display: block;
+    max-height: 400px;
+    overflow: auto;
+}
+
+    /* Modal cart scrollbar style
+-------------------------------------------------- */
+#cartModal > div > div > div.modal-body > table > tbody::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+#cartModal > div > div > div.modal-body > table > tbody::-webkit-scrollbar {
+    width: 4px;
+    background-color: #F5F5F5;
+}
+
+#cartModal > div > div > div.modal-body > table > tbody::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+
+td#name {
+    font-weight: 600;
+}
+
+th#img, td#img,
+th#price, td#price,
+th#qty, td#qty {
+    width: 120px;
+}
+
+th#total, td#total {
+    width: 100px;
+}
+
+td#total, td#price {
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    color: #6394F8;
+}
+
+th#actions, td#actions {
+    width: 80px;
+}
+
+th#name, td#name,
+td#price,
+th#total, td#total,
+td#actions {
+    text-align: center;
+}
+
+.table-image .price {
+    margin-left: 1rem;
+}
+
+.table-image .modal-footer {
+    padding-top: 0rem;
+}
+
+.modal-footer {
+    margin-left: auto;
+}
+
+/* Dropdown cart quantity style
+-------------------------------------------------- */
+td#qty button {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 0 4px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 1px;
+    background: #eee;
+    font-weight: 700;
+}
+
+.decrease-quantity {
+    margin-right: -4px;
+}
+
+.increase-quantity {
+    margin-left: -4px;
+}
+
+.cart-icon {
+  color: #515783;
+  font-size: 24px;
+  margin-right: 7px;
+  float: left;
+}
+
+.shopping-cart .button {
+    border: none;
+    background: #6394F8;
+    color: white;
+    height: 35px;
+    text-align: center;
+    padding: 6px;
+    text-decoration: none;
+    display: block;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 10px auto 5px auto;
+}
+
+.shopping-cart .button:hover {
+    background: #7FA6F7;
+    box-shadow: 0 1px 2px #888888;
+    cursor: pointer;
+}
+
+.cart-details-container {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.delete-cart-item {
+    background: none;
+    border: none;
+    padding: 0;
+    color: royalblue;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.delete-cart-item:hover{
+    cursor: pointer;
+    color: red;
+}
+
+/* Cart page style
+-------------------------------------------------- */
+.shopping-cart-page-container {
+    position: relative;
+    overflow: hidden;
+    padding: 15px;
+    margin: 0 0 20px;
+    border-radius: 3px;
+}
+
+    /* Empty cart page style
+-------------------------------------------------- */
+.shopping-cart-page-container #empty-cart {
+    height: 350px;
+    padding-top: 150px;
+    margin-top: 5px;
+    position: relative;
+    text-align: center;
+}
+
+.shopping-cart-page-container #empty-cart .shopping-cart-title {
+    text-align: center;
+    font-size: 30px;
+}
+
+.shopping-cart-page-container #empty-cart .textBox {
+    margin: 20px 0;
+}
+
+    /* Filled cart page style
+-------------------------------------------------- */
+.shopping-cart-page-container #filled-cart {
+    background-color: #e4f1f9;
+    margin-top: 5px;
+    padding: 15px;
+}
+
+.shopping-cart-page-container .filled-cart-item {
+    background-color: #fff;
+    box-shadow: 1px 1px 2px #bbc6cc;
+    border: 0 none;
+    border-radius: 5px;
+    margin: 0 0 10px 0;
+    overflow: hidden;
+    padding: 30px 25px 20px 25px;
+    position: relative;
+}
+
+    /* Filled cart page item style
+-------------------------------------------------- */
+.filled-cart-item img {
+    height: 120px;
+}
+
+.filled-cart-item-left {
+    float: left;
+    text-align: center;
+    width: 130px;
+}
+
+.filled-cart-item-right {
+    margin-left: 140px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+
+.filled-cart-item-name {
+    color: #404040;
+    font-weight: bold;
+    font-size: 16px;
+    flex: 1 1 auto;
+    margin: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.filled-cart-item-name:hover {
+    color: #575555;
+    cursor: pointer;
+}
+
+.filled-cart-item-quantity {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    align-items: center;
+    justify-content: center;
+}
+
+.filled-cart-item-quantity p {
+    font-size: 18px;
+    margin: 0 5px;
+}
+
+.filled-cart-item-price {
+    color: #404040;
+    font-size: 18px;
+    font-weight: 700;
+    float: right !important;
+    line-height: 15px;
+    text-align: right;
+    width: 165px;
+}
+
+.shopping-cart-page-total {
+    font-size: 16px;
+    margin-right: 20px;
+    width: 200px;
+    vertical-align: top;
+    min-height: 1px;
+    float: right !important;
+}
+
+.shopping-cart-page-total .total-left {
+    float: left;
+    color: #404040;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.shopping-cart-page-total .total-right {
+    float: right !important;
+    color: #404040;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.shopping-cart-summary {
+    height: 80px;
+    position: relative;
+}
+
+.shopping-cart-summary button {
+    background-image: linear-gradient(to bottom right,#3482cc,#1763aa);
+    border-radius: 3px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    margin-right: 20px;
+    padding: 6px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 40px;
+}
+
+.shopping-cart-summary button:hover {
+    background-image: linear-gradient(to bottom right,#3482dd,#1763bc);
+}
+
+.text-danger {
+    display: block;
+}
+
+/* Successful order page style
+-------------------------------------------------- */
+#order-successful {
+    margin-top: 20vw;
+    height: 350px;
+    padding-top: 150px;
+    position: relative;
+    text-align: center;
+}
+
+#order-successful .message {
+    font-size: 30px;
+    margin: 20px 0;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}

@@ -8,7 +8,7 @@ You have the freedom of choosing your teammates (assemble a team of 3-4 students
 
 This project is meant for 4 sprints at least, but it may keep you company until the end of the course, or even much longer. Who knows? Although we will not give you any direct tasks to fulfill, there will be some technical requirements for each sprint. You are expected to make incremental changes in a Scrum way, developing the project further and further, adding new features, technologies, etc.
 
-***¡Comience El Proyecte Grande!***
+***�Comience El Proyecte Grande!***
 
 ## What are you going to learn?
 
