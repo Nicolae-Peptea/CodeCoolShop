@@ -4,6 +4,7 @@ using Codecool.CodecoolShop.Services;
 using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,14 @@ namespace Codecool.CodecoolShop.Controllers
     {
         public IOrderServices OrderServices { get; private set; }
         public IMailService EmailService { get; private set; }
+        public SendgridSettings SendgridSettings { get; private set; }
 
         public OrderPlacementController(IMailService mailService,
-            IOrderServices orderServices)
+            IOrderServices orderServices, IOptions<SendgridSettings> sendgridSettings)
         {
             OrderServices = orderServices;
             EmailService = mailService;
+            SendgridSettings = sendgridSettings.Value;
         }
 
         [HttpPost]
@@ -37,7 +40,7 @@ namespace Codecool.CodecoolShop.Controllers
 
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
-                EmailService.SendEmail(model).Wait();
+                EmailService.SendEmail(model, SendgridSettings).Wait();
                 OrderServices.Add(customerId);
 
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
