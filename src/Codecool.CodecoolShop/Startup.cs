@@ -6,6 +6,7 @@ using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,6 +48,8 @@ namespace Codecool.CodecoolShop
             services.AddDbContext<CodeCoolShopContext>(options =>
                 options.UseSqlServer(connectionString)
             );
+
+            services.AddIdentity<IdentityUser, IdentityRole>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

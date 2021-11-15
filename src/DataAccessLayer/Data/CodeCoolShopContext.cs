@@ -1,9 +1,10 @@
 ﻿using DataAccessLayer.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data
 {
-    public partial class CodeCoolShopContext : DbContext
+    public partial class CodeCoolShopContext : IdentityDbContext
     {
         public CodeCoolShopContext(DbContextOptions<CodeCoolShopContext> options)
             : base(options)
