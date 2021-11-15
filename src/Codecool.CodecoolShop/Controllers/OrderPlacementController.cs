@@ -1,6 +1,7 @@
 ﻿using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -12,7 +13,6 @@ namespace Codecool.CodecoolShop.Controllers
 {
     public class OrderPlacementController : Controller
     {
-        public ProductServicesDb ProductService { get; private set; }
         public OrderServices OrderServices { get; private set; }
         public IMailService EmailService { get; private set; }
 

@@ -1,5 +1,8 @@
+using Codecool.CodecoolShop.Daos;
+using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +29,15 @@ namespace Codecool.CodecoolShop
         {
             services.AddControllersWithViews();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-            services.AddTransient<IMailService, MailService>();
+
+            services.AddTransient<IProductDao, ProductDaoDb>();
+            services.AddTransient<IProductCategoryDao, ProductCategoryDaoDb>();
+            services.AddTransient<ISupplierDao, SupplierDaoDb>();
+            services.AddScoped<IProductServicesDb, ProductServicesDb>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ISupplierService, SupplierService>();
+
+            services.AddScoped<IMailService, MailService>();
 
             string connectionString = Configuration.GetConnectionString("CodeCoolShop");
             services.AddDbContext<CodeCoolShopContext>(options =>
