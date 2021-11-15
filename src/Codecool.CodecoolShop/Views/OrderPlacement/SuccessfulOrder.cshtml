@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Checkout Details";
+    Layout = "~/Views/Shared/_CheckoutLayout.cshtml";
+}
+
+<div id="order-successful">
+    <div class="message">Your order with id #@ViewBag.OrderId has been placed successfully!</div>
+
+    <a class="empty-cart-primary-btn pho-btn btn btn-primary" href="/">
+        <i class="em em-go-left"></i>Back to Store
+    </a>
+</div>
+
+@section Scripts {
+    <script>
+        sessionStorage.removeItem('shoppingCartItems');
+    </script>
+    
+}
