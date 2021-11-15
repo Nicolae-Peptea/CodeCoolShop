@@ -49,7 +49,8 @@ namespace Codecool.CodecoolShop
                 options.UseSqlServer(connectionString)
             );
 
-            services.AddIdentity<IdentityUser, IdentityRole>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<CodeCoolShopContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +70,8 @@ namespace Codecool.CodecoolShop
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseSerilogRequestLogging();
 
