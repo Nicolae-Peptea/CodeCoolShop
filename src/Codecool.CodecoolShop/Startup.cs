@@ -29,6 +29,7 @@ namespace Codecool.CodecoolShop
         {
             services.AddControllersWithViews();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.Configure<SendgridSettings>(Configuration.GetSection("Sendgrid"));
 
             services.AddTransient<IProductDao, ProductDaoDb>();
             services.AddTransient<IProductCategoryDao, ProductCategoryDaoDb>();
