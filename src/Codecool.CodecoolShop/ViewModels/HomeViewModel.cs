@@ -2,7 +2,7 @@
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class ViewModel
+    public class HomeViewModel
     {
         public IEnumerable<DataAccessLayer.Model.Category> Categories { get; set; }
         public IEnumerable<DataAccessLayer.Model.Supplier> Suppliers { get; set; }
@@ -10,7 +10,7 @@ namespace Codecool.CodecoolShop.Models
         public int CurrentCategory { get; set; }
         public int CurrentSupplier { get; set; }
 
-        public ViewModel(IEnumerable<DataAccessLayer.Model.Category> categories,
+        public HomeViewModel(IEnumerable<DataAccessLayer.Model.Category> categories,
             IEnumerable<DataAccessLayer.Model.Supplier> suppliers,
             IEnumerable<DataAccessLayer.Model.Product> products,
             int currentCategory,
