@@ -12,16 +12,13 @@ namespace Codecool.CodecoolShop.Controllers
 {
     public class OrderPlacementController : Controller
     {
-        public OrderServices OrderServices { get; private set; }
+        public IOrderServices OrderServices { get; private set; }
         public IMailService EmailService { get; private set; }
 
-        public OrderPlacementController(IMailService mailService, CodeCoolShopContext context)
+        public OrderPlacementController(IMailService mailService,
+            IOrderServices orderServices)
         {
-            ProductDaoDb productDao = new(context);
-            ProductOrderDaoDb productOrderDao = new(context);
-            OrderDaoDb orderDao = new(context);
-
-            OrderServices = new OrderServices(orderDao, productDao, productOrderDao);
+            OrderServices = orderServices;
             EmailService = mailService;
         }
 

@@ -1,6 +1,7 @@
 ﻿using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Model;
 using Stripe;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class OrderServices
+    public class OrderServices : IOrderServices
     {
         private readonly IOrderDao _order;
         private readonly IProductOrder _productOrder;

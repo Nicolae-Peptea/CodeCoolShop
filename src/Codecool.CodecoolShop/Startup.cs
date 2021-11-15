@@ -33,9 +33,12 @@ namespace Codecool.CodecoolShop
             services.AddTransient<IProductDao, ProductDaoDb>();
             services.AddTransient<IProductCategoryDao, ProductCategoryDaoDb>();
             services.AddTransient<ISupplierDao, SupplierDaoDb>();
+            services.AddTransient<IOrderDao, OrderDaoDb>();
+            services.AddTransient<IProductOrder, ProductOrderDaoDb>();
             services.AddScoped<IProductServicesDb, ProductServicesDb>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<IOrderServices, OrderServices>();
 
             services.AddScoped<IMailService, MailService>();
 
