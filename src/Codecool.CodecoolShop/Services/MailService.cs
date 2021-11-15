@@ -1,4 +1,5 @@
 ﻿using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Services.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Serilog;

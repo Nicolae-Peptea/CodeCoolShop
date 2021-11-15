@@ -1,6 +1,7 @@
 using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +13,16 @@ namespace Codecool.CodecoolShop.Controllers
 {
     public class ProductController : Controller
     {
-        public ProductServicesDb ProductService { get; set; }
-        public CategoryService CategoryService { get; set; }
-        public SupplierService SupplierService { get; set; }
+        public IProductServicesDb ProductService { get; set; }
+        public ICategoryService CategoryService { get; set; }
+        public ISupplierService SupplierService { get; set; }
 
-        public ProductController(CodeCoolShopContext context)
+        public ProductController(IProductServicesDb productServices,
+            ICategoryService categoryService, ISupplierService supplierService)
         {
-            ProductDaoDb productDao = new(context);
-            ProductCategoryDaoDb categoryDao = new(context);
-            SupplierDaoDb supplierDao = new(context);
-
-            ProductService = new ProductServicesDb(productDao, categoryDao, supplierDao);
-            CategoryService = new CategoryService(categoryDao);
-            SupplierService = new SupplierService(supplierDao);
+            ProductService = productServices;
+            CategoryService = categoryService;
+            SupplierService = supplierService;
         }
 
         public IActionResult Index(int category = 0, int supplier = 0)

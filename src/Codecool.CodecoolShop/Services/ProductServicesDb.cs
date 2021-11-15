@@ -1,10 +1,11 @@
 using Codecool.CodecoolShop.Daos;
+using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Model;
 using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class ProductServicesDb
+    public class ProductServicesDb : IProductServicesDb
     {
         private readonly IProductDao productDao;
         private readonly IProductCategoryDao productCategoryDao;
