@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Model;
-using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Daos
 {
