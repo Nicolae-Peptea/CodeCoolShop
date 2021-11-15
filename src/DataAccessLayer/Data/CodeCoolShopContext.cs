@@ -25,6 +25,7 @@ namespace DataAccessLayer.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.Entity<ProductOrder>().HasKey(t => new { t.ProductId, t.OrderId });
             Supplier amazon = new Supplier { Id = 1, Name = "Amazon", Description = "Digital content and services" };
             Supplier lenovo = new Supplier { Id = 2, Name = "Lenovo", Description = "Computers" };
