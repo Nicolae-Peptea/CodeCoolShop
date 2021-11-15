@@ -30,7 +30,7 @@ namespace Codecool.CodecoolShop.Controllers
             IEnumerable<DataAccessLayer.Model.Supplier> suppliers = SupplierService.GetSuppliers();
             IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetSortedProducts(category, supplier);
 
-            ViewModel viewModel = new(categories, suppliers, products, category, supplier);
+            HomeViewModel viewModel = new(categories, suppliers, products, category, supplier);
 
             return View(viewModel);
         }
