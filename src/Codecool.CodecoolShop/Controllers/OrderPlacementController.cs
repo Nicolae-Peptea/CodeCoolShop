@@ -34,6 +34,7 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 OrderServices.ChargeCustomer(order, orderTotal);
                 OrderServices.CreateOrder(order, HttpContext);
+
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
                 EmailService.SendEmail(model, SendgridSettings).Wait();

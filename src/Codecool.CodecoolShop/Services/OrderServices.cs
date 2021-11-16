@@ -32,7 +32,7 @@ namespace Codecool.CodecoolShop.Services
         {
             DataAccessLayer.Model.Order newOrder = new();
             newOrder.OrderPlaced = DateTime.Now;
-            newOrder.CustomerId = customerId;
+            //newOrder.CustomerId = customerId;
             _order.Add(newOrder);
         }
 
