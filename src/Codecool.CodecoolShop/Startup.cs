@@ -49,7 +49,12 @@ namespace Codecool.CodecoolShop
                 options.UseSqlServer(connectionString)
             );
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 3;
+                options.Password.RequireNonAlphanumeric = false;
+            })
                 .AddEntityFrameworkStores<CodeCoolShopContext>();
         }
 
