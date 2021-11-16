@@ -70,15 +70,30 @@ namespace Codecool.CodecoolShop.Services
             return orderItems;
         }
 
-        public void CreateCustomer(OrderDetails order)
+        public void CreateCustomer(OrderDetails order, HttpContext httpContext)
         {
-            CustomerService customers = new();
+            CustomerService stripeCustomer = new();
 
-            customers.Create(new CustomerCreateOptions
+            stripeCustomer.Create(new CustomerCreateOptions
             {
                 Email = order.StripeEmail,
                 Name = order.StripeBillingName,
             });
+
+            string userId = _userManager.GetUserId(httpContext.User);
+
+            DataAccessLayer.Model.Customer customerForDb = new()
+            {
+                FirstName = order.StripeBillingName,
+                LastName = order.StripeBillingName,
+
+            };
+
+
+            if (userId != string.Empty)
+            {
+
+            }
         }
 
         public void CreateOrder(OrderDetails order, HttpContext httpContext)

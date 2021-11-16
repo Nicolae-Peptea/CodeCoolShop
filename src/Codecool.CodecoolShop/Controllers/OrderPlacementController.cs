@@ -28,7 +28,7 @@ namespace Codecool.CodecoolShop.Controllers
             List<DataAccessLayer.Model.ProductOrder> orderItems = OrderServices.UpdateProductOrderPriceFromJson(order);
             decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
 
-            OrderServices.CreateCustomer(order);
+            //OrderServices.CreateCustomer(order);
             //int customerId = 4;
             try
             {
