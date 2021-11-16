@@ -8,6 +8,9 @@ namespace DataAccessLayer.Model
         public int Id { get; set; }
 
 #nullable enable
+
+        public string UserId { get; set; }
+
         [MaxLength(40)]
         public string FirstName { get; set; }
 

@@ -6,6 +6,7 @@ namespace DataAccessLayer.Model
     {
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
+
         public int SupplierId { get; set; }
 
         public int CategoryId { get; set; }
