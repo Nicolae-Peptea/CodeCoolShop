@@ -39,12 +39,12 @@ namespace DataAccessLayer.Data
             var pr3 = new Product { Id = 3, Name = "Amazon Fire HD 8", Price = 89.0m, Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", CategoryId = 1, SupplierId = 1 };
             var pr4 = new Product { Id = 4, Name = "Apple iPhone 12 Pro Max", Price = 1239.0m, Description = "The iPhone 12 is a new iPhone model developed by Apple Inc. It is part of a device family that was announced during a special event on October 13, 2020 to succeed the iPhone 11 line.", CategoryId = 2, SupplierId = 3 };
 
-            var Ion = new Customer {Id= 1, BillingAddressCity = "Topolog" };
+            //var Ion = new Customer {Id= 1, BillingAddressCity = "Topolog" };
 
             builder.Entity<Supplier>().HasData(amazon, lenovo, apple);
             builder.Entity<Category>().HasData(tablet, phone);
             builder.Entity<Product>().HasData(pr1, pr2, pr3, pr4);
-            builder.Entity<Customer>().HasData(Ion);
+            //builder.Entity<Customer>().HasData(Ion);
 
         }
     }
