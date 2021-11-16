@@ -19,9 +19,9 @@ namespace Codecool.CodecoolShop.Services.Interfaces
         
         List<ProductOrder> UpdateProductOrderPriceFromJson(OrderDetails order);
         
-        void CreateCustomer(OrderDetails order);
-        
         void ChargeCustomer(OrderDetails order, decimal orderTotal);
+
+        void CreateCustomer(OrderDetails order, HttpContext httpContext);
 
         void CreateOrder(OrderDetails order, HttpContext httpContext);
     }
