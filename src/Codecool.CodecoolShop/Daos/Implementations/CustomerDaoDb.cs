@@ -18,7 +18,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Customer item)
         {
-            _context.Add(item);
+            _context.Customers.Add(item);
             _context.SaveChangesAsync();
         }
 
