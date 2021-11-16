@@ -1,9 +1,7 @@
 ﻿using Codecool.CodecoolShop.Services.Interfaces;
 using Codecool.CodecoolShop.ViewModels;
-using DataAccessLayer.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Controllers
@@ -12,28 +10,17 @@ namespace Codecool.CodecoolShop.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IOrderServices _orderServices;
 
         public AccountController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            IOrderServices orderServices)
+            SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _orderServices = orderServices;
         }
 
         public IActionResult Index()
         {
             return View();
-        }
-
-        [Route("orders")]
-        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-        public ActionResult Orders()
-        {
-            List<Order> orders = _orderServices.GetAllItems();
-            return Json(orders);
         }
 
         [HttpGet]
