@@ -41,9 +41,9 @@ namespace Codecool.CodecoolShop.Services
             _order.RemoveItem(id);
         }
 
-        public IEnumerable<DataAccessLayer.Model.Order> GetAllItems()
+        public List<DataAccessLayer.Model.Order> GetAllItems()
         {
-            return _order.GetAll();
+            return _order.GetAll().ToList();
         }
 
         public decimal GetTotalOrderValue(List<ProductOrder> orderItems)

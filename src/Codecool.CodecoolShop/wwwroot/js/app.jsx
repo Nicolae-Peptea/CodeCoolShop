@@ -46,12 +46,14 @@ const Header = ({ handleClick }) => {
 const Content = () => {
     return (
         <div className="page-content">
-            <OrdersList />
+            <OrdersList url="/orders"/>
         </div>
     );
 }
 
-const OrdersList = () => {
+const OrdersList = ({ url }) => {
+    const [orders, setOrders] = React.useState(null);
+
     return (
         <div className="orders-list">
             <div className="table-header">
@@ -59,7 +61,7 @@ const OrdersList = () => {
                 <div className="column">Column2</div>
                 <div className="column">Column3</div>
             </div>
-            <OrderTableRows />
+            <OrderTableRows/>
         </div>
     );
 }
