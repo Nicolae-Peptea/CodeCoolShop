@@ -33,7 +33,8 @@ namespace Codecool.CodecoolShop.Controllers
             try
             {
                 OrderServices.ChargeCustomer(order, orderTotal);
-                OrderServices.CreateOrder(order, HttpContext);
+                //OrderServices.CreateOrder(order, HttpContext);
+                OrderServices.CreateCustomer(order, HttpContext);
 
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
