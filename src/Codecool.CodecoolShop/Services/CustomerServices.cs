@@ -36,15 +36,16 @@ namespace Codecool.CodecoolShop.Services
             {
                 Email = order.StripeEmail,
                 FirstName = order.StripeBillingName,
+                BillingName = order.StripeBillingName,
                 BillingAddressCountry = order.StripeBillingAddressCountry,
                 BillingAddressCity = order.StripeBillingAddressCity,
                 BillingAddressLine1 = order.StripeBillingAddressLine1,
                 BillingAddressZip = order.StripeBillingAddressZip,
-                BillingName = order.StripeBillingName,
                 ShippingAddressCountry = order.StripeBillingAddressCountry,
                 ShippingAddressCity = order.StripeShippingAddressCity,
                 ShippingAddressLine1 = order.StripeShippingAddressLine1,
                 ShippingAddressZip = order.StripeShippingAddressZip,
+                ShippingName = order.StripeShippingName,
             };
 
             string userId = _userManager.GetUserId(httpContext.User);

@@ -9,49 +9,49 @@ namespace DataAccessLayer.Model
 
 #nullable enable
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         [MaxLength(40)]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [MaxLength(40)]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [MaxLength(40)]
-        public string BillingName { get; set; }
+        public string? BillingName { get; set; }
 
         [MaxLength(100)]
-        public string BillingAddressLine1 { get; set; }
+        public string? BillingAddressLine1 { get; set; }
 
         [MaxLength(25)]
-        public long BillingAddressZip { get; set; }
+        public long? BillingAddressZip { get; set; }
 
         [MaxLength(40)]
-        public string BillingAddressCity { get; set; }
+        public string? BillingAddressCity { get; set; }
 
         [MaxLength(40)]
-        public string BillingAddressCountry { get; set; }
+        public string? BillingAddressCountry { get; set; }
 
         [MaxLength(25)]
         public long BillingAddressCountryCode { get; set; }
 
         [MaxLength(40)]
-        public string ShippingName { get; set; }
+        public string? ShippingName { get; set; }
 
         [MaxLength(100)]
-        public string ShippingAddressLine1 { get; set; }
+        public string? ShippingAddressLine1 { get; set; }
 
         [MaxLength(25)]
-        public long ShippingAddressZip { get; set; }
+        public long? ShippingAddressZip { get; set; }
 
         [MaxLength(25)]
-        public string ShippingAddressCity { get; set; }
+        public string? ShippingAddressCity { get; set; }
 
         [MaxLength(40)]
-        public string ShippingAddressCountry { get; set; }
+        public string? ShippingAddressCountry { get; set; }
 
         [MaxLength(25)]
-        public long ShippingAddressCountryCode { get; set; }
+        public long? ShippingAddressCountryCode { get; set; }
 
         [MaxLength(20)]
         public string? Phone { get; set; }
