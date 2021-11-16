@@ -1,8 +1,5 @@
-﻿using Codecool.CodecoolShop.Daos.Implementations;
-using Codecool.CodecoolShop.Models;
-using Codecool.CodecoolShop.Services;
+﻿using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
-using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -32,17 +29,15 @@ namespace Codecool.CodecoolShop.Controllers
             decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
 
             OrderServices.CreateCustomer(order);
-            int customerId = 4;
-
+            //int customerId = 4;
             try
             {
                 OrderServices.ChargeCustomer(order, orderTotal);
-
+                OrderServices.CreateOrder(order, HttpContext);
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
                 EmailService.SendEmail(model, SendgridSettings).Wait();
-                OrderServices.Add(customerId);
-
+                //OrderServices.Add(customerId);
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)

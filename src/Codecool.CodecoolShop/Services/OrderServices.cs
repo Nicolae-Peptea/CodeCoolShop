@@ -3,6 +3,8 @@ using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Model;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -15,12 +17,15 @@ namespace Codecool.CodecoolShop.Services
         private readonly IOrderDao _order;
         private readonly IProductOrder _productOrder;
         private readonly IProductDao _product;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public OrderServices(IOrderDao order, IProductDao product, IProductOrder productOrder)
+        public OrderServices(IOrderDao order, IProductDao product,
+            IProductOrder productOrder, UserManager<IdentityUser> userManager)
         {
             _order = order;
             _product = product;
             _productOrder = productOrder;
+            _userManager = userManager;
         }
 
         public void Add(int customerId)
@@ -74,6 +79,22 @@ namespace Codecool.CodecoolShop.Services
                 Email = order.StripeEmail,
                 Name = order.StripeBillingName,
             });
+        }
+
+        public void CreateOrder(OrderDetails order, HttpContext httpContext)
+        {
+
+            var x = _userManager.GetUserId(httpContext.User);
+           
+            DataAccessLayer.Model.Order dbOrder = new()
+            {
+                OrderPlaced = DateTime.Now,
+            };
+
+            if (x != null)
+            {
+                var y = 5;
+            }
         }
 
         public void ChargeCustomer(OrderDetails order, decimal orderTotal)
