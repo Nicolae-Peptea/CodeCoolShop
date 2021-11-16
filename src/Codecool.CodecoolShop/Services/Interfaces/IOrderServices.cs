@@ -21,8 +21,6 @@ namespace Codecool.CodecoolShop.Services.Interfaces
         
         void ChargeCustomer(OrderDetails order, decimal orderTotal);
 
-        void CreateCustomer(OrderDetails order, HttpContext httpContext);
-
         void CreateOrder(OrderDetails order, HttpContext httpContext);
     }
 }

@@ -17,12 +17,12 @@ namespace Codecool.CodecoolShop.Services
     public class OrderServices : IOrderServices
     {
         private readonly IOrderDao _order;
-        private readonly IProductOrder _productOrder;
+        private readonly IProductOrderDao _productOrder;
         private readonly IProductDao _product;
         private readonly UserManager<IdentityUser> _userManager;
 
         public OrderServices(IOrderDao order, IProductDao product,
-            IProductOrder productOrder, UserManager<IdentityUser> userManager)
+            IProductOrderDao productOrder, UserManager<IdentityUser> userManager)
         {
             _order = order;
             _product = product;
@@ -72,38 +72,7 @@ namespace Codecool.CodecoolShop.Services
             return orderItems;
         }
 
-        public void CreateCustomer(OrderDetails order, HttpContext httpContext)
-        {
-            CustomerService stripeCustomer = new();
-
-            stripeCustomer.Create(new CustomerCreateOptions
-            {
-                Email = order.StripeEmail,
-                Name = order.StripeBillingName,
-            });
-
-            DataAccessLayer.Model.Customer customerForDb = new()
-            {
-                Email = order.StripeEmail,
-                FirstName = order.StripeBillingName,
-                BillingAddressCountry = order.StripeBillingAddressCountry,
-                BillingAddressCity = order.StripeBillingAddressCity,
-                BillingAddressLine1 = order.StripeBillingAddressLine1,
-                BillingAddressZip = order.StripeBillingAddressZip,
-                BillingName = order.StripeBillingName,
-                ShippingAddressCountry = order.StripeBillingAddressCountry,
-                ShippingAddressCity = order.StripeShippingAddressCity,
-                ShippingAddressLine1 = order.StripeShippingAddressLine1,
-                ShippingAddressZip = order.StripeShippingAddressZip,
-            };
-
-            string userId = _userManager.GetUserId(httpContext.User);
-
-            if (userId != null)
-            {
-                customerForDb.UserId = userId;
-            }
-        }
+       
 
         public void CreateOrder(OrderDetails order, HttpContext httpContext)
         {
