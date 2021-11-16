@@ -44,11 +44,9 @@
                                 </form>
                             </li>
                             <li class="nav-item">
-                                <form method="get" asp-controller="Account" asp-action="Index">
-                                    <button class="nav-link btn btn-link py-0" type="submit" style="width:auto">
-                                        @UserNameHelper.ExtractUserNameFromEmail(User.Identity.Name)
-                                    </button>
-                                </form>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">
+                                    @UserNameHelper.ExtractUserNameFromEmail(User.Identity.Name)
+                                </a>
                             </li>
                         }
                         else

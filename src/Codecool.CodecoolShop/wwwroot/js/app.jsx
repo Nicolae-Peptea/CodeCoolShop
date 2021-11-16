@@ -4,20 +4,6 @@
         console.log("Orders");
     }
 
-    React.useEffect(() => {
-        const rows = document.querySelectorAll('.row');
-        for (const row of rows) {
-            row.addEventListener('click', (e) => {
-                let orderDetailsContainer =
-                    e.currentTarget.querySelector(".order-details");
-
-                orderDetailsContainer.style.display =
-                    orderDetailsContainer.style.display === ""
-                    ? "flex" : "";
-            });
-        }
-    }, []);
-
     return (
         <div className="App">
             <Header handleClick={handleClick}/>
@@ -55,12 +41,26 @@ const OrdersList = ({ url }) => {
     const [baseLink, setBaseLink] = React.useState("https://localhost:5001");
     const { data: orders, isLoading, error } = useFetch(baseLink + url);
 
+    React.useEffect(() => {
+        const rows = document.querySelectorAll('.row');
+        for (const row of rows) {
+            row.addEventListener('click', (e) => {
+                let orderDetailsContainer =
+                    e.currentTarget.querySelector(".order-details");
+
+                orderDetailsContainer.style.display =
+                    orderDetailsContainer.style.display === ""
+                        ? "flex" : "";
+            });
+        }
+    }, [orders]);
+
     return (
         <div className="orders-list">
             <div className="table-header">
-                <div className="column">Column1</div>
-                <div className="column">Column2</div>
-                <div className="column">Column3</div>
+                <div className="column">Number</div>
+                <div className="column">Placed</div>
+                <div className="column">Total</div>
             </div>
             {error ?? <div>{error}</div>}
             {isLoading && <div>Loading...</div>}
@@ -72,18 +72,18 @@ const OrdersList = ({ url }) => {
 const OrderTableRows = ({ orders }) => {
     return (
         <div className="table-content">
-            {orders.map((x, i) =>
-                <div className="row" key={i}>
+            {orders.map((order, i) =>
+                <div className="row" key={i + 1}>
                     <div className="order-preview">
-                        <div className="column">Column1</div>
-                        <div className="column">Column2</div>
-                        <div className="column">Column3</div>
+                        <div className="column">{i + 1}</div>
+                        <div className="column">{order.orderPlaced}</div>
+                        <div className="column">{i + 1}</div>
                     </div>
 
                     <div className="order-details">
-                        <div className="column">Column1</div>
-                        <div className="column">Column2</div>
-                        <div className="column">Column3</div>
+                        <div className="column">1</div>
+                        <div className="column">Product 1</div>
+                        <div className="column">$49.99</div>
                     </div>
                 </div>
             )}
@@ -100,7 +100,6 @@ const useFetch = (url) => {
         setTimeout(() => {
             fetch(url)
                 .then((response) => {
-                    console.log(response);
                     if (!response.ok) {
                         throw Error("Could not fetch the data for that resource...");
                     }
