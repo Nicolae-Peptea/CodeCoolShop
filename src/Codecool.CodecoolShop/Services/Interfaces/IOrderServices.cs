@@ -9,7 +9,7 @@ namespace Codecool.CodecoolShop.Services.Interfaces
         void Add(int customerId);
         Order Get(int id);
         void RemoveItem(int id);
-        IEnumerable<Order> GetAllItems();
+        List<Order> GetAllItems();
         decimal GetTotalOrderValue(List<ProductOrder> orderItems);
         List<ProductOrder> UpdateProductOrderPriceFromJson(OrderDetails order);
         void CreateCustomer(OrderDetails order);
