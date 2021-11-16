@@ -50,7 +50,7 @@ namespace Codecool.CodecoolShop.Controllers
                 Log.Error(ex, "Failed the checkout process due to payment");
             }
 
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult SuccessfulOrder(int id)

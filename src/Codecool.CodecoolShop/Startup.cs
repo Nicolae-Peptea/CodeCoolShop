@@ -64,7 +64,7 @@ namespace Codecool.CodecoolShop
             }
             else
             {
-                app.UseExceptionHandler("/Product/Error");
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -83,7 +83,7 @@ namespace Codecool.CodecoolShop
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Product}/{action=Index}/{id?}");
+                    pattern: "{controller=HomePage}/{action=Index}/{id?}");
             });
         }
     }
