@@ -1,4 +1,5 @@
-﻿using Codecool.CodecoolShop.Models;
+﻿using Codecool.CodecoolShop.Daos;
+using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,10 +14,12 @@ namespace Codecool.CodecoolShop.Services
     public class CustomerServices : ICustomerService
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ICustomerDao _customerDao;
 
-        public CustomerServices(UserManager<IdentityUser> userManager)
+        public CustomerServices(UserManager<IdentityUser> userManager, ICustomerDao customerDao)
         {
             _userManager = userManager;
+            _customerDao = customerDao;
         }
 
         public void CreateCustomer(OrderDetails order, HttpContext httpContext)
@@ -50,6 +53,8 @@ namespace Codecool.CodecoolShop.Services
             {
                 customerForDb.UserId = userId;
             }
+
+            _customerDao.Add(customerForDb);
         }
     }
 }

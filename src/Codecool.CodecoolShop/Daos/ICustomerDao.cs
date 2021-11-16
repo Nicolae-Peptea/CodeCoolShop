@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Daos
 {
-    interface ICustomerDao : IDao<Customer>
+    public interface ICustomerDao : IDao<Customer>
     {
     }
 }
