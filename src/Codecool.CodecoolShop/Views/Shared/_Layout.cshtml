@@ -39,8 +39,13 @@
                         {
                             <li class="nav-item">
                                 <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <button class="nav-link btn btn-link py-0" type="submit" style="width:auto">LogOut</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form method="get" asp-controller="Account" asp-action="Index">
                                     <button class="nav-link btn btn-link py-0" type="submit" style="width:auto">
-                                        LogOut @UserNameHelper.ExtractUserNameFromEmail(User.Identity.Name)
+                                        @UserNameHelper.ExtractUserNameFromEmail(User.Identity.Name)
                                     </button>
                                 </form>
                             </li>
