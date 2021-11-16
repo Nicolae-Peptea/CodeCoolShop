@@ -12,14 +12,17 @@ namespace Codecool.CodecoolShop.Controllers
     {
         public IOrderServices OrderServices { get; private set; }
         public IMailService EmailService { get; private set; }
+        public ICustomerService CustomerService { get; private set; }
         public SendgridSettings SendgridSettings { get; private set; }
 
         public OrderPlacementController(IMailService mailService,
-            IOrderServices orderServices, IOptions<SendgridSettings> sendgridSettings)
+            IOrderServices orderServices, IOptions<SendgridSettings> sendgridSettings,
+            ICustomerService customerService)
         {
             OrderServices = orderServices;
             EmailService = mailService;
             SendgridSettings = sendgridSettings.Value;
+            CustomerService = customerService;
         }
 
         [HttpPost]
@@ -34,7 +37,7 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 OrderServices.ChargeCustomer(order, orderTotal);
                 //OrderServices.CreateOrder(order, HttpContext);
-                OrderServices.CreateCustomer(order, HttpContext);
+                CustomerService.CreateCustomer(order, HttpContext);
 
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
