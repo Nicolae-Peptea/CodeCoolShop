@@ -11,6 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
+using JavaScriptEngineSwitcher.V8;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
+using React.AspNet;
 using Serilog;
 using Stripe;
 
@@ -56,6 +60,12 @@ namespace Codecool.CodecoolShop
                 options.Password.RequireNonAlphanumeric = false;
             })
                 .AddEntityFrameworkStores<CodeCoolShopContext>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddReact();
+
+            services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
+              .AddV8();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +84,7 @@ namespace Codecool.CodecoolShop
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseReact(config => config.AddScript("~/js/app.jsx"));
             app.UseStaticFiles();
 
             app.UseAuthentication();
