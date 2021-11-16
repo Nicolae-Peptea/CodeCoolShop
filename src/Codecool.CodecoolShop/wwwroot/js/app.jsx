@@ -46,13 +46,14 @@ const Header = ({ handleClick }) => {
 const Content = () => {
     return (
         <div className="page-content">
-            <OrdersList url="/orders"/>
+            <OrdersList url="/order/all"/>
         </div>
     );
 }
 
 const OrdersList = ({ url }) => {
-    const [orders, setOrders] = React.useState(null);
+    const [baseLink, setBaseLink] = React.useState("https://localhost:5001");
+    const { data: orders, isLoading, error } = useFetch(baseLink + url);
 
     return (
         <div className="orders-list">
@@ -61,15 +62,17 @@ const OrdersList = ({ url }) => {
                 <div className="column">Column2</div>
                 <div className="column">Column3</div>
             </div>
-            <OrderTableRows/>
+            {error ?? <div>{error}</div>}
+            {isLoading && <div>Loading...</div>}
+            {orders && <OrderTableRows orders={orders} />}
         </div>
     );
 }
 
-const OrderTableRows = () => {
+const OrderTableRows = ({ orders }) => {
     return (
         <div className="table-content">
-            {[...Array(10)].map((x, i) =>
+            {orders.map((x, i) =>
                 <div className="row" key={i}>
                     <div className="order-preview">
                         <div className="column">Column1</div>
@@ -86,6 +89,42 @@ const OrderTableRows = () => {
             )}
         </div>
     );
+}
+
+const useFetch = (url) => {
+    const [data, setData] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [error, setError] = React.useState(null);
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            fetch(url)
+                .then((response) => {
+                    console.log(response);
+                    if (!response.ok) {
+                        throw Error("Could not fetch the data for that resource...");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setIsLoading(false);
+                    setError(null);
+                    setData(data);
+                })
+                .catch((error) => {
+                    if (error.name === 'AbortError') {
+                        console.log('Fetch aborted.');
+                    }
+                    else {
+                        setIsLoading(false);
+                        setError(error.message);
+                    }
+                });
+        }, 500);
+    }, [url]);
+
+    return { data, isLoading, error }
 }
 
 ReactDOM.render(<App />, document.getElementById('content'));
