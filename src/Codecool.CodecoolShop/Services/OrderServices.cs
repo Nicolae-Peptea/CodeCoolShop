@@ -21,7 +21,6 @@ namespace Codecool.CodecoolShop.Services
             _order = order;
             _product = product;
             _productOrder = productOrder;
-
         }
 
         public void Add(int customerId)

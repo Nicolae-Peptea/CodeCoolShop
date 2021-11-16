@@ -20,6 +20,7 @@ namespace Codecool.CodecoolShop.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -33,7 +34,7 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 IdentityUser user = new()
                 {
-                    UserName = UserNameHelper.ExtractUserNameFromEmail(model.Email),
+                    UserName = model.Email,
                     Email = model.Email,
                 };
 
@@ -42,15 +43,48 @@ namespace Codecool.CodecoolShop.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Product");
+                    return RedirectToAction("Index", "HomePage");
                 }
 
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserLoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, 
+                    model.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "HomePage");
+                }
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "HomePage");
         }
     }
 }

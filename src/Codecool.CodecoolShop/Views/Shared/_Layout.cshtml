@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity;
+@using Codecool.CodecoolShop.Helpers;
+
 @inject SignInManager<IdentityUser> signInManager;
 
 <!DOCTYPE html>
@@ -36,10 +38,11 @@
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <form method="post" asp-controller="Account" asp-action="Logout"></form>
-                                <button class="nav-link btn btn-link py-0" type="submit" style="width:auto">
-                                    LogOut @User.Identity.Name
-                                </button>
+                                <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <button class="nav-link btn btn-link py-0" type="submit" style="width:auto">
+                                        LogOut @UserNameHelper.ExtractUserNameFromEmail(User.Identity.Name)
+                                    </button>
+                                </form>
                             </li>
                         }
                         else
