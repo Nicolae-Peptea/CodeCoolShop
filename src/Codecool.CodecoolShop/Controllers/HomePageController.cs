@@ -8,13 +8,13 @@ using System.Diagnostics;
 
 namespace Codecool.CodecoolShop.Controllers
 {
-    public class ProductController : Controller
+    public class HomePageController : Controller
     {
         public IProductServicesDb ProductService { get; set; }
         public ICategoryService CategoryService { get; set; }
         public ISupplierService SupplierService { get; set; }
 
-        public ProductController(IProductServicesDb productServices,
+        public HomePageController(IProductServicesDb productServices,
             ICategoryService categoryService, ISupplierService supplierService)
         {
             ProductService = productServices;
