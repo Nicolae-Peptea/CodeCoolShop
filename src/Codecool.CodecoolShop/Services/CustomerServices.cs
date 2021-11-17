@@ -22,7 +22,7 @@ namespace Codecool.CodecoolShop.Services
             _customerDao = customerDao;
         }
 
-        public void CreateCustomer(OrderDetails order, HttpContext httpContext)
+        public void CreateCustomer(OrderViewDetails order, HttpContext httpContext)
         {
             CustomerService stripeCustomer = new();
 
@@ -50,7 +50,7 @@ namespace Codecool.CodecoolShop.Services
             }
         }
 
-        private DataAccessLayer.Model.Customer MapOrderDetailsToCustomerModel(OrderDetails order)
+        private DataAccessLayer.Model.Customer MapOrderDetailsToCustomerModel(OrderViewDetails order)
         {
             return new()
             {

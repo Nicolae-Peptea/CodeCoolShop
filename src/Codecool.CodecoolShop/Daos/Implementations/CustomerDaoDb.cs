@@ -21,7 +21,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public void Add(Customer item)
         {
             _context.Customers.Add(item);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public Customer Get(int id)
@@ -29,12 +29,19 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             throw new NotImplementedException();
         }
 
-        public bool IsAlreadyCustomer(OrderDetails order)
+        public bool IsAlreadyCustomer(OrderViewDetails order)
         {
             Customer customer =_context.Customers
                 .Where(customer => customer.Email == order.StripeEmail)
                 .FirstOrDefault();
             return customer == null;
+        }
+
+        public int GetCustomerIdByEmail(OrderViewDetails order)
+        {
+            return _context.Customers
+                .Where(customer => customer.Email == order.StripeEmail)
+                .FirstOrDefault().Id;
         }
 
         public void UpdateCustomer(Customer customer)
@@ -68,6 +75,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             throw new NotImplementedException();
         }
+
 
         public void RemoveItem(int id)
         {

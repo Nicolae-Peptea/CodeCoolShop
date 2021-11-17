@@ -6,6 +6,6 @@ namespace Codecool.CodecoolShop.Services.Interfaces
 {
     public interface ICustomerService
     {
-        void CreateCustomer(OrderDetails order, HttpContext httpContext);
+        void CreateCustomer(OrderViewDetails order, HttpContext httpContext);
     }
 }

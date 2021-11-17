@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DataAccessLayer.Data
 {
@@ -40,6 +41,7 @@ namespace DataAccessLayer.Data
             var pr4 = new Product { Id = 4, Name = "Apple iPhone 12 Pro Max", Price = 1239.0m, Description = "The iPhone 12 is a new iPhone model developed by Apple Inc. It is part of a device family that was announced during a special event on October 13, 2020 to succeed the iPhone 11 line.", CategoryId = 2, SupplierId = 3 };
 
             var Ion = new Customer { Id = 1, BillingAddressCity = "Topolog", FirstName="Ion"};
+            var dummyOrder = new Order { Id = 1, CustomerId = 5, OrderPlaced = DateTime.Now };
 
             builder.Entity<Supplier>().HasData(amazon, lenovo, apple);
             builder.Entity<Category>().HasData(tablet, phone);

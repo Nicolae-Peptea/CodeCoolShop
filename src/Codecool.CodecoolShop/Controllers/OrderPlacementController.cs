@@ -26,16 +26,19 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(OrderDetails order)
+        public IActionResult Index(OrderViewDetails order)
         {
             List<DataAccessLayer.Model.ProductOrder> orderItems = OrderServices.UpdateProductOrderPriceFromJson(order);
             decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
 
             try
             {
-                OrderServices.ChargeCustomer(order, orderTotal);
                 CustomerService.CreateCustomer(order, HttpContext);
+                OrderServices.AddOrder(order);
 
+                OrderServices.ChargeCustomer(order, orderTotal);
+                
+                
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
                 EmailService.SendEmail(model, SendgridSettings).Wait();

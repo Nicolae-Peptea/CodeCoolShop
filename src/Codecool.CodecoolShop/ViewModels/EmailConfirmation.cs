@@ -21,7 +21,7 @@ namespace Codecool.CodecoolShop.Models
 
         public List<ProductOrder> Items { get; set; }
 
-        public EmailConfirmation(OrderDetails details, decimal orderTotal, List<ProductOrder> orderItems)
+        public EmailConfirmation(OrderViewDetails details, decimal orderTotal, List<ProductOrder> orderItems)
         {
             this.FullName = details.StripeBillingName;
             this.Email = details.StripeEmail;

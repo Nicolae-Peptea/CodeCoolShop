@@ -16,41 +16,49 @@ namespace Codecool.CodecoolShop.Services
 {
     public class OrderServices : IOrderServices
     {
-        private readonly IOrderDao _order;
-        private readonly IProductOrderDao _productOrder;
-        private readonly IProductDao _product;
+        private readonly IOrderDao _orderDao;
+        private readonly IProductOrderDao _productOrderDao;
+        private readonly IProductDao _productDao;
+        private readonly ICustomerDao _customerDao;
         private readonly UserManager<IdentityUser> _userManager;
 
         public OrderServices(IOrderDao order, IProductDao product,
-            IProductOrderDao productOrder, UserManager<IdentityUser> userManager)
+            IProductOrderDao productOrder, UserManager<IdentityUser> userManager,
+            ICustomerDao customerDao)
         {
-            _order = order;
-            _product = product;
-            _productOrder = productOrder;
+            _orderDao = order;
+            _productDao = product;
+            _productOrderDao = productOrder;
             _userManager = userManager;
+            _customerDao = customerDao;
         }
 
-        public void Add(int customerId)
+        public void AddOrder(OrderViewDetails order)
         {
-            DataAccessLayer.Model.Order newOrder = new();
-            newOrder.OrderPlaced = DateTime.Now;
-            //newOrder.CustomerId = customerId;
-            _order.Add(newOrder);
+            int customerId = _customerDao.GetCustomerIdByEmail(order);
+
+            DataAccessLayer.Model.Order newOrder = new()
+            {
+                OrderPlaced = DateTime.Now,
+                CustomerId = customerId,
+            };
+
+            _orderDao.Add(newOrder);
         }
 
         public DataAccessLayer.Model.Order Get(int id)
         {
-            return _order.Get(id);
+            return _orderDao.Get(id);
         }
 
         public void RemoveItem(int id)
         {
-            _order.RemoveItem(id);
+            _orderDao.RemoveItem(id);
         }
 
         public IEnumerable<DataAccessLayer.Model.Order> GetAllItems()
         {
-            return _order.GetAll();
+            return _orderDao.GetAll();
         }
 
         public decimal GetTotalOrderValue(List<ProductOrder> orderItems)
@@ -59,20 +67,20 @@ namespace Codecool.CodecoolShop.Services
         }
 
 
-        public List<ProductOrder> UpdateProductOrderPriceFromJson(OrderDetails order)
+        public List<ProductOrder> UpdateProductOrderPriceFromJson(OrderViewDetails order)
         {
             List<ProductOrder> orderItems = JsonHelper.Deserialize<List<ProductOrder>>(order.CartItems);
 
             foreach (var item in orderItems)
             {
-                item.Product = _product.Get(item.ProductId);
+                item.Product = _productDao.Get(item.ProductId);
                 item.PricePerProduct = item.Product.Price;
             }
 
             return orderItems;
         }
 
-        public void ChargeCustomer(OrderDetails order, decimal orderTotal)
+        public void ChargeCustomer(OrderViewDetails order, decimal orderTotal)
         {
             ChargeService charges = new();
 
@@ -83,22 +91,6 @@ namespace Codecool.CodecoolShop.Services
                 Currency = "usd",
                 Source = order.StripeToken,
             });
-        }
-
-        public void CreateOrder(OrderDetails order, HttpContext httpContext)
-        {
-
-            var x = _userManager.GetUserId(httpContext.User);
-
-            DataAccessLayer.Model.Order dbOrder = new()
-            {
-                OrderPlaced = DateTime.Now,
-            };
-
-            if (x != null)
-            {
-                var y = 5;
-            }
         }
     }
 }
