@@ -13,16 +13,18 @@ namespace Codecool.CodecoolShop.Controllers
         public IOrderServices OrderServices { get; private set; }
         public IMailService EmailService { get; private set; }
         public ICustomerService CustomerService { get; private set; }
+        public IProductOrderServices ProductOrderService { get; private set; }
         public SendgridSettings SendgridSettings { get; private set; }
 
         public OrderPlacementController(IMailService mailService,
             IOrderServices orderServices, IOptions<SendgridSettings> sendgridSettings,
-            ICustomerService customerService)
+            ICustomerService customerService, IProductOrderServices productOrderServices)
         {
             OrderServices = orderServices;
             EmailService = mailService;
             SendgridSettings = sendgridSettings.Value;
             CustomerService = customerService;
+            ProductOrderService = productOrderServices;
         }
 
         [HttpPost]
@@ -37,11 +39,11 @@ namespace Codecool.CodecoolShop.Controllers
                 OrderServices.AddOrder(order);
 
                 OrderServices.ChargeCustomer(order, orderTotal);
-                
+                ProductOrderService.AddProducts(orderItems);
                 
                 Log.Information("Successful checkout process - payment complete");
-                EmailConfirmation model = new(order, orderTotal, orderItems);
-                EmailService.SendEmail(model, SendgridSettings).Wait();
+                //EmailConfirmation model = new(order, orderTotal, orderItems);
+                //EmailService.SendEmail(model, SendgridSettings).Wait();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)
@@ -49,7 +51,7 @@ namespace Codecool.CodecoolShop.Controllers
                 Log.Error(ex, "Failed the checkout process due to payment");
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "HomePage");
         }
 
         public IActionResult SuccessfulOrder(int id)

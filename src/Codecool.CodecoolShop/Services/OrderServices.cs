@@ -61,11 +61,16 @@ namespace Codecool.CodecoolShop.Services
             return _orderDao.GetAll();
         }
 
+        public int GetLatestOrderId()
+        {
+            DataAccessLayer.Model.Order latestOrder = _orderDao.GetLatestAddedOrder();
+            return latestOrder.CustomerId;
+        }
+
         public decimal GetTotalOrderValue(List<ProductOrder> orderItems)
         {
             return orderItems.Select(item => item.PricePerProduct * item.Quantity).Sum();
         }
-
 
         public List<ProductOrder> UpdateProductOrderPriceFromJson(OrderViewDetails order)
         {
