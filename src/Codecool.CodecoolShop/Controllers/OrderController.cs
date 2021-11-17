@@ -30,7 +30,7 @@ namespace Codecool.CodecoolShop.Controllers
             return orders;
         }
 
-        public string GetByUserId()
+        public string GetByUserInSession()
         {
             ClaimsPrincipal userInSession = _httpContextAccessor.HttpContext.User;
             string userId = _customerService.GetUserId(userInSession);
