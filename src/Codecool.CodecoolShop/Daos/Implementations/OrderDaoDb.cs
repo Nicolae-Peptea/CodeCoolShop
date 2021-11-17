@@ -14,16 +14,16 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             _context = context;
         }
 
-        public void Add(Order order)
+        public async void Add(Order order)
         {
-            //order.Id = _context.Orders.Count() + 1;
-            _context.Orders.Add(order);
-            _context.SaveChanges();
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
         }
 
         public Order Get(int id)
         {
-            return _context.Orders.Where(product => product.Id == id).FirstOrDefault();
+            return _context.Orders.Where(product => product.Id == id)
+                .FirstOrDefault();
         }
 
         public IEnumerable<Order> GetAll()

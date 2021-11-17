@@ -9,7 +9,9 @@ namespace Codecool.CodecoolShop.Daos
 {
     public interface ICustomerDao : IDao<Customer>
     {
-        public bool IsAlreadyCustomer(OrderDetails order);
+        public int GetCustomerIdByEmail(OrderViewDetails order);
+
+        public bool IsAlreadyCustomer(OrderViewDetails order);
 
         public void UpdateCustomer(Customer customer);
     }

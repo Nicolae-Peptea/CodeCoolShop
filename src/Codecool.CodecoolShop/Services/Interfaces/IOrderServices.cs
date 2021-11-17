@@ -7,7 +7,7 @@ namespace Codecool.CodecoolShop.Services.Interfaces
 {
     public interface IOrderServices
     {
-        void Add(int customerId);
+        void AddOrder(OrderViewDetails order);
         
         Order Get(int id);
         
@@ -17,10 +17,8 @@ namespace Codecool.CodecoolShop.Services.Interfaces
         
         decimal GetTotalOrderValue(List<ProductOrder> orderItems);
         
-        List<ProductOrder> UpdateProductOrderPriceFromJson(OrderDetails order);
+        List<ProductOrder> UpdateProductOrderPriceFromJson(OrderViewDetails order);
         
-        void ChargeCustomer(OrderDetails order, decimal orderTotal);
-
-        void CreateOrder(OrderDetails order, HttpContext httpContext);
+        void ChargeCustomer(OrderViewDetails order, decimal orderTotal);
     }
 }
