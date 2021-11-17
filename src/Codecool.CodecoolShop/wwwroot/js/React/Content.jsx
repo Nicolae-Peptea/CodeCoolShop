@@ -3,7 +3,7 @@
 const Content = () => {
     return (
         <div className="page-content">
-            <OrdersList url="/order/all" />
+            <OrdersList url="/order/getbyuserid" />
         </div>
     );
 }

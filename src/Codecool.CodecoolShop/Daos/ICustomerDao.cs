@@ -8,5 +8,6 @@ namespace Codecool.CodecoolShop.Daos
 {
     public interface ICustomerDao : IDao<Customer>
     {
+        int GetId(string userId);
     }
 }

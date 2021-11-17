@@ -139,12 +139,18 @@ ul {
     margin: 0;
 }
 
-.table-content .row .order-preview {
+.table-content .row .order-preview,
+.order-details-row {
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     display: flex;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
     justify-content: space-around;
+}
+
+.order-details {
+    display: flex;
+    flex-direction: column;
 }
 
 .table-content .row .order-preview:hover {
@@ -156,7 +162,6 @@ ul {
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     display: none;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 30px;
     justify-content: space-around;
     padding-bottom: 5px;
     -moz-box-shadow: inset 0 0 2px #000000;

@@ -53,6 +53,11 @@ namespace Codecool.CodecoolShop.Services
             return _order.GetAll().ToList();
         }
 
+        public List<DataAccessLayer.Model.Order> GetByUserId(int customerId)
+        {
+            return _order.GetByCustomerId(customerId).ToList();
+        }
+
         public decimal GetTotalOrderValue(List<ProductOrder> orderItems)
         {
             return orderItems.Select(item => item.PricePerProduct * item.Quantity).Sum();

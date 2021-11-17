@@ -31,6 +31,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return _context.Orders;
         }
 
+        public IEnumerable<Order> GetByCustomerId(int customerId)
+        {
+            return _context.Orders.Where(order => order.CustomerId == customerId);
+        }
+
         public void RemoveItem(int id)
         {
             _context.Orders.Remove(this.Get(id));

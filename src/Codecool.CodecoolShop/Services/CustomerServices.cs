@@ -7,6 +7,7 @@ using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Services
@@ -56,6 +57,24 @@ namespace Codecool.CodecoolShop.Services
             }
 
             _customerDao.Add(customerForDb);
+        }
+
+        public string GetUserId(ClaimsPrincipal principal)
+        {
+            var user = _userManager.GetUserId(principal);
+            return user;
+        }
+
+        public int GetCustomerId(string userId)
+        {
+            int customerId = _customerDao.GetId(userId);
+            return customerId;
+        }
+
+        public DataAccessLayer.Model.Customer Get(int id)
+        {
+            var customer = _customerDao.Get(id);
+            return customer;
         }
     }
 }
