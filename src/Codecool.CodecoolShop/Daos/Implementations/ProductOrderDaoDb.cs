@@ -15,7 +15,8 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         }
         public void Add(ProductOrder item)
         {
-            throw new NotImplementedException();
+             _context.ProductOrders.Add(item);
+             _context.SaveChanges();
         }
 
         public ProductOrder Get(int id)

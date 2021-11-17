@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Data;
+﻿using Codecool.CodecoolShop.Models;
+using DataAccessLayer.Data;
 using DataAccessLayer.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,13 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public Order Get(int id)
         {
             return _context.Orders.Where(product => product.Id == id)
+                .FirstOrDefault();
+        }
+
+        public Order GetLatestAddedOrder()
+        {
+            return _context.Orders
+                .OrderByDescending(order => order.OrderPlaced)
                 .FirstOrDefault();
         }
 
