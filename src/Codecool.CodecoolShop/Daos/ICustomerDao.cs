@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Model;
+﻿using Codecool.CodecoolShop.Models;
+using DataAccessLayer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +9,8 @@ namespace Codecool.CodecoolShop.Daos
 {
     public interface ICustomerDao : IDao<Customer>
     {
+        public Customer GetCustomerByEmail(OrderDetails order);
+
+        public void UpdateCustomer(Customer customer);
     }
 }
