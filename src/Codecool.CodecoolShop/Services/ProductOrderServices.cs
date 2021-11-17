@@ -22,8 +22,9 @@ namespace Codecool.CodecoolShop.Services
 
             foreach (var product in productOrders)
             {
-                product.OrderId = latestAddedOrder;
-                _productOrderDao.Add(product);
+                ProductOrder newProduct = new(product);
+                newProduct.OrderId = latestAddedOrder;
+                _productOrderDao.Add(newProduct);
             }
         }
     }

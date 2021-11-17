@@ -40,10 +40,10 @@ namespace Codecool.CodecoolShop.Controllers
 
                 OrderServices.ChargeCustomer(order, orderTotal);
                 ProductOrderService.AddProducts(orderItems);
-                
+
                 Log.Information("Successful checkout process - payment complete");
-                //EmailConfirmation model = new(order, orderTotal, orderItems);
-                //EmailService.SendEmail(model, SendgridSettings).Wait();
+                EmailConfirmation model = new(order, orderTotal, orderItems);
+                EmailService.SendEmail(model, SendgridSettings).Wait();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)
