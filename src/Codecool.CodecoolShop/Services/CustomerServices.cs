@@ -32,7 +32,30 @@ namespace Codecool.CodecoolShop.Services
                 Name = order.StripeBillingName,
             });
 
-            DataAccessLayer.Model.Customer customerForDb = new()
+            DataAccessLayer.Model.Customer customerForDb = MapOrderDetailsToCustomerModel(order);
+
+            string userId = _userManager.GetUserId(httpContext.User);
+            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetCustomerByEmail(order);
+
+ 
+            if (userId != null)
+            {
+                customerForDb.UserId = userId;
+            }
+
+            if (alreadyCustomer == null)
+            {
+                _customerDao.Add(customerForDb);
+            }
+            else
+            {
+                _customerDao.UpdateCustomer(customerForDb);
+            }
+        }
+
+        private DataAccessLayer.Model.Customer MapOrderDetailsToCustomerModel(OrderDetails order)
+        {
+            return new()
             {
                 Email = order.StripeEmail,
                 FirstName = order.StripeBillingName,
@@ -47,15 +70,6 @@ namespace Codecool.CodecoolShop.Services
                 ShippingAddressZip = order.StripeShippingAddressZip,
                 ShippingName = order.StripeShippingName,
             };
-
-            string userId = _userManager.GetUserId(httpContext.User);
-
-            if (userId != null)
-            {
-                customerForDb.UserId = userId;
-            }
-
-            _customerDao.Add(customerForDb);
         }
     }
 }
