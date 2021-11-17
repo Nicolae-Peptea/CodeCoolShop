@@ -1,4 +1,9 @@
-﻿const Header = ({ handleClick }) => {
+﻿const Header = () => {
+    const handleClick = (e) => {
+        e.preventDefault();
+        console.log("Orders");
+    }
+
     return (
         <div className="page-header">
             <nav>
