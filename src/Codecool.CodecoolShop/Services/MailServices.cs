@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class MailService : IMailService
+    public class MailServices : IMailService
     {
         public string SenderEmail { get; set; }
         public string ApiKey { get; set; }
