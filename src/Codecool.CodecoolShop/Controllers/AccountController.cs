@@ -47,6 +47,7 @@ namespace Codecool.CodecoolShop.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
             return View(model);
         }
 
@@ -68,6 +69,7 @@ namespace Codecool.CodecoolShop.Controllers
                 {
                     return RedirectToAction("Index", "HomePage");
                 }
+                else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
                 }
