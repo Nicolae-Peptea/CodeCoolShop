@@ -19,5 +19,16 @@ namespace DataAccessLayer.Model
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal PricePerProduct { get; set; }
+
+        public ProductOrder()
+        {
+        }
+
+        public ProductOrder(ProductOrder oldProduct)
+        {
+            Quantity = oldProduct.Quantity;
+            ProductId = oldProduct.ProductId;
+            OrderId = oldProduct.OrderId;
+        }
     }
 }
