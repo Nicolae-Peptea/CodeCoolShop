@@ -46,5 +46,19 @@ namespace Codecool.CodecoolShop.Controllers
 
             return json;
         }
+
+        public string GetOrderProducts(int id)
+        {
+            //List<Order> orderProducts = _orderServices.GetOrderProducts(id);
+
+
+            string json = JsonConvert.SerializeObject(id, Formatting.Indented,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+
+            return json;
+        }
     }
 }
