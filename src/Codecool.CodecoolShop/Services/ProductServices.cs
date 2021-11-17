@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class ProductServicesDb : IProductServicesDb
+    public class ProductServices : IProductServicesDb
     {
         private readonly IProductDao productDao;
         private readonly IProductCategoryDao productCategoryDao;
         private readonly ISupplierDao productSupplierDao;
 
-        public ProductServicesDb(IProductDao productDao,
+        public ProductServices(IProductDao productDao,
             IProductCategoryDao productCategoryDao,
             ISupplierDao productSupplierDao)
         {
