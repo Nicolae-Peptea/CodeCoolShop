@@ -1,5 +1,5 @@
-﻿import Header from '/js/Header.jsx';
-import Content from '/js/Content.jsx';
+﻿import Header from '/js/React/Header.jsx';
+import Content from '/js/React/Content.jsx';
 
 
 const App = () => {

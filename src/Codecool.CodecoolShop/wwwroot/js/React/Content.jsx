@@ -1,4 +1,4 @@
-﻿import OrdersList from '/js/OrdersList.jsx';
+﻿import OrdersList from '/js/React/OrdersList.jsx';
 
 const Content = () => {
     return (

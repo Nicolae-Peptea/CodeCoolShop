@@ -1,5 +1,5 @@
-﻿import OrderTableRows from '/js/OrderTableRows.jsx';
-import useFetch from '/js/useFetch.jsx';
+﻿import OrderTableRows from '/js/React/OrderTableRows.jsx';
+import useFetch from '/js/React/useFetch.jsx';
 
 const OrdersList = ({ url }) => {
     const [baseLink, setBaseLink] = React.useState("https://localhost:5001");
