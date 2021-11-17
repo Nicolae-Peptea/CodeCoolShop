@@ -39,13 +39,13 @@ namespace Codecool.CodecoolShop
             services.AddTransient<IProductOrderDao, ProductOrderDaoDb>();
             services.AddTransient<ICustomerDao, CustomerDaoDb>();
 
-            services.AddScoped<IProductServicesDb, ProductServicesDb>();
+            services.AddScoped<IProductServicesDb, ProductServices>();
             services.AddScoped<ICategoryService, CategoryServices>();
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IOrderServices, OrderServices>();
             services.AddScoped<ICustomerService, CustomerServices>();
 
-            services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IMailService, MailServices>();
 
             string connectionString = Configuration.GetConnectionString("CodeCoolShop");
             services.AddDbContext<CodeCoolShopContext>(options =>
