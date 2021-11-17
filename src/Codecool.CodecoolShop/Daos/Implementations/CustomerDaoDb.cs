@@ -29,11 +29,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             throw new NotImplementedException();
         }
 
-        public Customer GetCustomerByEmail(OrderDetails order)
+        public bool IsAlreadyCustomer(OrderDetails order)
         {
-            return _context.Customers
+            Customer customer =_context.Customers
                 .Where(customer => customer.Email == order.StripeEmail)
                 .FirstOrDefault();
+            return customer == null;
         }
 
         public void UpdateCustomer(Customer customer)
@@ -42,6 +43,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 .Where(c => c.Email == customer.Email)
                 .FirstOrDefault();
 
+            existingCustomer.BillingName = customer.BillingName;
             existingCustomer.BillingAddressCity = customer.BillingAddressCity;
             existingCustomer.BillingAddressCountry = customer.BillingAddressCountry;
             existingCustomer.BillingAddressCountryCode = customer.BillingAddressCountryCode;
@@ -50,6 +52,8 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             existingCustomer.Email = customer.Email;
             existingCustomer.FirstName = customer.FirstName;
             existingCustomer.LastName = customer.LastName;
+
+            existingCustomer.ShippingName = customer.ShippingName;
             existingCustomer.ShippingAddressCity = customer.ShippingAddressCity;
             existingCustomer.ShippingAddressCountry = customer.ShippingAddressCountry;
             existingCustomer.ShippingAddressCountryCode = customer.ShippingAddressCountryCode;

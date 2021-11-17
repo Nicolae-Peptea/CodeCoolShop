@@ -72,24 +72,6 @@ namespace Codecool.CodecoolShop.Services
             return orderItems;
         }
 
-       
-
-        public void CreateOrder(OrderDetails order, HttpContext httpContext)
-        {
-
-            var x = _userManager.GetUserId(httpContext.User);
-           
-            DataAccessLayer.Model.Order dbOrder = new()
-            {
-                OrderPlaced = DateTime.Now,
-            };
-
-            if (x != null)
-            {
-                var y = 5;
-            }
-        }
-
         public void ChargeCustomer(OrderDetails order, decimal orderTotal)
         {
             ChargeService charges = new();
@@ -101,6 +83,22 @@ namespace Codecool.CodecoolShop.Services
                 Currency = "usd",
                 Source = order.StripeToken,
             });
+        }
+
+        public void CreateOrder(OrderDetails order, HttpContext httpContext)
+        {
+
+            var x = _userManager.GetUserId(httpContext.User);
+
+            DataAccessLayer.Model.Order dbOrder = new()
+            {
+                OrderPlaced = DateTime.Now,
+            };
+
+            if (x != null)
+            {
+                var y = 5;
+            }
         }
     }
 }
