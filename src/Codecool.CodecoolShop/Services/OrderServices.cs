@@ -1,8 +1,12 @@
-﻿using Codecool.CodecoolShop.Daos;
+﻿
+
+using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Model;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -13,21 +17,24 @@ namespace Codecool.CodecoolShop.Services
     public class OrderServices : IOrderServices
     {
         private readonly IOrderDao _order;
-        private readonly IProductOrder _productOrder;
+        private readonly IProductOrderDao _productOrder;
         private readonly IProductDao _product;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public OrderServices(IOrderDao order, IProductDao product, IProductOrder productOrder)
+        public OrderServices(IOrderDao order, IProductDao product,
+            IProductOrderDao productOrder, UserManager<IdentityUser> userManager)
         {
             _order = order;
             _product = product;
             _productOrder = productOrder;
+            _userManager = userManager;
         }
 
         public void Add(int customerId)
         {
             DataAccessLayer.Model.Order newOrder = new();
             newOrder.OrderPlaced = DateTime.Now;
-            newOrder.CustomerId = customerId;
+            //newOrder.CustomerId = customerId;
             _order.Add(newOrder);
         }
 
@@ -65,15 +72,22 @@ namespace Codecool.CodecoolShop.Services
             return orderItems;
         }
 
-        public void CreateCustomer(OrderDetails order)
-        {
-            CustomerService customers = new();
+       
 
-            customers.Create(new CustomerCreateOptions
+        public void CreateOrder(OrderDetails order, HttpContext httpContext)
+        {
+
+            var x = _userManager.GetUserId(httpContext.User);
+           
+            DataAccessLayer.Model.Order dbOrder = new()
             {
-                Email = order.StripeEmail,
-                Name = order.StripeBillingName,
-            });
+                OrderPlaced = DateTime.Now,
+            };
+
+            if (x != null)
+            {
+                var y = 5;
+            }
         }
 
         public void ChargeCustomer(OrderDetails order, decimal orderTotal)

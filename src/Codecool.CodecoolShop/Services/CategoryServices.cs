@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class CategoryService : ICategoryService
+    public class CategoryServices : ICategoryService
     {
         private readonly IProductCategoryDao productCategoryDao;
 
-        public CategoryService(IProductCategoryDao productCategoryDao)
+        public CategoryServices(IProductCategoryDao productCategoryDao)
         {
             this.productCategoryDao = productCategoryDao;
         }

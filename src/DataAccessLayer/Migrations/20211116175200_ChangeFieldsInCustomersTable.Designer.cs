@@ -4,14 +4,16 @@ using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CodeCoolShopContext))]
-    partial class CodeCoolShopContextModelSnapshot : ModelSnapshot
+    [Migration("20211116175200_ChangeFieldsInCustomersTable")]
+    partial class ChangeFieldsInCustomersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,10 +62,12 @@ namespace DataAccessLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("BillingAddressCity")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("BillingAddressCountry")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -72,14 +76,16 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("BillingAddressLine1")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<long?>("BillingAddressZip")
+                    b.Property<long>("BillingAddressZip")
                         .HasMaxLength(25)
                         .HasColumnType("bigint");
 
                     b.Property<string>("BillingName")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -88,10 +94,12 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -100,44 +108,40 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ShippingAddressCity")
+                        .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("ShippingAddressCountry")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<long?>("ShippingAddressCountryCode")
+                    b.Property<long>("ShippingAddressCountryCode")
                         .HasMaxLength(25)
                         .HasColumnType("bigint");
 
                     b.Property<string>("ShippingAddressLine1")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<long?>("ShippingAddressZip")
+                    b.Property<long>("ShippingAddressZip")
                         .HasMaxLength(25)
                         .HasColumnType("bigint");
 
                     b.Property<string>("ShippingName")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BillingAddressCity = "Topolog",
-                            BillingAddressCountryCode = 0L,
-                            FirstName = "Ion"
-                        });
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Order", b =>

@@ -2,28 +2,32 @@
 using DataAccessLayer.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    public class ProductOrderDaoDb : IProductOrderDao
+    public class CustomerDaoDb : ICustomerDao
     {
         private readonly CodeCoolShopContext _context;
 
-        public ProductOrderDaoDb(CodeCoolShopContext context)
+        public CustomerDaoDb(CodeCoolShopContext context)
         {
             _context = context;
         }
-        public void Add(ProductOrder item)
+
+        public void Add(Customer item)
+        {
+            _context.Customers.Add(item);
+            _context.SaveChangesAsync();
+        }
+
+        public Customer Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public ProductOrder Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ProductOrder> GetAll()
+        public IEnumerable<Customer> GetAll()
         {
             throw new NotImplementedException();
         }
