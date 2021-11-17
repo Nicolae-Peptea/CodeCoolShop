@@ -24,12 +24,21 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public Customer Get(int id)
         {
-            throw new NotImplementedException();
+            return _context.Customers
+                .Where(customer => customer.Id == id)
+                .First();
         }
 
         public IEnumerable<Customer> GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        public int GetId(string userId)
+        {
+            return _context.Customers
+                .Where(customer => customer.UserId == userId)
+                .First().Id;
         }
 
         public void RemoveItem(int id)
