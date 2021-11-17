@@ -33,17 +33,14 @@ namespace Codecool.CodecoolShop.Services
             });
 
             DataAccessLayer.Model.Customer customerForDb = MapOrderDetailsToCustomerModel(order);
-
             string userId = _userManager.GetUserId(httpContext.User);
-            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetCustomerByEmail(order);
 
- 
             if (userId != null)
             {
                 customerForDb.UserId = userId;
             }
 
-            if (alreadyCustomer == null)
+            if (_customerDao.IsAlreadyCustomer(order))
             {
                 _customerDao.Add(customerForDb);
             }

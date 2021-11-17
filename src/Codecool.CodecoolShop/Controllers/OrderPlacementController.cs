@@ -31,18 +31,14 @@ namespace Codecool.CodecoolShop.Controllers
             List<DataAccessLayer.Model.ProductOrder> orderItems = OrderServices.UpdateProductOrderPriceFromJson(order);
             decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
 
-            //OrderServices.CreateCustomer(order);
-            //int customerId = 4;
             try
             {
                 OrderServices.ChargeCustomer(order, orderTotal);
-                //OrderServices.CreateOrder(order, HttpContext);
                 CustomerService.CreateCustomer(order, HttpContext);
 
                 Log.Information("Successful checkout process - payment complete");
                 EmailConfirmation model = new(order, orderTotal, orderItems);
                 EmailService.SendEmail(model, SendgridSettings).Wait();
-                //OrderServices.Add(customerId);
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)
