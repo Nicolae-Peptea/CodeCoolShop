@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Codecool.CodecoolShop.ViewModels
+namespace Codecool.CodecoolShop.Models
 {
     public class UserLoginModel
     {

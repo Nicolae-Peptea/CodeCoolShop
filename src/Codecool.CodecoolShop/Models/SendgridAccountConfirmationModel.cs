@@ -1,15 +1,13 @@
 ﻿using Codecool.CodecoolShop.Helpers;
 using Microsoft.AspNetCore.Identity;
 
-namespace Codecool.CodecoolShop.ViewModels
+namespace Codecool.CodecoolShop.Models
 {
-    public class SendgridAccountConfirmationModel
+    public class SendgridAccountConfirmationModel : SendgridBaseModel
     {
         public string FullName { get; private set; }
 
         public string Link { get; private set; }
-
-        public string Email { get; private set; }
 
         public SendgridAccountConfirmationModel(IdentityUser user, string link)
         {
