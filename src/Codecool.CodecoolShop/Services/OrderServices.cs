@@ -61,7 +61,7 @@ namespace Codecool.CodecoolShop.Services
             return _orderDao.GetAll().ToList();
         }
 
-        public List<DataAccessLayer.Model.Order> GetByUserId(int customerId)
+        public List<DataAccessLayer.Model.Order> GetOrderByUserId(int customerId)
         {
             return _orderDao.GetByCustomerId(customerId).ToList();
         }
@@ -69,7 +69,7 @@ namespace Codecool.CodecoolShop.Services
         public int GetLatestOrderId()
         {
             DataAccessLayer.Model.Order latestOrder = _orderDao.GetLatestAddedOrder();
-            return latestOrder.CustomerId;
+            return latestOrder.Id;
         }
 
         public decimal GetTotalOrderValue(List<ProductOrder> orderItems)

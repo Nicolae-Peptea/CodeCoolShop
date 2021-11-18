@@ -41,7 +41,7 @@ namespace Codecool.CodecoolShop.Controllers
                 Log.Information("Successful checkout process - payment complete");
                 SendgridOrderConfirmationModel model = new(order, orderTotal, orderItems);
                 EmailService.SendOrderConfirmation(model).Wait();
-                return RedirectToAction("SuccessfulOrder", new { id = 1 });
+                return RedirectToAction("SuccessfulOrder", new { id = OrderServices.GetLatestOrderId() });
             }
             catch (Exception ex)
             {

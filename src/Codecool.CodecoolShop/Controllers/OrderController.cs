@@ -39,7 +39,7 @@ namespace Codecool.CodecoolShop.Controllers
             string userId = _customerService.GetUserId(userInSession);
             int customerId = _customerService.GetCustomerId(userId);
 
-            List<Order> userOrders = _orderServices.GetByUserId(customerId);
+            List<Order> userOrders = _orderServices.GetOrderByUserId(customerId);
 
             string json = JsonConvert.SerializeObject(userOrders, Formatting.Indented,
                     new JsonSerializerSettings()
