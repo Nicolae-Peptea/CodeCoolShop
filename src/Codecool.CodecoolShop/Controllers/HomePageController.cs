@@ -10,11 +10,11 @@ namespace Codecool.CodecoolShop.Controllers
 {
     public class HomePageController : Controller
     {
-        private readonly IProductServicesDb _productService;
+        private readonly IProductServices _productService;
         private readonly ICategoryService _categoryService;
         private readonly ISupplierService _supplierService;
 
-        public HomePageController(IProductServicesDb productServices,
+        public HomePageController(IProductServices productServices,
             ICategoryService categoryService, ISupplierService supplierService)
         {
             _productService = productServices;

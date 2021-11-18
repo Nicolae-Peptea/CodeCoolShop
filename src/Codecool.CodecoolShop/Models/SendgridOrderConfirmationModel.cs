@@ -19,7 +19,7 @@ namespace Codecool.CodecoolShop.Models
 
         public List<ProductOrder> Items { get; private set; }
 
-        public SendgridOrderConfirmationModel(OrderViewDetails details, decimal orderTotal, List<ProductOrder> orderItems)
+        public SendgridOrderConfirmationModel(OrderViewDetailsModel details, decimal orderTotal, List<ProductOrder> orderItems)
         {
             this.FullName = details.StripeBillingName;
             this.Email = details.StripeEmail;

@@ -8,7 +8,7 @@ namespace Codecool.CodecoolShop.Services.Interfaces
     public interface ICustomerService
     {
         Customer Get(int id);
-        void CreateCustomer(OrderViewDetails order, HttpContext httpContext);
+        void CreateCustomer(OrderViewDetailsModel order, HttpContext httpContext);
         string GetUserId(ClaimsPrincipal principal);
         int GetCustomerId(string userId);
     }

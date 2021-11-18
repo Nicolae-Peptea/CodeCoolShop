@@ -42,7 +42,7 @@ namespace Codecool.CodecoolShop
             services.AddTransient<ICustomerDao, CustomerDaoDb>();
             services.AddTransient<IProductOrderDao, ProductOrderDaoDb>();
 
-            services.AddScoped<IProductServicesDb, ProductServices>();
+            services.AddScoped<IProductServices, ProductServices>();
             services.AddScoped<ICategoryService, CategoryServices>();
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IOrderServices, OrderServices>();

@@ -29,7 +29,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 .First();
         }
 
-        public bool IsAlreadyCustomer(OrderViewDetails order)
+        public bool IsAlreadyCustomer(OrderViewDetailsModel order)
         {
             Customer customer = _context.Customers
                 .Where(customer => customer.Email == order.StripeEmail)
@@ -37,7 +37,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return customer == null;
         }
 
-        public int GetCustomerIdByEmail(OrderViewDetails order)
+        public int GetCustomerIdByEmail(OrderViewDetailsModel order)
         {
             return _context.Customers
                 .Where(customer => customer.Email == order.StripeEmail)

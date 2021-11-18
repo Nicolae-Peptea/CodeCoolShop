@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Services.Interfaces
 {
-    public interface IProductServicesDb
+    public interface IProductServices
     {
         Category GetProductCategory(int categoryId);
         IEnumerable<Product> GetProductsForCategory(int categoryId);
