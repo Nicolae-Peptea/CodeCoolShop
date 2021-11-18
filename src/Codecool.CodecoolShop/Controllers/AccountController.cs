@@ -57,9 +57,8 @@ namespace Codecool.CodecoolShop.Controllers
                     SendgridAccountConfirmationModel emailModel = new(user, confirmationLink);
                     await _mailServices.SendAccountRegisterConfirmation(emailModel);
                    
-                    ViewBag.Message = @"Registration succesful
-                                        Before you can Login, please confirm your
-                                            email, by clicking on the confirmation link sent to your email";
+                    ViewBag.Message = @"Registration succesful!<br>Before you can Login, please confirm your
+                                            email, by clicking on the confirmation link sent to your email.";
                    
                     return View("ConfirmEmail");
                 }

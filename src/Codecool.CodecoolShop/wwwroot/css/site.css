@@ -562,6 +562,12 @@ td#qty button {
 .submit-login:hover{
     opacity: 1;
 }
+.alert-danger {
+    width: 70%;
+    text-align: center;
+    margin: auto;
+    margin-top: 20vw;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
