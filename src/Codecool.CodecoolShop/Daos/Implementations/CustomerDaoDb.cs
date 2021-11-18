@@ -1,11 +1,9 @@
 ﻿using Codecool.CodecoolShop.Models;
 using DataAccessLayer.Data;
 using DataAccessLayer.Model;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
@@ -33,7 +31,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public bool IsAlreadyCustomer(OrderViewDetails order)
         {
-            Customer customer =_context.Customers
+            Customer customer = _context.Customers
                 .Where(customer => customer.Email == order.StripeEmail)
                 .FirstOrDefault();
             return customer == null;

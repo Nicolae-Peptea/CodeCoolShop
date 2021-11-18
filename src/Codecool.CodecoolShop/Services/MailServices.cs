@@ -1,5 +1,4 @@
-﻿using Codecool.CodecoolShop.Helpers;
-using Codecool.CodecoolShop.Models;
+﻿using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using SendGrid;
@@ -51,7 +50,7 @@ namespace Codecool.CodecoolShop.Services
         {
             SendGridClient client = new(SendgridSettings.ApiKey);
             var response = await client.SendEmailAsync(sendGridMessage);
-            
+
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
             {
                 Log.Information("Email sent successfully to: " + model.Email);

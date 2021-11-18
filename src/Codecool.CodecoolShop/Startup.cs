@@ -4,16 +4,16 @@ using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Data;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
+using JavaScriptEngineSwitcher.V8;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Http;
-using JavaScriptEngineSwitcher.V8;
-using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using React.AspNet;
 using Serilog;
 using Stripe;
@@ -68,7 +68,7 @@ namespace Codecool.CodecoolShop
             })
                 .AddEntityFrameworkStores<CodeCoolShopContext>()
                 .AddDefaultTokenProviders();
-            
+
             services.AddReact();
 
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)

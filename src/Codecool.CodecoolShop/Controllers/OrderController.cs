@@ -1,11 +1,10 @@
 ﻿using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Model;
-using System.Collections.Generic;
-using System.Web.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Web.Http;
 
 namespace Codecool.CodecoolShop.Controllers
 {
