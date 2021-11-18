@@ -42,8 +42,8 @@ namespace Codecool.CodecoolShop.Controllers
                 ProductOrderService.AddProducts(orderItems);
 
                 Log.Information("Successful checkout process - payment complete");
-                EmailConfirmation model = new(order, orderTotal, orderItems);
-                EmailService.SendEmail(model, SendgridSettings).Wait();
+                OrderEmailConfirmation model = new(order, orderTotal, orderItems);
+                EmailService.SendOrderConfirmationEmail(model, SendgridSettings).Wait();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)

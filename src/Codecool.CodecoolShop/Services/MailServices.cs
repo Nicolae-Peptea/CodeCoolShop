@@ -13,7 +13,7 @@ namespace Codecool.CodecoolShop.Services
         public string ApiKey { get; set; }
         public string TemplateId { get; set; }
 
-        public async Task SendEmail(EmailConfirmation model, SendgridSettings sendgridSettings)
+        public async Task SendOrderConfirmationEmail(OrderEmailConfirmation model, SendgridSettings sendgridSettings)
         {
             var client = new SendGridClient(sendgridSettings.ApiKey);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class EmailConfirmation
+    public class OrderEmailConfirmation
     {
         public string FullName { get; set; }
 
@@ -21,7 +21,7 @@ namespace Codecool.CodecoolShop.Models
 
         public List<ProductOrder> Items { get; set; }
 
-        public EmailConfirmation(OrderViewDetails details, decimal orderTotal, List<ProductOrder> orderItems)
+        public OrderEmailConfirmation(OrderViewDetails details, decimal orderTotal, List<ProductOrder> orderItems)
         {
             this.FullName = details.StripeBillingName;
             this.Email = details.StripeEmail;
