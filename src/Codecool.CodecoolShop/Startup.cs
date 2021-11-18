@@ -11,8 +11,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
+using JavaScriptEngineSwitcher.V8;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
+using React.AspNet;
 using Serilog;
 using Stripe;
+using System.Text.Json.Serialization;
 
 namespace Codecool.CodecoolShop
 {
@@ -28,9 +33,7 @@ namespace Codecool.CodecoolShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-            services.Configure<SendgridSettings>(Configuration.GetSection("Sendgrid"));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IProductDao, ProductDaoDb>();
             services.AddTransient<IProductCategoryDao, ProductCategoryDaoDb>();
@@ -49,6 +52,8 @@ namespace Codecool.CodecoolShop
 
             services.AddScoped<IMailService, MailServices>();
 
+            services.AddControllersWithViews();
+
             string connectionString = Configuration.GetConnectionString("CodeCoolShop");
             services.AddDbContext<CodeCoolShopContext>(options =>
                 options.UseSqlServer(connectionString)
@@ -61,6 +66,14 @@ namespace Codecool.CodecoolShop
                 options.Password.RequireNonAlphanumeric = false;
             })
                 .AddEntityFrameworkStores<CodeCoolShopContext>();
+            
+            services.AddReact();
+
+            services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
+              .AddV8();
+
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.Configure<SendgridSettings>(Configuration.GetSection("Sendgrid"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +92,7 @@ namespace Codecool.CodecoolShop
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseReact(config => config.AddScript("~/js/app.jsx"));
             app.UseStaticFiles();
 
             app.UseAuthentication();

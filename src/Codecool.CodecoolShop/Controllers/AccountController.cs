@@ -1,4 +1,5 @@
-﻿using Codecool.CodecoolShop.ViewModels;
+﻿using Codecool.CodecoolShop.Services.Interfaces;
+using Codecool.CodecoolShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,6 +16,11 @@ namespace Codecool.CodecoolShop.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
 
         [HttpGet]

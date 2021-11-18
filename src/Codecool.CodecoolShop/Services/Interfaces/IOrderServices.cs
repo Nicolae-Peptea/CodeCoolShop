@@ -12,9 +12,8 @@ namespace Codecool.CodecoolShop.Services.Interfaces
         Order Get(int id);
         
         void RemoveItem(int id);
-        
-        IEnumerable<Order> GetAllItems();
-        
+        List<Order> GetAllItems();
+        List<Order> GetByUserId(int customerId);
         decimal GetTotalOrderValue(List<ProductOrder> orderItems);
         
         List<ProductOrder> UpdateProductOrderPriceFromJson(OrderViewDetails order);
