@@ -63,7 +63,7 @@ namespace Codecool.CodecoolShop.Services
 
         public List<DataAccessLayer.Model.Order> GetByUserId(int customerId)
         {
-            return _order.GetByCustomerId(customerId).ToList();
+            return _orderDao.GetByCustomerId(customerId).ToList();
         }
 
         public int GetLatestOrderId()

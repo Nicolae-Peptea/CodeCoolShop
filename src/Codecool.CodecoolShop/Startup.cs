@@ -56,7 +56,8 @@ namespace Codecool.CodecoolShop
 
             string connectionString = Configuration.GetConnectionString("CodeCoolShop");
             services.AddDbContext<CodeCoolShopContext>(options =>
-                options.UseSqlServer(connectionString)
+                options.UseSqlServer(connectionString),
+                ServiceLifetime.Transient
             );
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
