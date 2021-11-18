@@ -1,12 +1,8 @@
-﻿
-
-using Codecool.CodecoolShop.Daos;
+﻿using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Model;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -17,19 +13,14 @@ namespace Codecool.CodecoolShop.Services
     public class OrderServices : IOrderServices
     {
         private readonly IOrderDao _orderDao;
-        private readonly IProductOrderDao _productOrderDao;
         private readonly IProductDao _productDao;
         private readonly ICustomerDao _customerDao;
-        private readonly UserManager<IdentityUser> _userManager;
 
         public OrderServices(IOrderDao order, IProductDao product,
-            IProductOrderDao productOrder, UserManager<IdentityUser> userManager,
             ICustomerDao customerDao)
         {
             _orderDao = order;
             _productDao = product;
-            _productOrderDao = productOrder;
-            _userManager = userManager;
             _customerDao = customerDao;
         }
 

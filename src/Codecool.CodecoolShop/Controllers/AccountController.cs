@@ -1,8 +1,7 @@
-﻿using Codecool.CodecoolShop.Services.Interfaces;
-using Codecool.CodecoolShop.Models;
+﻿using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Threading.Tasks;
 //using System.Web.Http;
@@ -52,14 +51,14 @@ namespace Codecool.CodecoolShop.Controllers
                 {
                     string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     string confirmationLink = Url.Action("ConfirmEmail", "Account",
-                        new { userId = user.Id, token = token}, Request.Scheme);
-                    
+                        new { userId = user.Id, token = token }, Request.Scheme);
+
                     SendgridAccountConfirmationModel emailModel = new(user, confirmationLink);
                     await _mailServices.SendAccountRegisterConfirmation(emailModel);
-                   
+
                     ViewBag.Message = @"Registration succesful!<br>Before you can Login, please confirm your
                                             email, by clicking on the confirmation link sent to your email.";
-                   
+
                     return View("ConfirmEmail");
                 }
 
@@ -92,7 +91,7 @@ namespace Codecool.CodecoolShop.Controllers
                     return View(model);
                 }
 
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, 
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password,
                     model.RememberMe, false);
 
                 if (result.Succeeded)

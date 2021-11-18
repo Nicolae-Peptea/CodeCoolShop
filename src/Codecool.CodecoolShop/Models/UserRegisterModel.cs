@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Codecool.CodecoolShop.Models
 {
@@ -17,8 +13,8 @@ namespace Codecool.CodecoolShop.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name ="Confirm Password")]
-        [Compare ("Password",
+        [Display(Name = "Confirm Password")]
+        [Compare("Password",
             ErrorMessage = "Password and confirmation password do not match")]
         public string ConfrimPassword { get; set; }
     }
