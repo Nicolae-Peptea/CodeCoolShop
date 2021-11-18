@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Serilog;
-using System;
+
 using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Services

@@ -53,17 +53,15 @@ namespace Codecool.CodecoolShop.Controllers
                     string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     string confirmationLink = Url.Action("ConfirmEmail", "Account",
                         new { userId = user.Id, token = token}, Request.Scheme);
-
+                    
                     SendgridAccountConfirmationModel emailModel = new(user, confirmationLink);
                     await _mailServices.SendAccountRegisterConfirmation(emailModel);
-                    //ViewBag.ErrorTitle = "Registration succesful";
-                    //ViewBag.ErrorMessage = @"Before you can Login, please confirm your
-                    //                        email, by clicking on the confirmation link ";
-
-                    //return View("Error");
-
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
-                    //return RedirectToAction("Index", "HomePage");
+                   
+                    ViewBag.Message = @"Registration succesful
+                                        Before you can Login, please confirm your
+                                            email, by clicking on the confirmation link sent to your email";
+                   
+                    return View("ConfirmEmail");
                 }
 
                 foreach (var error in result.Errors)
@@ -129,6 +127,7 @@ namespace Codecool.CodecoolShop.Controllers
 
             if (result.Succeeded)
             {
+                Log.Information($"the user Id {userId} successful confirmed the account");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return View();
             }
