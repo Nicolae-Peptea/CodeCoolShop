@@ -7,5 +7,7 @@ namespace Codecool.CodecoolShop.Services.Interfaces
     public interface IMailService
     {
         Task SendOrderConfirmation(SendgridOrderConfirmationModel model);
+
+        Task SendAccountRegisterConfirmation(SendgridAccountConfirmationModel model);
     }
 }

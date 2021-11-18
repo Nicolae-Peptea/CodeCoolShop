@@ -46,19 +46,16 @@ namespace Codecool.CodecoolShop.Controllers
                     Email = model.Email,
                 };
 
-                var result = await _userManager.CreateAsync(user, model.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var confirmationLink = Url.Action("ConfirmEmail", "Account",
+                    string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    string confirmationLink = Url.Action("ConfirmEmail", "Account",
                         new { userId = user.Id, token = token}, Request.Scheme);
 
-                    Log.Warning(confirmationLink);
-                    //string userName = UserNameHelper.ExtractUserNameFromEmail(user.Email);
-
                     SendgridAccountConfirmationModel emailModel = new(user, confirmationLink);
-                    //_mailServices.SendEmail(emailModel, EmailTemplates.AccountConfirmation);
+                    await _mailServices.SendAccountRegisterConfirmation(emailModel);
                     //ViewBag.ErrorTitle = "Registration succesful";
                     //ViewBag.ErrorMessage = @"Before you can Login, please confirm your
                     //                        email, by clicking on the confirmation link ";
@@ -120,7 +117,7 @@ namespace Codecool.CodecoolShop.Controllers
                 return RedirectToAction("Index", "HomePage");
             }
 
-            var user = await _userManager.FindByIdAsync(userId);
+            IdentityUser user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
@@ -128,10 +125,11 @@ namespace Codecool.CodecoolShop.Controllers
                 return RedirectToAction("Index", "HomePage");
             }
 
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            IdentityResult result = await _userManager.ConfirmEmailAsync(user, token);
 
             if (result.Succeeded)
             {
+                await _signInManager.SignInAsync(user, isPersistent: false);
                 return View();
             }
 
