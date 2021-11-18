@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Codecool.CodecoolShop.ViewModels
+namespace Codecool.CodecoolShop.Models
 {
     public class SendgridBaseModel
     {
-        public string Email { get; set; }
+        public string Email { get; protected set; }
     }
 }

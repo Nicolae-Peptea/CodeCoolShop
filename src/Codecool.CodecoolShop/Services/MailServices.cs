@@ -19,22 +19,56 @@ namespace Codecool.CodecoolShop.Services
             SendgridSettings = sendgridSettings.Value;
         }
 
-        public async Task SendOrderConfirmation(OrderEmailConfirmation model)
+        //public async Task SendOrderConfirmation(OrderEmailConfirmation model)
+        //{
+        //    SendGridClient client = new SendGridClient(SendgridSettings.ApiKey);
+
+        //    SendGridMessage sendGridMessage = new SendGridMessage();
+
+        //    string senderName = "Codecool Shop";
+        //    sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
+
+        //    sendGridMessage.AddTo(model.Email);
+
+        //    sendGridMessage.SetTemplateData(model);
+
+        //    sendGridMessage.SetTemplateId(SendgridSettings.OrderConfirmationTemplateId);
+
+        //    var response = await client.SendEmailAsync(sendGridMessage);
+        //    if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
+        //    {
+        //        Log.Information("Email sent successfully to: " + model.Email);
+        //    }
+        //    else
+        //    {
+        //        Log.Information("Email failed to send to: " + model.Email);
+        //    }
+        //}
+
+        public async Task SendOrderConfirmation(SendgridOrderConfirmationModel model)
         {
-            SendGridClient client = new SendGridClient(SendgridSettings.ApiKey);
-
-            SendGridMessage sendGridMessage = new SendGridMessage();
-
-            string senderName = "Codecool Shop";
-            sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
-
-            sendGridMessage.AddTo(model.Email);
-
+            SendGridMessage sendGridMessage = ConfigureSender(model);
             sendGridMessage.SetTemplateData(model);
-
             sendGridMessage.SetTemplateId(SendgridSettings.OrderConfirmationTemplateId);
 
+            await SendEmail(sendGridMessage, model);
+        }
+
+        private SendGridMessage ConfigureSender(SendgridBaseModel model)
+        {
+            SendGridMessage sendGridMessage = new SendGridMessage();
+            string senderName = "Codecool Shop";
+            sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
+            sendGridMessage.AddTo(model.Email);
+
+            return sendGridMessage;
+        }
+
+        private async Task SendEmail(SendGridMessage sendGridMessage, SendgridBaseModel model)
+        {
+            SendGridClient client = new SendGridClient(SendgridSettings.ApiKey);
             var response = await client.SendEmailAsync(sendGridMessage);
+            
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
             {
                 Log.Information("Email sent successfully to: " + model.Email);
@@ -44,32 +78,5 @@ namespace Codecool.CodecoolShop.Services
                 Log.Information("Email failed to send to: " + model.Email);
             }
         }
-
-        private SendGridMessage ConfigureSender()
-        {
-            SendGridClient client = new SendGridClient(SendgridSettings.ApiKey);
-
-            SendGridMessage sendGridMessage = new SendGridMessage();
-
-            string senderName = "Codecool Shop";
-            sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
-
-            sendGridMessage.AddTo(model.Email)
-
-            sendGridMessage.SetTemplateId(SendgridSettings.OrderConfirmationTemplateId);
-        }
-
-        private string GetEmailTemplate(EmailTemplates option)
-        {
-            switch (option)
-            {
-                case EmailTemplates.AccountConfirmation:
-                    return SendgridSettings.AccountConfirmationTemplateId;
-                case EmailTemplates.OrderConfirmation:
-                    return SendgridSettings.OrderConfirmationTemplateId;
-                default:
-                    throw new ArgumentNullException();
-        }
     }
-}
 }

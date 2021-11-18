@@ -1,8 +1,6 @@
-﻿using Codecool.CodecoolShop.Helpers;
-using Codecool.CodecoolShop.Models;
+﻿using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -41,8 +39,8 @@ namespace Codecool.CodecoolShop.Controllers
                 ProductOrderService.AddProducts(orderItems);
 
                 Log.Information("Successful checkout process - payment complete");
-                OrderEmailConfirmation model = new(order, orderTotal, orderItems);
-                EmailService.SendOrderConfirmation(model, EmailTemplates.OrderConfirmation).Wait();
+                SendgridOrderConfirmationModel model = new(order, orderTotal, orderItems);
+                EmailService.SendOrderConfirmation(model).Wait();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)

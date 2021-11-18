@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer.Model;
 using System.Collections.Generic;
 
-namespace Codecool.CodecoolShop.ViewModels
+namespace Codecool.CodecoolShop.Models
 {
     public class SendgridOrderConfirmationModel : SendgridBaseModel
     {
