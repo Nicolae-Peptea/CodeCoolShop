@@ -19,22 +19,20 @@ namespace Codecool.CodecoolShop.Services
             SendgridSettings = sendgridSettings.Value;
         }
 
-        public async Task SendEmail(OrderEmailConfirmation model, EmailTemplates emailTemplateOption)
+        public async Task SendOrderConfirmation(OrderEmailConfirmation model)
         {
-            var client = new SendGridClient(SendgridSettings.ApiKey);
+            SendGridClient client = new SendGridClient(SendgridSettings.ApiKey);
 
-            var sendGridMessage = new SendGridMessage();
+            SendGridMessage sendGridMessage = new SendGridMessage();
 
-            var senderName = "Codecool Shop";
+            string senderName = "Codecool Shop";
             sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
 
-            string receiverName = model.FullName;
-            sendGridMessage.AddTo(model.Email, receiverName);
+            sendGridMessage.AddTo(model.Email);
 
             sendGridMessage.SetTemplateData(model);
 
-            string emailTemplate = GetEmailTemplate(emailTemplateOption);
-            sendGridMessage.SetTemplateId(emailTemplate);
+            sendGridMessage.SetTemplateId(SendgridSettings.OrderConfirmationTemplateId);
 
             var response = await client.SendEmailAsync(sendGridMessage);
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
@@ -45,6 +43,20 @@ namespace Codecool.CodecoolShop.Services
             {
                 Log.Information("Email failed to send to: " + model.Email);
             }
+        }
+
+        private SendGridMessage ConfigureSender()
+        {
+            SendGridClient client = new SendGridClient(SendgridSettings.ApiKey);
+
+            SendGridMessage sendGridMessage = new SendGridMessage();
+
+            string senderName = "Codecool Shop";
+            sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
+
+            sendGridMessage.AddTo(model.Email)
+
+            sendGridMessage.SetTemplateId(SendgridSettings.OrderConfirmationTemplateId);
         }
 
         private string GetEmailTemplate(EmailTemplates option)

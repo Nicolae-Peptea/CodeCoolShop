@@ -42,7 +42,7 @@ namespace Codecool.CodecoolShop.Controllers
 
                 Log.Information("Successful checkout process - payment complete");
                 OrderEmailConfirmation model = new(order, orderTotal, orderItems);
-                EmailService.SendEmail(model, EmailTemplates.OrderConfirmation).Wait();
+                EmailService.SendOrderConfirmation(model, EmailTemplates.OrderConfirmation).Wait();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)
