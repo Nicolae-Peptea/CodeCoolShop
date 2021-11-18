@@ -1,1 +1,23 @@
-﻿<h2>Thanks for confirmation</h2>
+﻿
+@{
+    ViewData["Title"] = "ConfirmEmail";
+}
+
+@if (ViewBag.Message != null)
+{
+    <h1 class="alert-danger">@ViewBag.Message</h1>
+}
+else if (ViewBag.Error != null)
+{
+    <h1 class="alert-danger">@ViewBag.Error</h1>
+}
+else
+{
+    <h1>Account confirmed happy shopping</h1>
+    <a class="empty-cart-primary-btn pho-btn btn btn-primary" href="/">
+        <i class="em em-go-left"></i>Let's shop!
+    </a>
+}
+
+
+
