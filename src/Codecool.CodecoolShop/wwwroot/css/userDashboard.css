@@ -146,22 +146,99 @@ ul {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
     justify-content: space-around;
+    align-items: center;
 }
 
-.order-details {
-    flex-direction: column;
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-    display: none;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: space-around;
-    padding-bottom: 5px;
-    margin-top: 5%;
-    -moz-box-shadow: inset 0 0 2px #000000;
-    -webkit-box-shadow: inset 0 0 2px #000000;
-    box-shadow: inset 0 0 4px #888;
+.table-content .row .order-preview {
+    text-align: center;
+    grid-gap: 0;
 }
 
 .table-content .row .order-preview:hover {
     box-shadow: 0 1px 2px #888;
     cursor: pointer;
+}
+
+.order-number-header {
+    width: 5vw;
+}
+
+.placed-header {
+    width: 15vw;
+}
+
+.order-number,
+.order-date-preview {
+    width: 25vw;
+}
+
+.order-details-row {
+    display: inline-table;
+    box-shadow: 0 -1px 10px 1px #888888;
+    margin: 1vw 0;
+    border-radius: 4px;
+}
+
+.order-details-row:first-child {
+    border-top: none;
+}
+
+.column {
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
+}
+
+.product-image {
+    height: 7vw;
+    min-height: 70px;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px #888;
+    margin: 1% 0;
+    text-align: center;
+}
+
+.product-image-container {
+    padding: 0.5% 1%;
+    width: 7vw;
+}
+
+.product-details {
+    min-width: 200px;
+    width: 410px;
+    padding-left: 20px;
+}
+
+.product-price-details {
+    text-align: right;
+    width: 143px;
+    padding-right: 2vw;
+}
+
+.order-details {
+    background: var(--white);
+    flex-direction: column;
+    display: flex;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-around;
+    padding-bottom: 5px;
+    margin-top: 5%;
+    padding: 5% 1%;
+    border-radius: 1vw;
+}
+
+.back {
+    display: block;
+    height: 50px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 3px solid #333;
+    transition: all .35s;
+}
+
+.back:hover {
+    background: #333;
+    color: #fff;
 }

@@ -524,6 +524,44 @@ td#qty button {
     margin: 20px 0;
 }
 
+
+/* Register and Login pages style
+-------------------------------------------------- */
+.register-title,
+.login-title {
+    text-align: center;
+}
+
+.register-container,
+.login-container {
+    width: 30vw;
+    margin: auto;
+    min-width: 250px;
+}
+.register-input,
+.login-input {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    background: #f1f1f1;
+}
+.submit-register,
+.submit-login {
+    background-color: darkslategray;
+    color: white;
+    padding: 16px 20px;
+    margin: 2vw 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    border-radius: 2vw;
+}
+.submit-register:hover,
+.submit-login:hover{
+    opacity: 1;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

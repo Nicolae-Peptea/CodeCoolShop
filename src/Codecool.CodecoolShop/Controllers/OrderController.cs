@@ -12,16 +12,19 @@ namespace Codecool.CodecoolShop.Controllers
     public class OrderController : ApiController
     {
         private readonly IOrderServices _orderServices;
+        private readonly IProductOrderServices _productOrderServices;
         private readonly ICustomerService _customerService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public OrderController(IOrderServices orderServices,
             ICustomerService customerService,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IProductOrderServices productOrderServices)
         {
             _orderServices = orderServices;
             _customerService = customerService;
             _httpContextAccessor = httpContextAccessor;
+            _productOrderServices = productOrderServices;
         }
 
         public List<Order> All()
@@ -49,10 +52,9 @@ namespace Codecool.CodecoolShop.Controllers
 
         public string GetOrderProducts(int id)
         {
-            //List<Order> orderProducts = _orderServices.GetOrderProducts(id);
+            List<ProductOrder> orderProducts = _productOrderServices.GetAllByOrder(id);
 
-
-            string json = JsonConvert.SerializeObject(id, Formatting.Indented,
+            string json = JsonConvert.SerializeObject(orderProducts, Formatting.Indented,
                     new JsonSerializerSettings()
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore

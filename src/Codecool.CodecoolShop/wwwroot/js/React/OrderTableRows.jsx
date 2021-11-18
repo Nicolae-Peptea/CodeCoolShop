@@ -1,32 +1,41 @@
-﻿import OrderProductList from '/js/React/OrderProductList.jsx';
-import useFetch from '/js/React/useFetch.jsx';
+﻿import useFetch from '/js/React/useFetch.jsx';
 
-const OrderTableRows = ({ url }) => {
+const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
     const [baseLink, setBaseLink] = React.useState("https://localhost:5001");
     const { data: orders, isLoading, error } = useFetch(baseLink + url);
-    const [orderIdInUse, setOrderIdInUse] = React.useState("");
 
     React.useEffect(() => {
         const rows = document.querySelectorAll('.row');
-        let orderDetailsContainer = document.querySelector(".order-details");
+        let back = document.querySelector(".back");
+
         for (const row of rows) {
             row.addEventListener('click', (e) => {
                 let target = e.currentTarget;
 
                 let currentOrderId = target.dataset.orderId;
 
-                if (orderDetailsContainer.style.display === "") {
-                    orderDetailsContainer.style.display = "flex";
-                    console.log("Order " + currentOrderId + " expanded");
-                } else {
-                    orderDetailsContainer.style.display = "";
-                    console.log("Order " + currentOrderId + " collapsed");
-                }
+                fetch(baseLink + "/order/getorderproducts?id=" + currentOrderId)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw Error("Could not fetch the data for that resource...");
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                        setProducts(data);
+                    });
 
-                setOrderIdInUse(currentOrderId);
+                setIsDetails(true);
             });
         }
-    }, [orders]);
+
+        if (back !== null) {
+            back.addEventListener("click", () => {
+                setIsDetails(false);
+            })
+        }
+    }, [orders, isDetails]);
 
     return (
         <>
@@ -37,16 +46,14 @@ const OrderTableRows = ({ url }) => {
                     orders.map((order, i) =>
                         <div className="row" key={i + 1} data-order-id={order.Id}>
                             <div className="order-preview">
-                                <div className="column">{i + 1}</div>
-                                <div className="column">{(order.OrderPlaced).split("T")[0]}</div>
-                                <div className="column">${(i + 1) * 49.99}</div>
+                                <div className="column order-number">{i + 1}</div>
+                                <div className="column order-date-preview">{(order.OrderPlaced).split("T").join(' ')}</div>
                             </div>
 
                         </div>
                     )
                 }
             </div>
-            <OrderProductList products={orderIdInUse} />
         </>
 
     );

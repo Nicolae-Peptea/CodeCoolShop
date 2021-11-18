@@ -1,7 +1,9 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
@@ -27,6 +29,13 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public IEnumerable<ProductOrder> GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<ProductOrder> GetAllByOrder(int id)
+        {
+            return _context.ProductOrders
+                .Where(item => item.Order.Id == id)
+                .Include(item => item.Product);
         }
 
         public void RemoveItem(int id)
