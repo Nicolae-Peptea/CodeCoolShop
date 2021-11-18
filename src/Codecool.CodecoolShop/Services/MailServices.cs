@@ -11,18 +11,18 @@ namespace Codecool.CodecoolShop.Services
 {
     public class MailServices : IMailService
     {
-        public SendgridSettings SendgridSettings { get; private set; }
+        private readonly SendgridSettings _sendgridSettings;
 
         public MailServices(IOptions<SendgridSettings> sendgridSettings)
         {
-            SendgridSettings = sendgridSettings.Value;
+            _sendgridSettings = sendgridSettings.Value;
         }
 
         public async Task SendOrderConfirmation(SendgridOrderConfirmationModel model)
         {
             SendGridMessage sendGridMessage = ConfigureSender(model);
             sendGridMessage.SetTemplateData(model);
-            sendGridMessage.SetTemplateId(SendgridSettings.OrderConfirmationTemplateId);
+            sendGridMessage.SetTemplateId(_sendgridSettings.OrderConfirmationTemplateId);
 
             await SendEmail(sendGridMessage, model);
         }
@@ -31,7 +31,7 @@ namespace Codecool.CodecoolShop.Services
         {
             SendGridMessage sendGridMessage = ConfigureSender(model);
             sendGridMessage.SetTemplateData(model);
-            sendGridMessage.SetTemplateId(SendgridSettings.AccountConfirmationTemplateId);
+            sendGridMessage.SetTemplateId(_sendgridSettings.AccountConfirmationTemplateId);
 
             await SendEmail(sendGridMessage, model);
         }
@@ -40,7 +40,7 @@ namespace Codecool.CodecoolShop.Services
         {
             SendGridMessage sendGridMessage = new();
             string senderName = "Codecool Shop";
-            sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
+            sendGridMessage.SetFrom(_sendgridSettings.SenderEmail, senderName);
             sendGridMessage.AddTo(model.Email);
 
             return sendGridMessage;
@@ -48,7 +48,7 @@ namespace Codecool.CodecoolShop.Services
 
         private async Task SendEmail(SendGridMessage sendGridMessage, SendgridBaseModel model)
         {
-            SendGridClient client = new(SendgridSettings.ApiKey);
+            SendGridClient client = new(_sendgridSettings.ApiKey);
             var response = await client.SendEmailAsync(sendGridMessage);
 
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)

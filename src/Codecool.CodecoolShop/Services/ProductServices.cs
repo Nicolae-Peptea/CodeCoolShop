@@ -7,57 +7,57 @@ namespace Codecool.CodecoolShop.Services
 {
     public class ProductServices : IProductServicesDb
     {
-        private readonly IProductDao productDao;
-        private readonly IProductCategoryDao productCategoryDao;
-        private readonly ISupplierDao productSupplierDao;
+        private readonly IProductDao _productDao;
+        private readonly IProductCategoryDao _productCategoryDao;
+        private readonly ISupplierDao _productSupplierDao;
 
         public ProductServices(IProductDao productDao,
             IProductCategoryDao productCategoryDao,
             ISupplierDao productSupplierDao)
         {
-            this.productDao = productDao;
-            this.productCategoryDao = productCategoryDao;
-            this.productSupplierDao = productSupplierDao;
+            _productDao = productDao;
+            _productCategoryDao = productCategoryDao;
+            _productSupplierDao = productSupplierDao;
         }
 
         public Category GetProductCategory(int categoryId)
         {
-            return this.productCategoryDao.Get(categoryId);
+            return _productCategoryDao.Get(categoryId);
         }
 
         public IEnumerable<Product> GetProductsForCategory(int categoryId)
         {
-            Category category = this.productCategoryDao.Get(categoryId);
-            return this.productDao.GetBy(category);
+            Category category = _productCategoryDao.Get(categoryId);
+            return _productDao.GetBy(category);
         }
 
         public IEnumerable<Product> GetProductsForSupplier(int supplierId)
         {
-            Supplier supplier = this.productSupplierDao.Get(supplierId);
-            return this.productDao.GetBy(supplier);
+            Supplier supplier = _productSupplierDao.Get(supplierId);
+            return _productDao.GetBy(supplier);
         }
 
         public IEnumerable<Product> GetProductsForCategoryAndSupplier(int categoryId,
             int supplierId)
         {
-            Category category = this.productCategoryDao.Get(categoryId);
-            Supplier supplier = this.productSupplierDao.Get(supplierId);
-            return this.productDao.GetBy(category, supplier);
+            Category category = _productCategoryDao.Get(categoryId);
+            Supplier supplier = _productSupplierDao.Get(supplierId);
+            return _productDao.GetBy(category, supplier);
         }
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return this.productDao.GetAll();
+            return _productDao.GetAll();
         }
 
         public IEnumerable<Product> GetProductsByTheirId()
         {
-            return this.productDao.GetAll();
+            return _productDao.GetAll();
         }
 
         public Product GetProductById(int id)
         {
-            return productDao.Get(id);
+            return _productDao.Get(id);
         }
 
         public IEnumerable<Product> GetSortedProducts(int category, int supplier)
