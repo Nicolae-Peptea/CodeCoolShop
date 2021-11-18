@@ -1,4 +1,5 @@
-﻿using Codecool.CodecoolShop.Models;
+﻿using Codecool.CodecoolShop.Helpers;
+using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -9,16 +10,12 @@ namespace Codecool.CodecoolShop.Services
 {
     public class MailServices : IMailService
     {
-        public string SenderEmail { get; set; }
-        public string ApiKey { get; set; }
-        public string TemplateId { get; set; }
-
-        public async Task SendOrderConfirmationEmail(OrderEmailConfirmation model, SendgridSettings sendgridSettings)
+        public async Task SendOrderConfirmationEmail(OrderEmailConfirmation model, SendgridSettings sendgridSettings,
+            EmailTemplates emailTemplateOption = null)
         {
             var client = new SendGridClient(sendgridSettings.ApiKey);
 
             var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetTemplateId(sendgridSettings.TemplateId);
 
             var senderName = "Codecool Shop";
             sendGridMessage.SetFrom(sendgridSettings.SenderEmail, senderName);
@@ -27,6 +24,8 @@ namespace Codecool.CodecoolShop.Services
             sendGridMessage.AddTo(model.Email, receiverName);
 
             sendGridMessage.SetTemplateData(model);
+
+            sendGridMessage.SetTemplateId(sendgridSettings.OrderConfirmationTemplateId);
 
             var response = await client.SendEmailAsync(sendGridMessage);
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
@@ -38,5 +37,16 @@ namespace Codecool.CodecoolShop.Services
                 Log.Information("Email failed to send to: " + model.Email);
             }
         }
+
+        //private string GetEmailTemplate(int option)
+        //{
+        //    switch (option)
+        //    {
+        //        if option == 1:
+        //            return 
+        //        default:
+        //            break;
+        //    }
+        //}
     }
 }
