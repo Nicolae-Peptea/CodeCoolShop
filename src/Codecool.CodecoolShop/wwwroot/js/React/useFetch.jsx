@@ -13,7 +13,6 @@
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data);
                     setIsLoading(false);
                     setError(null);
                     setData(data);
