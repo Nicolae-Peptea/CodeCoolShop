@@ -46,12 +46,12 @@ a {
 }
 
 .navbar-right li a {
-    color: #777777;
+    color: #0082e6;
     text-decoration: none;
 }
 
 .navbar-right li a:hover {
-    color: black;
+    opacity: 1;
 }
 
 .nav-item {
@@ -603,13 +603,15 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
+    /* Margin bottom by footer height */
     margin-bottom: 60px;
+    background-color: #f2f2f7;
 }
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
     line-height: 60px;
+    background-color: #fff;
 }
