@@ -19,32 +19,6 @@ namespace Codecool.CodecoolShop.Services
             SendgridSettings = sendgridSettings.Value;
         }
 
-        //public async Task SendOrderConfirmation(OrderEmailConfirmation model)
-        //{
-        //    SendGridClient client = new SendGridClient(SendgridSettings.ApiKey);
-
-        //    SendGridMessage sendGridMessage = new SendGridMessage();
-
-        //    string senderName = "Codecool Shop";
-        //    sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
-
-        //    sendGridMessage.AddTo(model.Email);
-
-        //    sendGridMessage.SetTemplateData(model);
-
-        //    sendGridMessage.SetTemplateId(SendgridSettings.OrderConfirmationTemplateId);
-
-        //    var response = await client.SendEmailAsync(sendGridMessage);
-        //    if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
-        //    {
-        //        Log.Information("Email sent successfully to: " + model.Email);
-        //    }
-        //    else
-        //    {
-        //        Log.Information("Email failed to send to: " + model.Email);
-        //    }
-        //}
-
         public async Task SendOrderConfirmation(SendgridOrderConfirmationModel model)
         {
             SendGridMessage sendGridMessage = ConfigureSender(model);
@@ -54,9 +28,18 @@ namespace Codecool.CodecoolShop.Services
             await SendEmail(sendGridMessage, model);
         }
 
+        public async Task SendAccountRegisterConfirmation(SendgridAccountConfirmationModel model)
+        {
+            SendGridMessage sendGridMessage = ConfigureSender(model);
+            sendGridMessage.SetTemplateData(model);
+            sendGridMessage.SetTemplateId(SendgridSettings.AccountConfirmationTemplateId);
+
+            await SendEmail(sendGridMessage, model);
+        }
+
         private SendGridMessage ConfigureSender(SendgridBaseModel model)
         {
-            SendGridMessage sendGridMessage = new SendGridMessage();
+            SendGridMessage sendGridMessage = new();
             string senderName = "Codecool Shop";
             sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
             sendGridMessage.AddTo(model.Email);
@@ -66,7 +49,7 @@ namespace Codecool.CodecoolShop.Services
 
         private async Task SendEmail(SendGridMessage sendGridMessage, SendgridBaseModel model)
         {
-            SendGridClient client = new SendGridClient(SendgridSettings.ApiKey);
+            SendGridClient client = new(SendgridSettings.ApiKey);
             var response = await client.SendEmailAsync(sendGridMessage);
             
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
