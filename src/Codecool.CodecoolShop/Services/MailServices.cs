@@ -1,31 +1,40 @@
 ﻿using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Serilog;
+using System;
 using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Services
 {
     public class MailServices : IMailService
     {
-        public async Task SendOrderConfirmationEmail(OrderEmailConfirmation model, SendgridSettings sendgridSettings,
-            EmailTemplates emailTemplateOption = null)
+        public SendgridSettings SendgridSettings { get; private set; }
+
+        public MailServices(IOptions<SendgridSettings> sendgridSettings)
         {
-            var client = new SendGridClient(sendgridSettings.ApiKey);
+            SendgridSettings = sendgridSettings.Value;
+        }
+
+        public async Task SendEmail(OrderEmailConfirmation model, EmailTemplates emailTemplateOption)
+        {
+            var client = new SendGridClient(SendgridSettings.ApiKey);
 
             var sendGridMessage = new SendGridMessage();
 
             var senderName = "Codecool Shop";
-            sendGridMessage.SetFrom(sendgridSettings.SenderEmail, senderName);
+            sendGridMessage.SetFrom(SendgridSettings.SenderEmail, senderName);
 
             string receiverName = model.FullName;
             sendGridMessage.AddTo(model.Email, receiverName);
 
             sendGridMessage.SetTemplateData(model);
 
-            sendGridMessage.SetTemplateId(sendgridSettings.OrderConfirmationTemplateId);
+            string emailTemplate = GetEmailTemplate(emailTemplateOption);
+            sendGridMessage.SetTemplateId(emailTemplate);
 
             var response = await client.SendEmailAsync(sendGridMessage);
             if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
@@ -38,15 +47,17 @@ namespace Codecool.CodecoolShop.Services
             }
         }
 
-        //private string GetEmailTemplate(int option)
-        //{
-        //    switch (option)
-        //    {
-        //        if option == 1:
-        //            return 
-        //        default:
-        //            break;
-        //    }
-        //}
+        private string GetEmailTemplate(EmailTemplates option)
+        {
+            switch (option)
+            {
+                case EmailTemplates.AccountConfirmation:
+                    return SendgridSettings.AccountConfirmationTemplateId;
+                case EmailTemplates.OrderConfirmation:
+                    return SendgridSettings.OrderConfirmationTemplateId;
+                default:
+                    throw new ArgumentNullException();
+        }
     }
+}
 }

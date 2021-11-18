@@ -17,7 +17,6 @@ using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using React.AspNet;
 using Serilog;
 using Stripe;
-using System.Text.Json.Serialization;
 
 namespace Codecool.CodecoolShop
 {
