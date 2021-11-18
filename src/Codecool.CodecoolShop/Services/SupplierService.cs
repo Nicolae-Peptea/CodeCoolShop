@@ -7,16 +7,16 @@ namespace Codecool.CodecoolShop.Services
 {
     public class SupplierService : ISupplierService
     {
-        private readonly ISupplierDao productSupplierDao;
+        private readonly ISupplierDao _productSupplierDao;
 
         public SupplierService(ISupplierDao productSupplierDao)
         {
-            this.productSupplierDao = productSupplierDao;
+            _productSupplierDao = productSupplierDao;
         }
 
         public IEnumerable<Supplier> GetSuppliers()
         {
-            return this.productSupplierDao.GetAll();
+            return _productSupplierDao.GetAll();
         }
     }
 }

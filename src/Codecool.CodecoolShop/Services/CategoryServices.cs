@@ -7,16 +7,16 @@ namespace Codecool.CodecoolShop.Services
 {
     public class CategoryServices : ICategoryService
     {
-        private readonly IProductCategoryDao productCategoryDao;
+        private readonly IProductCategoryDao _productCategoryDao;
 
         public CategoryServices(IProductCategoryDao productCategoryDao)
         {
-            this.productCategoryDao = productCategoryDao;
+            _productCategoryDao = productCategoryDao;
         }
 
         public IEnumerable<Category> GetCategories()
         {
-            return this.productCategoryDao.GetAll();
+            return _productCategoryDao.GetAll();
         }
     }
 }

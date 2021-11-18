@@ -10,25 +10,25 @@ namespace Codecool.CodecoolShop.Controllers
 {
     public class HomePageController : Controller
     {
-        public IProductServicesDb ProductService { get; set; }
-        public ICategoryService CategoryService { get; set; }
-        public ISupplierService SupplierService { get; set; }
+        private readonly IProductServicesDb _productService;
+        private readonly ICategoryService _categoryService;
+        private readonly ISupplierService _supplierService;
 
         public HomePageController(IProductServicesDb productServices,
             ICategoryService categoryService, ISupplierService supplierService)
         {
-            ProductService = productServices;
-            CategoryService = categoryService;
-            SupplierService = supplierService;
+            _productService = productServices;
+            _categoryService = categoryService;
+            _supplierService = supplierService;
         }
 
         public IActionResult Index(int category = 0, int supplier = 0)
         {
             Log.Information("User is on the main page");
 
-            IEnumerable<DataAccessLayer.Model.Category> categories = CategoryService.GetCategories();
-            IEnumerable<DataAccessLayer.Model.Supplier> suppliers = SupplierService.GetSuppliers();
-            IEnumerable<DataAccessLayer.Model.Product> products = ProductService.GetSortedProducts(category, supplier);
+            IEnumerable<DataAccessLayer.Model.Category> categories = _categoryService.GetCategories();
+            IEnumerable<DataAccessLayer.Model.Supplier> suppliers = _supplierService.GetSuppliers();
+            IEnumerable<DataAccessLayer.Model.Product> products = _productService.GetSortedProducts(category, supplier);
 
             HomeViewModel viewModel = new(categories, suppliers, products, category, supplier);
 

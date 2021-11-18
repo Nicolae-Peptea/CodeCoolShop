@@ -9,39 +9,39 @@ namespace Codecool.CodecoolShop.Controllers
 {
     public class OrderPlacementController : Controller
     {
-        public IOrderServices OrderServices { get; private set; }
-        public IMailService EmailService { get; private set; }
-        public ICustomerService CustomerService { get; private set; }
-        public IProductOrderServices ProductOrderService { get; private set; }
+        private readonly IOrderServices _orderServices;
+        private readonly IMailService _emailService;
+        private readonly ICustomerService _customerService;
+        private readonly IProductOrderServices _productOrderService;
 
         public OrderPlacementController(IMailService mailService,
             IOrderServices orderServices,
             ICustomerService customerService, IProductOrderServices productOrderServices)
         {
-            OrderServices = orderServices;
-            EmailService = mailService;
-            CustomerService = customerService;
-            ProductOrderService = productOrderServices;
+            _orderServices = orderServices;
+            _emailService = mailService;
+            _customerService = customerService;
+            _productOrderService = productOrderServices;
         }
 
         [HttpPost]
         public IActionResult Index(OrderViewDetails order)
         {
-            List<DataAccessLayer.Model.ProductOrder> orderItems = OrderServices.UpdateProductOrderPriceFromJson(order);
-            decimal orderTotal = OrderServices.GetTotalOrderValue(orderItems);
+            List<DataAccessLayer.Model.ProductOrder> orderItems = _orderServices.UpdateProductOrderPriceFromJson(order);
+            decimal orderTotal = _orderServices.GetTotalOrderValue(orderItems);
 
             try
             {
-                CustomerService.CreateCustomer(order, HttpContext);
-                OrderServices.AddOrder(order);
+                _customerService.CreateCustomer(order, HttpContext);
+                _orderServices.AddOrder(order);
 
-                OrderServices.ChargeCustomer(order, orderTotal);
-                ProductOrderService.AddProducts(orderItems);
+                _orderServices.ChargeCustomer(order, orderTotal);
+                _productOrderService.AddProducts(orderItems);
 
                 Log.Information("Successful checkout process - payment complete");
                 SendgridOrderConfirmationModel model = new(order, orderTotal, orderItems);
-                EmailService.SendOrderConfirmation(model).Wait();
-                return RedirectToAction("SuccessfulOrder", new { id = OrderServices.GetLatestOrderId() });
+                _emailService.SendOrderConfirmation(model).Wait();
+                return RedirectToAction("SuccessfulOrder", new { id = _orderServices.GetLatestOrderId() });
             }
             catch (Exception ex)
             {
