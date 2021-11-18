@@ -54,7 +54,6 @@ namespace Codecool.CodecoolShop.Controllers
         {
             List<ProductOrder> orderProducts = _productOrderServices.GetAllByOrder(id);
 
-
             string json = JsonConvert.SerializeObject(orderProducts, Formatting.Indented,
                     new JsonSerializerSettings()
                     {
