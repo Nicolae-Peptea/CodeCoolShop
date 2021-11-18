@@ -1,4 +1,5 @@
-﻿using Codecool.CodecoolShop.Models;
+﻿using Codecool.CodecoolShop.Helpers;
+using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -14,15 +15,13 @@ namespace Codecool.CodecoolShop.Controllers
         public IMailService EmailService { get; private set; }
         public ICustomerService CustomerService { get; private set; }
         public IProductOrderServices ProductOrderService { get; private set; }
-        public SendgridSettings SendgridSettings { get; private set; }
 
         public OrderPlacementController(IMailService mailService,
-            IOrderServices orderServices, IOptions<SendgridSettings> sendgridSettings,
+            IOrderServices orderServices,
             ICustomerService customerService, IProductOrderServices productOrderServices)
         {
             OrderServices = orderServices;
             EmailService = mailService;
-            SendgridSettings = sendgridSettings.Value;
             CustomerService = customerService;
             ProductOrderService = productOrderServices;
         }
@@ -43,7 +42,7 @@ namespace Codecool.CodecoolShop.Controllers
 
                 Log.Information("Successful checkout process - payment complete");
                 OrderEmailConfirmation model = new(order, orderTotal, orderItems);
-                EmailService.SendOrderConfirmationEmail(model, SendgridSettings).Wait();
+                EmailService.SendEmail(model, EmailTemplates.OrderConfirmation).Wait();
                 return RedirectToAction("SuccessfulOrder", new { id = 1 });
             }
             catch (Exception ex)
