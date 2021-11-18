@@ -56,9 +56,14 @@ namespace Codecool.CodecoolShop.Services
             _orderDao.RemoveItem(id);
         }
 
-        public IEnumerable<DataAccessLayer.Model.Order> GetAllItems()
+        public List<DataAccessLayer.Model.Order> GetAllItems()
         {
-            return _orderDao.GetAll();
+            return _orderDao.GetAll().ToList();
+        }
+
+        public List<DataAccessLayer.Model.Order> GetByUserId(int customerId)
+        {
+            return _order.GetByCustomerId(customerId).ToList();
         }
 
         public int GetLatestOrderId()

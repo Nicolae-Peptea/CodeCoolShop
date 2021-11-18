@@ -14,5 +14,6 @@ namespace Codecool.CodecoolShop.Daos
         public bool IsAlreadyCustomer(OrderViewDetails order);
 
         public void UpdateCustomer(Customer customer);
+        int GetId(string userId);
     }
 }

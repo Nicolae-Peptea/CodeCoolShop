@@ -54,6 +54,10 @@ a {
     color: black;
 }
 
+.nav-item {
+    align-self: center;
+}
+
 .badge {
     background-color: #6394F8;
     border-radius: 10px;
@@ -79,7 +83,7 @@ a {
     border-bottom: 1px solid #e5e5e5;
     border-radius: 3px;
     border-width: 1px;
-    display: block;
+    display: flex;
     margin: 5px 0;
     padding: 10px 15px;
     width: 100%;
@@ -114,6 +118,8 @@ a {
     font-size: 16px;
     width: 60px;
     padding: 5px 10px;
+    height: -webkit-fill-available;
+    align-self: self-end;
 }
 
 .sort-control-group button:hover {
@@ -133,18 +139,22 @@ a {
 }
 
 .card {
+    font-size: 1.2vw;
     max-width: 350px;
-    height: inherit;
+    height: 25vw;
+    min-height: 160px;
+    padding: 1%;
 }
 
 .card img {
     align-self: center;
-    height: 50%;
+    height: 10vw;
+    min-height: 64px;
     padding-top: 10px;
 }
 
 .card-title {
-    font-size: 1.1rem;
+    font-size: 1.2vw;
 }
 
 .card-body a {
@@ -152,15 +162,15 @@ a {
     border-width: 0;
     border-radius: 3px;
     display: block;
-    font-size: 16px;
+    font-size: 100%;
     line-height: 20px;
     padding: 5px 10px;
     position: absolute;
-    width: 96%;
+    width: 90%;
     bottom: 0;
     left: 0;
     right: 0;
-    margin: 5px;
+    margin: 1% auto;
 }
 
 .card-body a:hover {

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    @RenderSection("Stylesheets", required: false)
 </head>
 <body>
     <header>
@@ -39,10 +40,13 @@
                         {
                             <li class="nav-item">
                                 <form method="post" asp-controller="Account" asp-action="Logout">
-                                    <button class="nav-link btn btn-link py-0" type="submit" style="width:auto">
-                                        LogOut @UserNameHelper.ExtractUserNameFromEmail(User.Identity.Name)
-                                    </button>
+                                    <button class="nav-link btn btn-link py-0" type="submit" style="width:auto">LogOut</button>
                                 </form>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">
+                                    @UserNameHelper.ExtractUserNameFromEmail(User.Identity.Name)
+                                </a>
                             </li>
                         }
                         else
@@ -56,8 +60,8 @@
                         }
 
                     </ul>
-                    <ul class="navbar-right">
-                        <li><a href="#" id="cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge"></span></a></li>
+                    <ul class="navbar-nav navbar-right">
+                        <li class="nav-item"><a href="#" id="cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge"></span></a></li>
                     </ul>
                 </div>
             </div>
