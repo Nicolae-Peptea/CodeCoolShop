@@ -84,6 +84,15 @@ namespace Codecool.CodecoolShop.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user != null && !user.EmailConfirmed &&
+                    await _userManager.CheckPasswordAsync(user, model.Password))
+                {
+                    ModelState.AddModelError(string.Empty, "Confirm your email first");
+                    return View(model);
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, 
                     model.RememberMe, false);
 
@@ -132,8 +141,9 @@ namespace Codecool.CodecoolShop.Controllers
                 return View();
             }
 
+            Log.Warning($"the user Id {userId} cannot confirme the account");
             ViewBag.Error = "Email cannot be confirmed";
-            return View("ErrorForUser");
+            return View("ConfirmEmail");
         }
     }
 }
