@@ -1,7 +1,7 @@
 ﻿const Header = () => {
     const handleClick = (e) => {
         e.preventDefault();
-        console.log("Orders");
+        window.location.reload(false);
     }
 
     return (

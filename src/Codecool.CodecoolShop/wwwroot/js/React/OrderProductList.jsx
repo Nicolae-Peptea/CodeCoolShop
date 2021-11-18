@@ -1,19 +1,30 @@
-﻿import useFetch from '/js/React/useFetch.jsx';
+﻿const OrderProductList = ({ products, setIsDetails }) => {
+    React.useEffect(() => {
+        let back = document.querySelector(".back");
 
-const OrderProductList = ({ orderIdInUse }) => {
-    const [baseLink, setBaseLink] = React.useState("https://localhost:5001");
-    const { data: products } = useFetch(baseLink + "/order/getorderproducts?id=" + orderIdInUse);
+        back.addEventListener("click", () => {
+            setIsDetails(false);
+        })
+    }, []);
 
     return (
         <>
+            <button className="back">&#8249; Back to orders</button>
+
             <div className="order-details">
-                {[...Array(10)].map((product, i) =>
+                {products &&
+                    products.map((product, i) =>
                         <div className="order-details-row" key={i + 1}>
-                            <div className="column">{i + 1}</div>
-                            <div className="column">Product {i + 1}</div>
-                            <div className="column">$49.99</div>
+                            <div className="column product-image-container">
+                                <img src={`/img/${product.Product.Name}.jpg`} className="product-image" alt={`Image for ${product.Product.Name}.jpg`} />
+                            </div>
+                            <div className="column product-details">{product.Product.Name}</div>
+                            <div className="column product-price-details">
+                                <div className="product-price">${product.PricePerProduct}</div>
+                                <div className="quantity">x {product.productQuantity}</div>
+                            </div>
                         </div>
-                )}
+                    )}
             </div>
         </>
     );

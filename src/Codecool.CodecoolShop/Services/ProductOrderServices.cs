@@ -2,6 +2,7 @@
 using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Codecool.CodecoolShop.Services
 {
@@ -26,6 +27,11 @@ namespace Codecool.CodecoolShop.Services
                 newProduct.OrderId = latestAddedOrder;
                 _productOrderDao.Add(newProduct);
             }
+        }
+
+        public List<ProductOrder> GetAllByOrder(int id)
+        {
+            return _productOrderDao.GetAllByOrder(id).ToList();
         }
     }
 }
