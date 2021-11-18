@@ -25,7 +25,7 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(OrderViewDetails order)
+        public IActionResult Index(OrderViewDetailsModel order)
         {
             List<DataAccessLayer.Model.ProductOrder> orderItems = _orderServices.UpdateProductOrderPriceFromJson(order);
             decimal orderTotal = _orderServices.GetTotalOrderValue(orderItems);

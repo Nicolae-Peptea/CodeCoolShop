@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class ProductServices : IProductServicesDb
+    public class ProductServices : IProductServices
     {
         private readonly IProductDao _productDao;
         private readonly IProductCategoryDao _productCategoryDao;

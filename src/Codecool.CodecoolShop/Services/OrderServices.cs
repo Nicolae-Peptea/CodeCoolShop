@@ -24,7 +24,7 @@ namespace Codecool.CodecoolShop.Services
             _customerDao = customerDao;
         }
 
-        public void AddOrder(OrderViewDetails order)
+        public void AddOrder(OrderViewDetailsModel order)
         {
             int customerId = _customerDao.GetCustomerIdByEmail(order);
 
@@ -68,7 +68,7 @@ namespace Codecool.CodecoolShop.Services
             return orderItems.Select(item => item.PricePerProduct * item.Quantity).Sum();
         }
 
-        public List<ProductOrder> UpdateProductOrderPriceFromJson(OrderViewDetails order)
+        public List<ProductOrder> UpdateProductOrderPriceFromJson(OrderViewDetailsModel order)
         {
             List<ProductOrder> orderItems = JsonHelper.Deserialize<List<ProductOrder>>(order.CartItems);
 
@@ -81,7 +81,7 @@ namespace Codecool.CodecoolShop.Services
             return orderItems;
         }
 
-        public void ChargeCustomer(OrderViewDetails order, decimal orderTotal)
+        public void ChargeCustomer(OrderViewDetailsModel order, decimal orderTotal)
         {
             ChargeService charges = new();
 

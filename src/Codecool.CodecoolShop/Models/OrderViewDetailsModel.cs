@@ -1,6 +1,6 @@
 ﻿namespace Codecool.CodecoolShop.Models
 {
-    public class OrderViewDetails : BaseModel
+    public class OrderViewDetailsModel : BaseModel
     {
         public string StripeEmail { get; set; }
         public string StripeToken { get; set; }
