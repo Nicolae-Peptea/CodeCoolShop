@@ -1,4 +1,5 @@
-﻿using Codecool.CodecoolShop.Services.Interfaces;
+﻿using Codecool.CodecoolShop.Helpers;
+using Codecool.CodecoolShop.Services.Interfaces;
 using Codecool.CodecoolShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -53,7 +54,9 @@ namespace Codecool.CodecoolShop.Controllers
                         new { userId = user.Id, token = token}, Request.Scheme);
 
                     Log.Warning(confirmationLink);
+                    string userName = UserNameHelper.ExtractUserNameFromEmail(user.Email);
 
+                    EmailConfirmationViewModel emailModel = new(userName, confirmationLink);
                     //ViewBag.ErrorTitle = "Registration succesful";
                     //ViewBag.ErrorMessage = @"Before you can Login, please confirm your
                     //                        email, by clicking on the confirmation link ";
