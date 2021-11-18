@@ -66,7 +66,8 @@ namespace Codecool.CodecoolShop
                 options.Password.RequiredUniqueChars = 3;
                 options.Password.RequireNonAlphanumeric = false;
             })
-                .AddEntityFrameworkStores<CodeCoolShopContext>();
+                .AddEntityFrameworkStores<CodeCoolShopContext>()
+                .AddDefaultTokenProviders();
             
             services.AddReact();
 
