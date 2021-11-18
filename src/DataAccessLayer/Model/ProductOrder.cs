@@ -29,6 +29,7 @@ namespace DataAccessLayer.Model
             Quantity = oldProduct.Quantity;
             ProductId = oldProduct.ProductId;
             OrderId = oldProduct.OrderId;
+            PricePerProduct = oldProduct.PricePerProduct;
         }
     }
 }
