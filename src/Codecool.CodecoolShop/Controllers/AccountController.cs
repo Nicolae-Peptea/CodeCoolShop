@@ -2,6 +2,7 @@
 using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.Threading.Tasks;
 //using System.Web.Http;
@@ -13,14 +14,15 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IMailService _mailServices;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager, IMailService mailServices)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+            IMailService mailServices, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mailServices = mailServices;
-
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -52,9 +54,9 @@ namespace Codecool.CodecoolShop.Controllers
                     string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     string confirmationLink = Url.Action("ConfirmEmail", "Account",
                         new { userId = user.Id, token = token }, Request.Scheme);
-
-                    SendgridAccountConfirmationModel emailModel = new(user, confirmationLink);
-                    await _mailServices.SendAccountRegisterConfirmation(emailModel);
+                    string sendgridTemplateId = _configuration.GetValue<string>("Sendgrid:AccountConfirmationTemplateId");
+                    SendgridAccountConfirmationModel emailModel = new(user, confirmationLink, sendgridTemplateId);
+                    await _mailServices.SendEmail(emailModel);
 
                     ViewBag.Message = @"Registration succesful!<br>Before you can Login, please confirm your
                                             email, by clicking on the confirmation link sent to your email.";

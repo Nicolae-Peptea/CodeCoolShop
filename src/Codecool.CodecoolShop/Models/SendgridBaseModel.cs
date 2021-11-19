@@ -1,7 +1,11 @@
 ﻿namespace Codecool.CodecoolShop.Models
 {
-    public class SendgridBaseModel
+    public abstract class SendgridBaseModel
     {
         public string Email { get; protected set; }
+
+        public string FullName { get; protected set; }
+
+        public string TemplateId { get; set; }
     }
 }
