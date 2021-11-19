@@ -3,7 +3,9 @@ using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Serilog;
 using Stripe;
+using System;
 using System.Security.Claims;
 
 namespace Codecool.CodecoolShop.Services

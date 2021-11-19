@@ -1,8 +1,9 @@
 ﻿using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Serilog;
-using System;
+using Stripe;
 using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Controllers
@@ -13,15 +14,17 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly IMailService _emailService;
         private readonly ICustomerService _customerService;
         private readonly IProductOrderServices _productOrderService;
+        private readonly IConfiguration _configuration;
 
-        public OrderPlacementController(IMailService mailService,
-            IOrderServices orderServices,
-            ICustomerService customerService, IProductOrderServices productOrderServices)
+        public OrderPlacementController(IMailService mailService, IOrderServices orderServices,
+           ICustomerService customerService, IProductOrderServices productOrderServices,
+           IConfiguration confirguration)
         {
             _orderServices = orderServices;
             _emailService = mailService;
             _customerService = customerService;
             _productOrderService = productOrderServices;
+            _configuration = confirguration;
         }
 
         [HttpPost]
@@ -32,20 +35,21 @@ namespace Codecool.CodecoolShop.Controllers
 
             try
             {
+                _orderServices.ChargeCustomer(order, orderTotal);
+                
                 _customerService.CreateCustomer(order, HttpContext);
                 _orderServices.AddOrder(order);
-
-                _orderServices.ChargeCustomer(order, orderTotal);
                 _productOrderService.AddProducts(orderItems);
+                
+                string sendgridTemplateId = _configuration.GetValue<string>("Sendgrid:OrderConfirmationTemplateId");
+                SendgridOrderConfirmationModel emailModel = new(order, orderTotal, orderItems, sendgridTemplateId);
+                _emailService.SendEmail(emailModel).Wait();
 
-                Log.Information("Successful checkout process - payment complete");
-                SendgridOrderConfirmationModel model = new(order, orderTotal, orderItems);
-                _emailService.SendOrderConfirmation(model).Wait();
                 return RedirectToAction("SuccessfulOrder", new { id = _orderServices.GetLatestOrderId() });
             }
-            catch (Exception ex)
+            catch (StripeException ex)
             {
-                Log.Error(ex, "Failed the checkout process due to payment");
+                Log.Error(ex, "Failed to process the payment");
             }
 
             return RedirectToAction("Index", "HomePage");

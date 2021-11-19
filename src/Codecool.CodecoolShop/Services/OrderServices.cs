@@ -3,6 +3,7 @@ using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Model;
+using Serilog;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -83,15 +84,25 @@ namespace Codecool.CodecoolShop.Services
 
         public void ChargeCustomer(OrderViewDetailsModel order, decimal orderTotal)
         {
-            ChargeService charges = new();
-
-            charges.Create(new ChargeCreateOptions
+            try
             {
-                Amount = (long)orderTotal * 100,
-                Description = "Test Payment",
-                Currency = "usd",
-                Source = order.StripeToken,
-            });
+                ChargeService charges = new();
+
+                charges.Create(new ChargeCreateOptions
+                {
+                    Amount = (long)orderTotal * 100,
+                    Description = "Test Payment",
+                    Currency = "usd",
+                    Source = order.StripeToken,
+                });
+
+                Log.Information("Payment completed sucessfully");
+            }
+            catch(StripeException)
+            {
+                throw new StripeException();
+            }
+          
         }
     }
 }

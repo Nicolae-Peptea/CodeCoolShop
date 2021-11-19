@@ -4,7 +4,6 @@
     {
         public string SenderEmail { get; set; }
         public string ApiKey { get; set; }
-        public string OrderConfirmationTemplateId { get; set; }
-        public string AccountConfirmationTemplateId { get; set; }
+        public string ShopName { get; set; }
     }
 }

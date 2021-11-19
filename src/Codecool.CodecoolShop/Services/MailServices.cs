@@ -18,20 +18,11 @@ namespace Codecool.CodecoolShop.Services
             _sendgridSettings = sendgridSettings.Value;
         }
 
-        public async Task SendOrderConfirmation(SendgridOrderConfirmationModel model)
+        public async Task SendEmail(SendgridBaseModel model)
         {
             SendGridMessage sendGridMessage = ConfigureSender(model);
             sendGridMessage.SetTemplateData(model);
-            sendGridMessage.SetTemplateId(_sendgridSettings.OrderConfirmationTemplateId);
-
-            await SendEmail(sendGridMessage, model);
-        }
-
-        public async Task SendAccountRegisterConfirmation(SendgridAccountConfirmationModel model)
-        {
-            SendGridMessage sendGridMessage = ConfigureSender(model);
-            sendGridMessage.SetTemplateData(model);
-            sendGridMessage.SetTemplateId(_sendgridSettings.AccountConfirmationTemplateId);
+            sendGridMessage.SetTemplateId(model.TemplateId);
 
             await SendEmail(sendGridMessage, model);
         }
@@ -39,9 +30,11 @@ namespace Codecool.CodecoolShop.Services
         private SendGridMessage ConfigureSender(SendgridBaseModel model)
         {
             SendGridMessage sendGridMessage = new();
-            string senderName = "Codecool Shop";
+            string senderName = _sendgridSettings.ShopName;
             sendGridMessage.SetFrom(_sendgridSettings.SenderEmail, senderName);
-            sendGridMessage.AddTo(model.Email);
+
+            string receiverEmail = model.Email;
+            sendGridMessage.AddTo(receiverEmail);
 
             return sendGridMessage;
         }
@@ -57,8 +50,9 @@ namespace Codecool.CodecoolShop.Services
             }
             else
             {
-                Log.Information("Email failed to send to: " + model.Email);
+                Log.Warning("Email failed to send to: " + model.Email);
             }
         }
+
     }
 }
