@@ -5,6 +5,8 @@ namespace DataAccessLayer.Model
 {
     public class ProductOrder
     {
+        public int Id { get; set; }
+
         [JsonProperty("productQuantity")]
         public int Quantity { get; set; }
 
