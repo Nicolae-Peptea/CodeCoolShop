@@ -11,6 +11,13 @@ namespace Codecool.CodecoolShop.Controllers
 {
     public class AccountController : Controller
     {
+        private const string SUCCESSFUL_REGISTRATION_MESSAGE =
+            @"Registration succesful!<br>Before you can Login, please confirm your
+             email, by clicking on the confirmation link sent to your email.";
+        private const string CONFIRM_YOUR_EMAIL = "Confirm your email first";
+        private const string INVALID_LOGIN = "Invalid Login Attempt";
+        private const string EMAIL_NOT_CONFIRMED = "Email cannot be confirmed";
+
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IMailService _mailServices;
@@ -58,8 +65,7 @@ namespace Codecool.CodecoolShop.Controllers
                     SendgridAccountConfirmationModel emailModel = new(user, confirmationLink, sendgridTemplateId);
                     await _mailServices.SendEmail(emailModel);
 
-                    ViewBag.Message = @"Registration succesful!<br>Before you can Login, please confirm your
-                                            email, by clicking on the confirmation link sent to your email.";
+                    ViewBag.Message = SUCCESSFUL_REGISTRATION_MESSAGE;
 
                     return View("ConfirmEmail");
                 }
@@ -89,7 +95,7 @@ namespace Codecool.CodecoolShop.Controllers
                 if (user != null && !user.EmailConfirmed &&
                     await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    ModelState.AddModelError(string.Empty, "Confirm your email first");
+                    ModelState.AddModelError(string.Empty, CONFIRM_YOUR_EMAIL);
                     return View(model);
                 }
 
@@ -102,7 +108,7 @@ namespace Codecool.CodecoolShop.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                    ModelState.AddModelError(string.Empty, INVALID_LOGIN);
                 }
             }
 
@@ -142,7 +148,7 @@ namespace Codecool.CodecoolShop.Controllers
             }
 
             Log.Warning($"the user Id {userId} cannot confirme the account");
-            ViewBag.Error = "Email cannot be confirmed";
+            ViewBag.Error = EMAIL_NOT_CONFIRMED;
             return View("ConfirmEmail");
         }
     }
