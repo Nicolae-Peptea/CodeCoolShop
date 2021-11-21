@@ -61,12 +61,12 @@ namespace Codecool.CodecoolShop.Controllers
                     string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     string confirmationLink = Url.Action("ConfirmEmail", "Account",
                         new { userId = user.Id, token = token }, Request.Scheme);
+                    
                     string sendgridTemplateId = _configuration.GetValue<string>("Sendgrid:AccountConfirmationTemplateId");
                     SendgridAccountConfirmationModel emailModel = new(user, confirmationLink, sendgridTemplateId);
                     await _mailServices.SendEmail(emailModel);
 
                     ViewBag.Message = SUCCESSFUL_REGISTRATION_MESSAGE;
-
                     return View("ConfirmEmail");
                 }
 
@@ -144,11 +144,13 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 Log.Information($"the user Id {userId} successful confirmed the account");
                 await _signInManager.SignInAsync(user, isPersistent: false);
+                
                 return View();
             }
 
             Log.Warning($"the user Id {userId} cannot confirme the account");
             ViewBag.Error = EMAIL_NOT_CONFIRMED;
+            
             return View("ConfirmEmail");
         }
     }

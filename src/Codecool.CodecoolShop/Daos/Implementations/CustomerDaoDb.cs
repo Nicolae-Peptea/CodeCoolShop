@@ -34,7 +34,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             Customer customer = _context.Customers
                 .Where(customer => customer.Email == order.StripeEmail)
                 .FirstOrDefault();
-            return customer == null;
+            return customer != null;
         }
 
         public int GetCustomerIdByEmail(OrderViewDetailsModel order)

@@ -41,11 +41,11 @@ namespace Codecool.CodecoolShop.Services
 
             if (_customerDao.IsAlreadyCustomer(order))
             {
-                _customerDao.Add(customerForDb);
+                _customerDao.UpdateCustomer(customerForDb);
             }
             else
             {
-                _customerDao.UpdateCustomer(customerForDb);
+                _customerDao.Add(customerForDb);
             }
         }
 
