@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+﻿import { useEffect } from "react";
 import useFetch from "/js/React/useFetch.jsx";
 
 const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
