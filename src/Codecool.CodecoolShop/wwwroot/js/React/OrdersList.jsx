@@ -32,14 +32,16 @@ const OrdersList = ({ url }) => {
                 </div>
             )}
             {!!isDetails && (
-                <OrderProductList
-                    products={products}
-                    setIsDetails={setIsDetails}
-                />
+                <>
+                    <OrderProductList
+                        products={products}
+                        setIsDetails={setIsDetails}
+                    />
+                    <p>
+                        <strong>Total is {total}</strong>
+                    </p>
+                </>
             )}
-            <p>
-                <strong>Total is {total}</strong>
-            </p>
         </>
     );
 };
