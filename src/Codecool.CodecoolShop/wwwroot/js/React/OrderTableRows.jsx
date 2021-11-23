@@ -6,7 +6,7 @@ const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
     const baseLink = "https://localhost:5001";
     const { data: orders, isLoading, error } = useFetch(baseLink + url);
 
-    const [total] = useState(0);
+    const [total, setTotal] = useState(0);
 
     const rowClickHandler = (e) => {
         e.preventDefault();
