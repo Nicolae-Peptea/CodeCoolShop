@@ -1,13 +1,12 @@
-﻿import { useState } from "react";
-import OrderTableRows from "/js/React/OrderTableRows.jsx";
+﻿import OrderTableRows from "/js/React/OrderTableRows.jsx";
 import OrderProductList from "/js/React/OrderProductList.jsx";
 
 const OrdersList = ({ url }) => {
-    const [isDetails, setIsDetails] = useState(false);
-    const [products, setProducts] = useState("");
-    const [total, setTotal] = useState(0);
+    const [isDetails, setIsDetails] = React.useState(false);
+    const [products, setProducts] = React.useState("");
+    const [total, setTotal] = React.useState(0);
 
-    useEffect(() => {
+    React.useEffect(() => {
         setTotal(
             products
                 .map((o) => o.PricePerProduct * o.productQuantity)

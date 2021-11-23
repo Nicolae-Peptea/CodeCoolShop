@@ -1,5 +1,4 @@
-﻿import { useEffect } from "react";
-import useFetch from "/js/React/useFetch.jsx";
+﻿import useFetch from "/js/React/useFetch.jsx";
 
 const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
     //  const baseLink = process.env.REACT_APP_BACKEND_LINK;
@@ -28,7 +27,7 @@ const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
         setIsDetails(true);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         let back = document.querySelector(".back");
 
         if (back !== null) {

@@ -1,11 +1,9 @@
-﻿import { useState, useEffect } from "react";
+﻿const useFetch = (url) => {
+    const [data, setData] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [error, setError] = React.useState(null);
 
-const useFetch = (url) => {
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
+    React.useEffect(() => {
         setTimeout(() => {
             fetch(url)
                 .then((response) => {
