@@ -5,6 +5,15 @@ import OrderProductList from "/js/React/OrderProductList.jsx";
 const OrdersList = ({ url }) => {
     const [isDetails, setIsDetails] = useState(false);
     const [products, setProducts] = useState("");
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        setTotal(
+            products
+                .map((o) => o.PricePerProduct * o.productQuantity)
+                .reduce((a, v) => a + v, 0)
+        );
+    }, [products]);
 
     return (
         <>
@@ -28,6 +37,9 @@ const OrdersList = ({ url }) => {
                     setIsDetails={setIsDetails}
                 />
             )}
+            <p>
+                <strong>Total is {total}</strong>
+            </p>
         </>
     );
 };

@@ -1,12 +1,10 @@
-﻿import { useState, useEffect } from "react";
+﻿import { useEffect } from "react";
 import useFetch from "/js/React/useFetch.jsx";
 
 const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
     //  const baseLink = process.env.REACT_APP_BACKEND_LINK;
     const baseLink = "https://localhost:5001";
     const { data: orders, isLoading, error } = useFetch(baseLink + url);
-
-    const [total, setTotal] = useState(0);
 
     const rowClickHandler = (e) => {
         e.preventDefault();
@@ -40,14 +38,6 @@ const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
         }
     }, [orders, isDetails]);
 
-    useEffect(() => {
-        setTotal(
-            orders
-                .map((o) => o.PricePerProduct * o.productQuantity)
-                .reduce((a, v) => a + v, 0)
-        );
-    }, []);
-
     return (
         <div className="table-content">
             {error ?? <div>{error}</div>}
@@ -68,9 +58,6 @@ const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
                         </div>
                     </div>
                 ))}
-            <p>
-                <strong>Total is {total}</strong>
-            </p>
         </div>
     );
 };
