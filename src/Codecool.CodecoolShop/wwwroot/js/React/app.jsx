@@ -1,5 +1,4 @@
-﻿import { render } from "react-dom";
-import Header from "/js/React/Header.jsx";
+﻿import Header from "/js/React/Header.jsx";
 import Content from "/js/React/Content.jsx";
 
 const App = () => (
@@ -9,4 +8,4 @@ const App = () => (
     </div>
 );
 
-render(<App />, document.getElementById("content"));
+ReactDOM.render(<App />, document.getElementById("content"));
