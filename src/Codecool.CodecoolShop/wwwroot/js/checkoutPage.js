@@ -18,14 +18,17 @@ function displayCartQuantityInForm() {
     cartTotalQuantityBadgeContainer.innerHTML = shoppingCartQuantity;
 }
 
-
 function loadItemsinCheckoutPageItemsContainer() {
     let items = JSON.parse(sessionStorage.getItem("shoppingCartItems"));
     let checkoutPageItemsContainer = document.querySelector(".list-group.mb-3");
     let itemsFormat = "";
     let totalCartSum = 0;
-    const cartItemTemplateBuilder = htmlFactory(htmlTemplates.formatCheckoutPageCartItem);
-    const cartTotalTemplateBuilder = htmlFactory(htmlTemplates.formatCheckoutPageCartTotal);
+    const cartItemTemplateBuilder = htmlFactory(
+        htmlTemplates.formatCheckoutPageCartItem
+    );
+    const cartTotalTemplateBuilder = htmlFactory(
+        htmlTemplates.formatCheckoutPageCartTotal
+    );
 
     for (let i = 0; i < items.length; i++) {
         const cartItemTemplate = cartItemTemplateBuilder(items[i]);
@@ -48,18 +51,15 @@ function initIntlPhoneNumber() {
         const invalidFeedbackContainer = document
             .querySelector(".mb-3.phone")
             .querySelector(".invalid-feedback");
-        const SelectedCountryData = (phoneInput.getSelectedCountryData()).name;
+        const SelectedCountryData = phoneInput.getSelectedCountryData().name;
         const isValidNumber = phoneInput.isValidNumber();
         invalidFeedbackContainer.style.display = "block";
 
         if (isValidNumber || phoneInputField.value == "") {
             invalidFeedbackContainer.innerHTML = "";
+        } else {
+            invalidFeedbackContainer.innerHTML = `Ivalid phone number format for <strong>${SelectedCountryData}</strong>!`;
         }
-        else {
-            invalidFeedbackContainer.innerHTML =
-                `Ivalid phone number format for <strong>${SelectedCountryData}</strong>!`;
-        }
-
     });
 }
 
@@ -83,16 +83,15 @@ function initCountrySelectorOnChangeFunctionality() {
         let countryName = countrySelector.value;
         if (countryName != "") {
             let countries = JSON.parse(localStorage.getItem("countries"));
-            let countryCities = countries.filter(obj => {
+            let countryCities = countries.filter((obj) => {
                 return obj.country === countryName;
             })[0].cities;
 
             initCitiesInSelector(countryCities);
-        }
-        else {
+        } else {
             initCitiesInSelector(-1);
         }
-    })
+    });
 }
 
 function initCitiesInSelector(countryCities = -1) {
@@ -109,17 +108,15 @@ function initCitiesInSelector(countryCities = -1) {
     citySelector.innerHTML = format;
 }
 
-
 function initGoToPaymentEvent() {
     $(".btn").on("click", () => {
         console.log("Going to payment");
     });
 }
 
-
 await getCountriesApi();
 displayCartQuantityInForm();
 loadItemsinCheckoutPageItemsContainer();
 initIntlPhoneNumber();
 initCountriesInSelector();
-initGoToPaymentEvent()
+initGoToPaymentEvent();

@@ -1,14 +1,18 @@
-﻿const useFetch = (url) => {
-    const [data, setData] = React.useState(null);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [error, setError] = React.useState(null);
+﻿import { useState, useEffect } from "react";
 
-    React.useEffect(() => {
+const useFetch = (url) => {
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
         setTimeout(() => {
             fetch(url)
                 .then((response) => {
                     if (!response.ok) {
-                        throw Error("Could not fetch the data for that resource...");
+                        throw Error(
+                            "Could not fetch the data for that resource..."
+                        );
                     }
                     return response.json();
                 })
@@ -18,10 +22,9 @@
                     setData(data);
                 })
                 .catch((error) => {
-                    if (error.name === 'AbortError') {
-                        console.log('Fetch aborted.');
-                    }
-                    else {
+                    if (error.name === "AbortError") {
+                        console.log("Fetch aborted.");
+                    } else {
                         setIsLoading(false);
                         setError(error.message);
                     }
@@ -29,7 +32,7 @@
         }, 500);
     }, [url]);
 
-    return { data, isLoading, error }
-}
+    return { data, isLoading, error };
+};
 
 export default useFetch;
