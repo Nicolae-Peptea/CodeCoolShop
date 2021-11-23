@@ -6,5 +6,4 @@ $("body").on("click", "#checkout-button", () => {
     inputValue.value = JSON.stringify(cartItems);
 });
 
-
 loadShoppingCartPage();
