@@ -29,12 +29,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 .First();
         }
 
-        public bool IsAlreadyCustomer(OrderViewDetailsModel order)
+        public Customer GetAlreadyCustomers(OrderViewDetailsModel order)
         {
             Customer customer = _context.Customers
                 .Where(customer => customer.Email == order.StripeEmail)
                 .FirstOrDefault();
-            return customer != null;
+            return customer;
         }
 
         public int GetCustomerIdByEmail(OrderViewDetailsModel order)

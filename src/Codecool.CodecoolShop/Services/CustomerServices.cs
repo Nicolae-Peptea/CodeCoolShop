@@ -32,6 +32,7 @@ namespace Codecool.CodecoolShop.Services
             });
 
             DataAccessLayer.Model.Customer customerForDb = MapOrderDetailsToCustomerModel(order);
+            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomers(order);
             string userId = _userManager.GetUserId(httpContext.User);
 
             if (userId != null)
@@ -39,8 +40,9 @@ namespace Codecool.CodecoolShop.Services
                 customerForDb.UserId = userId;
             }
 
-            if (_customerDao.IsAlreadyCustomer(order))
+            if (alreadyCustomer != null)
             {
+                customerForDb.UserId = alreadyCustomer.UserId;
                 _customerDao.UpdateCustomer(customerForDb);
             }
             else
