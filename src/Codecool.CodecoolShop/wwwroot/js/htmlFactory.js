@@ -1,4 +1,7 @@
-﻿let formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', });
+﻿let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+});
 
 export const htmlTemplates = {
     formatShoppingCartItem: 1,
@@ -40,19 +43,33 @@ export function htmlFactory(template) {
 function formatShoppingCartItemBuilder(item) {
     return `<tr data-product-id="${item.productId}">
                 <td id="img">
-                <img src="/img/${item.productName}.jpg" class="img-fluid img-thumbnail" alt="${item.productName}">
+                <img src="/img/${
+                    item.productName
+                }.jpg" class="img-fluid img-thumbnail" alt="${
+        item.productName
+    }">
                 </td>
                 <td id="name">${item.productName}</td>
                 <td id="price">${formatter.format(item.productPrice)}</td>
                 <td class="qty" id="qty">
-                    <button class="decrease-quantity" name="decrease-quantity" type="submit" data-product-id="${item.productId}">-</button>
+                    <button class="decrease-quantity" name="decrease-quantity" type="submit" data-product-id="${
+                        item.productId
+                    }">-</button>
                     <span class="item-quantity">${item.productQuantity}</span>
-                    <button class="increase-quantity" name="increase-quantity" type="submit"data-product-id="${item.productId}">+</button>
+                    <button class="increase-quantity" name="increase-quantity" type="submit"data-product-id="${
+                        item.productId
+                    }">+</button>
                 </td>
-                <td id="total">${formatter.format(item.productPrice * item.productQuantity)}</td>
+                <td id="total">${formatter.format(
+                    item.productPrice * item.productQuantity
+                )}</td>
                 <td id="actions">
-                    <button class="delete-cart-item" data-product-id="${item.productId}" data-product-name="${item.productName}" 
-                       data-price="${item.productPrice}"><i class="fa fa-trash-o"></i></button>
+                    <button class="delete-cart-item" data-product-id="${
+                        item.productId
+                    }" data-product-name="${item.productName}" 
+                       data-price="${
+                           item.productPrice
+                       }"><i class="fa fa-trash-o"></i></button>
                 </td>
             </tr>`;
 }
@@ -61,7 +78,9 @@ function formatShoppingCartPageItemBuilder(item) {
     return `
         <div class="filled-cart-item">
             <div class="filled-cart-item-left">
-                <img src="/img/${item.productName}.jpg" alt="${item.productName}" />
+                <img src="/img/${item.productName}.jpg" alt="${
+        item.productName
+    }" />
             </div>
             <div class="filled-cart-item-right">
                 <a class="filled-cart-item-name"
@@ -69,10 +88,14 @@ function formatShoppingCartPageItemBuilder(item) {
                 </a>
 
                 <div class="filled-cart-item-quantity">
-                    <p><strong>${item.productQuantity} x ${formatter.format(item.productPrice)}</strong></p>
+                    <p><strong>${item.productQuantity} x ${formatter.format(
+        item.productPrice
+    )}</strong></p>
                 </div>
                 
-                <span class="filled-cart-item-price">${formatter.format(item.productPrice * item.productQuantity)}</span>
+                <span class="filled-cart-item-price">${formatter.format(
+                    item.productPrice * item.productQuantity
+                )}</span>
             </div>
         </div>`;
 }
@@ -115,7 +138,9 @@ function checkoutPageCartItemBuilder(item) {
                 <h6 class="my-0">${item.productName}</h6>
                 <small class="text-muted">x ${item.productQuantity}</small>
             </div>
-            <span class="text-muted">${formatter.format(item.productPrice * item.productQuantity)}</span>
+            <span class="text-muted">${formatter.format(
+                item.productPrice * item.productQuantity
+            )}</span>
         </li>`;
 }
 
