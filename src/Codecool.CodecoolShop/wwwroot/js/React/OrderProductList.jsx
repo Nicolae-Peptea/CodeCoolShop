@@ -1,4 +1,6 @@
-﻿const OrderProductList = ({ products, setIsDetails }) => {
+﻿import Total from "/js/React/Total.jsx";
+
+const OrderProductList = ({ products, setIsDetails }) => {
     const backHandler = (e) => {
         e.preventDefault();
         setIsDetails(false);
@@ -34,6 +36,9 @@
                             </div>
                         </div>
                     ))}
+                    <Total
+                        products={products}
+                    />
                 </div>
             )}
         </>
