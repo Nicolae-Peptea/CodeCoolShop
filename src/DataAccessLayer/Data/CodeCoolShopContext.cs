@@ -1,7 +1,6 @@
 ﻿using DataAccessLayer.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace DataAccessLayer.Data
 {
