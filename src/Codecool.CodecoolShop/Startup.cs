@@ -76,6 +76,8 @@ namespace Codecool.CodecoolShop
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.Configure<SendgridSettings>(Configuration.GetSection("Sendgrid"));
+
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

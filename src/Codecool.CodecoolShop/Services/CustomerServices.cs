@@ -1,4 +1,5 @@
-﻿using Codecool.CodecoolShop.Daos;
+﻿using AutoMapper;
+using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -14,11 +15,14 @@ namespace Codecool.CodecoolShop.Services
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ICustomerDao _customerDao;
+        private readonly IMapper _mapper;
 
-        public CustomerServices(UserManager<IdentityUser> userManager, ICustomerDao customerDao)
+        public CustomerServices(UserManager<IdentityUser> userManager, ICustomerDao customerDao,
+            IMapper mapper)
         {
             _userManager = userManager;
             _customerDao = customerDao;
+            _mapper = mapper;
         }
 
         public void CreateCustomer(OrderViewDetailsModel order, HttpContext httpContext)
@@ -53,21 +57,9 @@ namespace Codecool.CodecoolShop.Services
 
         private DataAccessLayer.Model.Customer MapOrderDetailsToCustomerModel(OrderViewDetailsModel order)
         {
-            return new()
-            {
-                Email = order.StripeEmail,
-                FirstName = order.StripeBillingName,
-                BillingName = order.StripeBillingName,
-                BillingAddressCountry = order.StripeBillingAddressCountry,
-                BillingAddressCity = order.StripeBillingAddressCity,
-                BillingAddressLine1 = order.StripeBillingAddressLine1,
-                BillingAddressZip = order.StripeBillingAddressZip,
-                ShippingAddressCountry = order.StripeBillingAddressCountry,
-                ShippingAddressCity = order.StripeShippingAddressCity,
-                ShippingAddressLine1 = order.StripeShippingAddressLine1,
-                ShippingAddressZip = order.StripeShippingAddressZip,
-                ShippingName = order.StripeShippingName,
-            };
+            var customer = new DataAccessLayer.Model.Customer();
+            _mapper.Map(order, customer);
+            return customer;
         }
 
         public string GetUserId(ClaimsPrincipal principal)
