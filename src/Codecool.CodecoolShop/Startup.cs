@@ -1,17 +1,10 @@
-using Codecool.CodecoolShop.Daos;
-using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Extensions;
 using Codecool.CodecoolShop.Models;
-using Codecool.CodecoolShop.Services;
-using Codecool.CodecoolShop.Services.Interfaces;
-using DataAccessLayer.Data;
 using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using JavaScriptEngineSwitcher.V8;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,9 +27,9 @@ namespace Codecool.CodecoolShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-     
+
             services.AddApplicationInternalDependencies();
-            
+
             services.AddControllersWithViews();
 
             services.CongigureDbContext(Configuration);

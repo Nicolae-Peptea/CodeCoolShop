@@ -1,17 +1,12 @@
-﻿using AutoMapper.Configuration;
-using Codecool.CodecoolShop.Daos;
+﻿using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Services;
 using Codecool.CodecoolShop.Services.Interfaces;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Codecool.CodecoolShop.Extensions
 {

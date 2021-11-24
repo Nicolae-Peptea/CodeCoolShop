@@ -98,11 +98,11 @@ namespace Codecool.CodecoolShop.Services
 
                 Log.Information("Payment completed sucessfully");
             }
-            catch(StripeException)
+            catch (StripeException)
             {
                 throw new StripeException();
             }
-          
+
         }
     }
 }

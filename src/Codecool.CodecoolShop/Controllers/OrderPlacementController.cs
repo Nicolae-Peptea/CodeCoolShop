@@ -36,11 +36,11 @@ namespace Codecool.CodecoolShop.Controllers
             try
             {
                 _orderServices.ChargeCustomer(order, orderTotal);
-                
+
                 _customerService.CreateCustomer(order, HttpContext);
                 _orderServices.AddOrder(order);
                 _productOrderService.AddProducts(orderItems);
-                
+
                 string sendgridTemplateId = _configuration.GetValue<string>("Sendgrid:OrderConfirmationTemplateId");
                 SendgridOrderConfirmationModel emailModel = new(order, orderTotal, orderItems, sendgridTemplateId);
                 _emailService.SendEmail(emailModel).Wait();
