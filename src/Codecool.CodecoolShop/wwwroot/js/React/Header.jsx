@@ -2,7 +2,7 @@
     const handleClick = (e) => {
         e.preventDefault();
         window.location.reload(false);
-    }
+    };
 
     return (
         <div className="page-header">
@@ -12,12 +12,14 @@
                         <h3>Admin</h3>
                     </li>
                     <li>
-                        <button onClick={handleClick}>My Orders</button>
+                        <a href="#" onClick={handleClick}>
+                            My Orders
+                        </a>
                     </li>
                 </ul>
             </nav>
         </div>
     );
-}
+};
 
 export default Header;
