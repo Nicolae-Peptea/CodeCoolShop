@@ -1,5 +1,6 @@
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
+using Codecool.CodecoolShop.Extensions;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using Codecool.CodecoolShop.Services.Interfaces;
@@ -33,44 +34,14 @@ namespace Codecool.CodecoolShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddTransient<IProductDao, ProductDaoDb>();
-            services.AddTransient<IProductCategoryDao, ProductCategoryDaoDb>();
-            services.AddTransient<ISupplierDao, SupplierDaoDb>();
-            services.AddTransient<IOrderDao, OrderDaoDb>();
-            services.AddTransient<IProductOrderDao, ProductOrderDaoDb>();
-            services.AddTransient<ICustomerDao, CustomerDaoDb>();
-            services.AddTransient<IProductOrderDao, ProductOrderDaoDb>();
-
-            services.AddScoped<IProductServices, ProductServices>();
-            services.AddScoped<ICategoryService, CategoryServices>();
-            services.AddScoped<ISupplierService, SupplierService>();
-            services.AddScoped<IOrderServices, OrderServices>();
-            services.AddScoped<ICustomerService, CustomerServices>();
-            services.AddScoped<IProductOrderServices, ProductOrderServices>();
-
-            services.AddScoped<IMailService, MailServices>();
-
+     
+            services.AddApplicationInternalDependencies();
+            
             services.AddControllersWithViews();
 
-            string connectionString = Configuration.GetConnectionString("CodeCoolShop");
-            services.AddDbContext<CodeCoolShopContext>(options =>
-                options.UseSqlServer(connectionString),
-                ServiceLifetime.Transient
-            );
-
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            {
-                options.Password.RequiredLength = 10;
-                options.Password.RequiredUniqueChars = 3;
-                options.Password.RequireNonAlphanumeric = false;
-                options.SignIn.RequireConfirmedEmail = true;
-            })
-                .AddEntityFrameworkStores<CodeCoolShopContext>()
-                .AddDefaultTokenProviders();
+            services.CongigureDbContext(Configuration);
 
             services.AddReact();
-
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
               .AddV8();
 
