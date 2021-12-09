@@ -540,10 +540,22 @@ td#qty button {
 
 .register-container,
 .login-container {
-    width: 30vw;
+    width: 20vw;
     margin: auto;
     min-width: 250px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px 0 rgb(27 27 27 / 20%);
+    margin-top: 6vw;
 }
+
+@media (max-width: 768px) {
+    .register-container,
+    .login-container {
+        width: 100%;
+    }
+}
+
 .register-input,
 .login-input {
     width: 100%;
