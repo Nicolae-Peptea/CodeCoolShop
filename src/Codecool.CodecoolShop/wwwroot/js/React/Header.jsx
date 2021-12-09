@@ -5,19 +5,14 @@
     };
 
     return (
-        <div className="page-header">
-            <nav>
-                <ul className="admin-menu">
-                    <li className="menu-heading">
-                        <h3>Admin</h3>
-                    </li>
-                    <li>
-                        <a href="#" onClick={handleClick}>
-                            My Orders
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+        <div className="sidebar">
+            <ul className="admin-menu">
+                <li>
+                    <a href="#" onClick={handleClick}>
+                        Orders
+                    </a>
+                </li>
+            </ul>
         </div>
     );
 };
