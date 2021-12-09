@@ -139,7 +139,7 @@ a {
 }
 
 .card {
-    font-size: 1.2vw;
+    font-size: 16px;
     max-width: 250px;
     height: 250px;
     min-height: 160px;
@@ -154,7 +154,7 @@ a {
 }
 
 .card-title {
-    font-size: 1.2vw;
+    font-size: 18px;
 }
 
 .card-body {
