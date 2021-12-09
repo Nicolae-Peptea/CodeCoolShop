@@ -142,18 +142,17 @@ ul {
 
 .order-head {
     border-bottom: 1px solid #cecece;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+
 }
 
 .go-left {
     float: left;
 }
 
-.go-left h1 {
+.go-left h2 {
     color: #0366d6;
     font-family: "Open Sans",Helvetica,sans-serif;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 500;
     margin-top: 0;
     margin-bottom: 0.5rem;
@@ -164,7 +163,7 @@ ul {
     font-family: "Open Sans",Helvetica,sans-serif;
 }
 
-.go-left h1 a:hover {
+.go-left h2 a:hover {
     color: #007bff;
     cursor: pointer;
     text-decoration: none;
@@ -263,6 +262,11 @@ ul {
 div .solid {
     border-top: 3px solid #bbb;
     margin-bottom: 2vh;
+}
+
+div .thin {
+    border-top: 2px solid #bbb;
+    margin: 2vh 0;
 }
 
 .column {
