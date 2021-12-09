@@ -55,21 +55,18 @@ const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
                         >
                             <div className="order-head">
                                 <div className="order-head-info go-left">
-                                    <h1>
-                                        <a className="" href="/history/shoppingdetails/122777789">
-                                            Order no.  <span className="order-number">{i + 1}</span>
-                                        </a>
-                                    </h1>
+                                    <h2>
+                                        Order no.  <span className="order-number">{i + 1}</span>
+                                    </h2>
                                     <p>Placed on: 
-                                        <span className="order-date"> {order.OrderPlaced.split("T").join(" ")}</span>
+                                        <span className="order-date"> {new Date(order.OrderPlaced).toLocaleString() }</span>
                                     </p>
                                 </div>
-                                <a
-                                    href="/history/shoppingdetails/122777789"
-                                    className="full-white-button go-right gtm_6x2itw"
+                                <button
+                                    className="full-white-button go-right"
                                 >
                                     View
-                                </a>
+                                </button>
                             </div>
                         </li>
                     ))}
