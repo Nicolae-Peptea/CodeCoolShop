@@ -141,7 +141,7 @@ a {
 .card {
     font-size: 1.2vw;
     max-width: 350px;
-    height: 25vw;
+    height: 20vw;
     min-height: 160px;
     padding: 1%;
 }
@@ -155,6 +155,12 @@ a {
 
 .card-title {
     font-size: 1.2vw;
+}
+
+.card-body {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-body a {
