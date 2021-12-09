@@ -39,26 +39,60 @@ const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
 
     return (
         <div className="table-content">
+            <div><h1>Orders</h1></div>
+            <div className="solid" />
             {error ?? <div>{error}</div>}
-            {!!isLoading && <div>Loading...</div>}
+            {!!isLoading &&
+                <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>}
             {orders &&
-                orders.map((order, i) => (
-                    <div
-                        className="row"
-                        key={i + 1}
-                        data-order-id={order.Id}
-                        onClick={rowClickHandler}
-                    >
-                        <div className="order-preview">
-                            <div className="column order-number">{i + 1}</div>
-                            <div className="column order-date-preview">
-                                {order.OrderPlaced.split("T").join(" ")}
+                <ul className="order-list">
+                    {orders.map((order, i) => (
+                        <li
+                            className="order-hist-box"
+                            key={i + 1}
+                            data-order-id={order.Id}
+                            onClick={rowClickHandler}
+                        >
+                            <div className="order-head">
+                                <div className="order-head-info go-left">
+                                    <h1>
+                                        <a className="" href="/history/shoppingdetails/122777789">
+                                            Order no.  <span className="order-number">{i + 1}</span>
+                                        </a>
+                                    </h1>
+                                    <p>Placed on: 
+                                        <span className="order-date"> {order.OrderPlaced.split("T").join(" ")}</span>
+                                    </p>
+                                </div>
+                                <a
+                                    href="/history/shoppingdetails/122777789"
+                                    className="full-white-button go-right gtm_6x2itw"
+                                >
+                                    View
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                ))}
+                        </li>
+                    ))}
+                </ul>
+            }
         </div>
     );
 };
 
 export default OrderTableRows;
+
+//orders.map((order, i) => (
+//    <div
+//        className="row"
+//        key={i + 1}
+//        data-order-id={order.Id}
+//        onClick={rowClickHandler}
+//    >
+//        <div className="order-preview">
+//            <div className="column order-number">{i + 1}</div>
+//            <div className="column order-date-preview">
+//                {order.OrderPlaced.split("T").join(" ")}
+//            </div>
+//        </div>
+//    </div>
+//))}
