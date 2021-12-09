@@ -18,6 +18,7 @@
                     setIsLoading(false);
                     setError(null);
                     setData(data);
+                    console.log(data);
                 })
                 .catch((error) => {
                     if (error.name === "AbortError") {
