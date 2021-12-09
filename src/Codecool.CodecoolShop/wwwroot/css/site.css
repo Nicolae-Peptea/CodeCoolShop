@@ -140,8 +140,8 @@ a {
 
 .card {
     font-size: 1.2vw;
-    max-width: 350px;
-    height: 20vw;
+    max-width: 250px;
+    height: 250px;
     min-height: 160px;
     padding: 1%;
 }
@@ -176,7 +176,7 @@ a {
     bottom: 0;
     left: 0;
     right: 0;
-    margin: 1% auto;
+    margin: 1vh auto;
 }
 
 .card-body a:hover {
@@ -625,6 +625,15 @@ body {
     margin-bottom: 60px;
     background-color: #f2f2f7;
 }
+
+.pb-3 {
+    padding-bottom: 1rem !important;
+    border-radius: 1vw;
+    box-shadow: 1;
+    background-color: #fff;
+    height: calc(100vh - 150px);
+}
+
 .footer {
     position: fixed;
     bottom: 0;
