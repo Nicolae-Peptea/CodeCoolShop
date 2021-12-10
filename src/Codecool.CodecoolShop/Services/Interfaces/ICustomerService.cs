@@ -11,5 +11,6 @@ namespace Codecool.CodecoolShop.Services.Interfaces
         void CreateCustomer(OrderViewDetailsModel order, HttpContext httpContext);
         string GetUserId(ClaimsPrincipal principal);
         int GetCustomerId(string userId);
+        void UpdateCustomerUserId(string email, string userId);
     }
 }
