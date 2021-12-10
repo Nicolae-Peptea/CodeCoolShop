@@ -1,5 +1,6 @@
 ﻿using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services.Interfaces;
+using DataAccessLayer.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -22,14 +23,16 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IMailService _mailServices;
         private readonly IConfiguration _configuration;
+        private readonly ICustomerService _customerService;
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
-            IMailService mailServices, IConfiguration configuration)
+            IMailService mailServices, IConfiguration configuration, ICustomerService customerService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mailServices = mailServices;
             _configuration = configuration;
+            _customerService = customerService;
         }
 
         public IActionResult Index()
@@ -141,10 +144,11 @@ namespace Codecool.CodecoolShop.Controllers
             IdentityResult result = await _userManager.ConfirmEmailAsync(user, token);
 
             if (result.Succeeded)
-            {
+            {   
                 Log.Information($"the user Id {userId} successful confirmed the account");
+                _customerService.UpdateCustomerUserId(user.Email, userId);
                 await _signInManager.SignInAsync(user, isPersistent: false);
-
+              
                 return View();
             }
 

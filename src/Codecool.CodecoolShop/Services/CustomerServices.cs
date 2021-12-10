@@ -34,13 +34,7 @@ namespace Codecool.CodecoolShop.Services
             });
 
             DataAccessLayer.Model.Customer customerForDb = MapOrderDetailsToCustomerModel(order);
-            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomers(order);
-            string userId = _userManager.GetUserId(httpContext.User);
-
-            if (userId != null)
-            {
-                customerForDb.UserId = userId;
-            }
+            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomers(order.StripeEmail);
 
             if (alreadyCustomer != null)
             {
@@ -50,6 +44,17 @@ namespace Codecool.CodecoolShop.Services
             else
             {
                 _customerDao.Add(customerForDb);
+            }
+        }
+
+        public void UpdateCustomerUserId (string email, string userId)
+        {
+            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomers(email);
+            
+            if (alreadyCustomer != null)
+            {
+                alreadyCustomer.UserId = userId;
+                _customerDao.UpdateCustomer(alreadyCustomer);
             }
         }
 
