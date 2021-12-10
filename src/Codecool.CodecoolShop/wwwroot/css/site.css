@@ -580,7 +580,8 @@ td#qty button {
 .submit-login:hover{
     opacity: 1;
 }
-.alert-danger {
+.alert-danger,
+.alert-success {
     width: 70%;
     text-align: center;
     margin: auto;
