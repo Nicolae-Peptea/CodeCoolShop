@@ -1,0 +1,83 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model HomeViewModel
+
+<form asp-area="" asp-controller="HomePage" asp-action="Index">
+    <div class="sort-control-group">
+        <div class="sort-control-item">
+            <label for="sort_by_category">Sort by Category:</label>
+            <select name="category">
+                @if (Model.CurrentCategory == 0)
+                {
+                    <option value="0" selected>All</option>
+                }
+                else
+                {
+                    <option value="0">All</option>
+                }
+                @foreach (var category in Model.Categories)
+                {
+                    @if (Model.CurrentCategory == category.Id)
+                    {
+                        <option value="@category.Id" selected>@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="sort-control-item">
+            <label for="sort_by_suppliers">Sort by Suppliers:</label>
+            <select name="supplier">
+                @if (Model.CurrentSupplier == 0)
+                {
+                    <option value="0" selected>All</option>
+                }
+                else
+                {
+                    <option value="0">All</option>
+                }
+                @foreach (var supplier in Model.Suppliers)
+                {
+                    @if (Model.CurrentSupplier == supplier.Id)
+                    {
+                        <option value="@supplier.Id" selected>@supplier.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@supplier.Id">@supplier.Name</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <button name="sort" type="submit">Sort</button>
+    </div>
+</form>
+
+<div class="container">
+
+
+    <div class="cards">
+        @foreach (var element in Model.Products)
+        {
+            <div class="card">
+                <img src="img/@(element.Name).jpg">
+
+                <div class="card-body">
+                    <h5 class="card-title">@element.Name</h5>
+                    <p class="card-text"><strong>Price: @element.Price.ToString("C2")</strong></p>
+                    <a href="" id="add-to-cart" data-product-id="@element.Id" data-product-name="@element.Name" type="button"
+                       data-price="@element.Price" class="btn btn-primary">
+                        Add To Cart
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
