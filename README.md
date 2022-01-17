@@ -223,7 +223,7 @@ Thanks for all the support to the Codecool mentors that have guided us!
 [serilog]: https://serilog.net/
 
 [home-page]: src/Codecool.CodecoolShop/wwwroot/img/captures/home-page.png
-[empty-cart]: src/Codecool.CodecoolShop/wwwroot/img/captures/empty-cart.png
+[empty-cart]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429623/CodeCoolShop/empty-cart_mjprbo.png
 [register-page]: src/Codecool.CodecoolShop/wwwroot/img/captures/register-page.png
 [login-page]: src/Codecool.CodecoolShop/wwwroot/img/captures/login-page.png
 [logged-in-home-page]: src/Codecool.CodecoolShop/wwwroot/img/captures/logged-in-home-page.png
