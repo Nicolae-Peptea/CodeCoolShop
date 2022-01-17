@@ -1,3 +1,4 @@
+
 <div id="top"></div>
 
 # Online Shop
@@ -32,13 +33,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![home-page.png][home-page]
-
 Codecool shop is an online shop you can use to buy gadgets like phones and tablets
 
-- The user can sort the products by Category or Supplier
-- The user can place an order with or without an account, by using a credit card
-- The user receives an email confirmation for both user registration and placed order details
+![home-page.png][home-page]
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -51,8 +49,10 @@ Codecool shop is an online shop you can use to buy gadgets like phones and table
 - Add to Cart
 - Cart Preview
 - Edit cart items quantity from the Cart Preview (Increase, Decrease, Remove)
-- Place order
+- Place with or without an account
+- Pay by credit card
 - User Dashboard - Placed orders details
+- Email confirmation for both user registration and placed order details
 - Event logging
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -61,8 +61,9 @@ Codecool shop is an online shop you can use to buy gadgets like phones and table
 
 Back End:
 * [ASP .NET Core][asp-net-core]
-* [Entity Framework Core][ef-core]
 * [C#][c#]
+* [Entity Framework Core][ef-core]
+* [AutoMapper][auto-mapper]
 
 Front End:
 * [HTML][html]
@@ -109,7 +110,7 @@ Login Page:
 
 ![login-page.png][login-page]
 
-Home Page while logged in**:**
+Home Page while logged in
 
 ![logged-in-home-page.png][logged-in-home-page]
 
@@ -133,7 +134,7 @@ Successful Order Placement Notification Page:
 
 ![successful-order.png][successful-order]
 
-Used Dashboard - Order Details:
+User Dashboard - Order Details:
 
 ![placed-order-details.png][placed-order-details]
 
@@ -145,25 +146,34 @@ Used Dashboard - Order Details:
 
 ### Installation
 
-- Create a database
-- Fill in the Stripe - SecretKey, Sendgrid - ApiKey and ConnectionStrings - CodecoolShop fields in appsettings.js or paste the following structure in secrets.json file of the project:
-    
-    ```json
-    {
+- Create a MSSQL database
+- Create a Stripe account [here][registerStripe]
+- Create a SendGrid account [here](https://signup.sendgrid.com/)
+- Go to appsettings.json -> Fill in the ConnectionStrings section with the database Connection String
+
+  ```json
       "ConnectionStrings": {
         "CodeCoolShop": "<your-database-connection-string-comes-here>",
-      },
+      }
+  ```
+- In Visual Studio open the Package Manager Console from Tools → Library Package Manager → Package Manager Console and then run the `enable-migrations` command (make sure that the default project is the "DataAccessLayer").
+![enbale-database.png][enable-database]
+- Then run `Update-Database` in the Package Manager Console to seed the database
+![update-database.png][update-database]
+- Go to appsettings.json ->Fill in the Stripe - SecretKey and Publishable Key [how to locate them in your Stripe account][stripeKey]
+    ```json
       "Stripe": {
-        "SecretKey": "<your-stripe-secret-key-comes-here>"
+        "SecretKey": "<your-stripe-secret-key-comes-here>",
+         "PublishableKey": "<your-stripe-publishable-key-comes-here>"
       },
+    ```
+    
+- Go to appsettings.json -> Fill in the ApiKey related to your Sendgrid account. Take a look on how to locate it in your account [here][sendgrid-key]
+	```json
       "Sendgrid": {
         "ApiKey": "<your-sendgrid-api-key-comes-here>"
       }
-    }
-    ```
-    
-- Fill in other details related to Sendgrid and Stripe according to your data
-- Update the database from the Package Manager Console
+	```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -172,7 +182,7 @@ Used Dashboard - Order Details:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Run the project with Kestrel Server to get events logged with Serilog.
+Run the project with Kestrel Server.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -203,6 +213,7 @@ Thanks for all the support to the Codecool mentors that have guided us!
 
 [asp-net-core]: https://dotnet.microsoft.com/en-us/learn/aspnet/what-is-aspnet-core
 [ef-core]: https://docs.microsoft.com/en-us/ef/core/
+[auto-mapper]: https://automapper.org/
 [c#]: https://docs.microsoft.com/en-us/dotnet/csharp/
 [html]: https://html.com/
 [css]: https://www.w3.org/Style/CSS/Overview.en.html
@@ -219,7 +230,13 @@ Thanks for all the support to the Codecool mentors that have guided us!
 [nicolae-peptea]: https://github.com/Nicolae-Peptea
 
 [sendgrid]: https://sendgrid.com/
+[sendgrid-key]: https://docs.sendgrid.com/ui/account-and-settings/api-keys#managing-api-keys
+
 [stripe]: https://stripe.com/
+
+[stripeKey]: https://support.stripe.com/questions/locate-api-keys-in-the-dashboard#:~:text=Locate%20API%20keys%20in%20the%20Dashboard%20%3A%20Stripe%3A%20Help%20%26%20Support&text=Users%20with%20Administrator%20permissions%20can,and%20clicking%20on%20API%20Keys
+[registerStripe]: https://dashboard.stripe.com/register
+
 [serilog]: https://serilog.net/
 
 [home-page]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429634/CodeCoolShop/home-page_hh7jfv.png
@@ -233,3 +250,7 @@ Thanks for all the support to the Codecool mentors that have guided us!
 [delivery-details]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429612/CodeCoolShop/delivery-details_mqbys6.png
 [successful-order]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429634/CodeCoolShop/successful-order_ycmwbf.png
 [placed-order-details]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429633/CodeCoolShop/placed-order-details_rm8xz0.png
+[update-database]:
+https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642434570/CodeCoolShop/update_database_txm84b.png
+[enable-database]:
+https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642434563/CodeCoolShop/enable-migrations_g6ep9i.png
