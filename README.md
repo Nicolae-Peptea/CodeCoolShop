@@ -222,14 +222,14 @@ Thanks for all the support to the Codecool mentors that have guided us!
 [stripe]: https://stripe.com/
 [serilog]: https://serilog.net/
 
-[home-page]: src/Codecool.CodecoolShop/wwwroot/img/captures/home-page.png
+[home-page]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429634/CodeCoolShop/home-page_hh7jfv.png
 [empty-cart]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429623/CodeCoolShop/empty-cart_mjprbo.png
-[register-page]: src/Codecool.CodecoolShop/wwwroot/img/captures/register-page.png
-[login-page]: src/Codecool.CodecoolShop/wwwroot/img/captures/login-page.png
-[logged-in-home-page]: src/Codecool.CodecoolShop/wwwroot/img/captures/logged-in-home-page.png
-[user-dashboard]: src/Codecool.CodecoolShop/wwwroot/img/captures/user-dashboard.png
-[items-in-cart]: src/Codecool.CodecoolShop/wwwroot/img/captures/items-in-cart.png
-[pre-checkout-cart-preview]: src/Codecool.CodecoolShop/wwwroot/img/captures/pre-checkout-cart-preview.png
-[delivery-details]: src/Codecool.CodecoolShop/wwwroot/img/captures/delivery-details.png
-[successful-order]: src/Codecool.CodecoolShop/wwwroot/img/captures/successful-order.png
-[placed-order-details]: src/Codecool.CodecoolShop/wwwroot/img/captures/placed-order-details.png
+[register-page]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429634/CodeCoolShop/register-page_mmukdc.png
+[login-page]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429633/CodeCoolShop/login-page_txknrt.png
+[logged-in-home-page]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429634/CodeCoolShop/logged-in-home-page_xdem86.png
+[user-dashboard]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429633/CodeCoolShop/user-dashboard_ulsy8e.png
+[items-in-cart]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429634/CodeCoolShop/items-in-cart_ggelhm.png
+[pre-checkout-cart-preview]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429633/CodeCoolShop/pre-checkout-cart-preview_zwezdv.png
+[delivery-details]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429612/CodeCoolShop/delivery-details_mqbys6.png
+[successful-order]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429634/CodeCoolShop/successful-order_ycmwbf.png
+[placed-order-details]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429633/CodeCoolShop/placed-order-details_rm8xz0.png
