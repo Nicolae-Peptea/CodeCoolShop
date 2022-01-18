@@ -146,9 +146,7 @@ User Dashboard - Order Details:
 
 ### Installation
 
-- Create a MSSQL database
-- Create a Stripe account [here][registerStripe]
-- Create a SendGrid account [here](https://signup.sendgrid.com/)
+-  Create a MSSQL database
 - Go to appsettings.json -> Fill in the ConnectionStrings section with the database Connection String
 
   ```json
@@ -160,6 +158,8 @@ User Dashboard - Order Details:
 ![enbale-database.png][enable-database]
 - Then run `Update-Database` in the Package Manager Console to seed the database
 ![update-database.png][update-database]
+
+- Create a Stripe account [here][registerStripe]
 - Go to appsettings.json ->Fill in the Stripe - SecretKey and Publishable Key [how to locate them in your Stripe account][stripeKey]
     ```json
       "Stripe": {
@@ -167,11 +167,26 @@ User Dashboard - Order Details:
          "PublishableKey": "<your-stripe-publishable-key-comes-here>"
       },
     ```
-    
-- Go to appsettings.json -> Fill in the ApiKey related to your Sendgrid account. Take a look on how to locate it in your account [here][sendgrid-key]
+- Create a SendGrid account [here](https://signup.sendgrid.com/)
+- Go to appsettings.json -> Fill in the ApiKey related to your Sendgrid account. Take a look on how to create it in your account [here][sendgrid-key]
 	```json
       "Sendgrid": {
         "ApiKey": "<your-sendgrid-api-key-comes-here>"
+      }
+	```
+- Create you sender profile on SendGrid and update the field from appsettings.json
+	```json
+      "Sendgrid": {
+        "SenderEmail": "<your-sender-email-comes-here>"
+      }
+	```
+- Create dynamic template for Order Confirmation => use this html template [here][order-email]
+-  Create dynamic template for Register Confirmation => use this html template [here][registration-email]
+- Update the templates ids
+	```json
+      "Sendgrid": {
+            "OrderConfirmationTemplateId": "<email-template-id>",
+		    "AccountConfirmationTemplateId": "<email-template-id>"
       }
 	```
 
@@ -231,6 +246,8 @@ Thanks for all the support to the Codecool mentors that have guided us!
 
 [sendgrid]: https://sendgrid.com/
 [sendgrid-key]: https://docs.sendgrid.com/ui/account-and-settings/api-keys#managing-api-keys
+[order-email]: https://res.cloudinary.com/dqwtm9fw1/raw/upload/v1642501179/CodeCoolShop/email-confirmation_tsqcmw.html
+[registration-email]: https://res.cloudinary.com/dqwtm9fw1/raw/upload/v1642501179/CodeCoolShop/email-confirmation_tsqcmw.html
 
 [stripe]: https://stripe.com/
 
