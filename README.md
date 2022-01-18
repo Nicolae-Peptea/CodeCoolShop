@@ -59,6 +59,9 @@ Codecool shop is an online shop you can use to buy gadgets like phones and table
 
 ### Built With
 
+* MVC design pattern
+* Uses React.Js for the Order History page
+
 Back End:
 * [ASP .NET Core][asp-net-core]
 * [C#][c#]
