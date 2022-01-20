@@ -67,8 +67,10 @@ Back End:
 * [ASP .NET Core][asp-net-core]
 * [C#][c#]
 * [Entity Framework Core][ef-core]
-* [Identity][identity-core]
 * [AutoMapper][auto-mapper]
+
+Security:
+* [Identity][identity-core]
 
 Front End:
 * [HTML][html]
