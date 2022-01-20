@@ -44,8 +44,9 @@ Codecool shop is an online shop you can use to buy gadgets like phones and table
 ### Main Features
 
 - Sort Products by Category and Supplier
-- Register
-- Login/Logout using Cookies
+- Register (the account is enbabled after email confirmation)
+- Login using Identity Package with cookies
+- Logout
 - Add to Cart
 - Cart Preview
 - Edit cart items quantity from the Cart Preview (Increase, Decrease, Remove)
@@ -66,6 +67,7 @@ Back End:
 * [ASP .NET Core][asp-net-core]
 * [C#][c#]
 * [Entity Framework Core][ef-core]
+* [Identity][identity-core]
 * [AutoMapper][auto-mapper]
 
 Front End:
@@ -243,6 +245,7 @@ Thanks for all the support to the Codecool mentors that have guided us!
 [msql-server]: https://www.microsoft.com/en-us/sql-server/sql-server-2019
 [ssms]: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15
 [visual-studio]: https://visualstudio.microsoft.com/
+[identity-core]: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio
 
 [mihai-buga]: https://github.com/mihaibuga
 [nicolae-peptea]: https://github.com/Nicolae-Peptea
