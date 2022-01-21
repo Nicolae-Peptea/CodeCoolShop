@@ -1,4 +1,5 @@
-﻿using Codecool.CodecoolShop.Models;
+﻿using AutoMapper;
+using Codecool.CodecoolShop.Models;
 using DataAccessLayer.Data;
 using DataAccessLayer.Model;
 using System;
@@ -10,10 +11,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     public class CustomerDaoDb : ICustomerDao
     {
         private readonly CodeCoolShopContext _context;
+        private readonly IMapper _mapper;
 
-        public CustomerDaoDb(CodeCoolShopContext context)
+        public CustomerDaoDb(CodeCoolShopContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public void Add(Customer item)
@@ -50,23 +53,9 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 .Where(c => c.Email == customer.Email)
                 .FirstOrDefault();
 
-            existingCustomer.BillingName = customer.BillingName;
-            existingCustomer.BillingAddressCity = customer.BillingAddressCity;
-            existingCustomer.BillingAddressCountry = customer.BillingAddressCountry;
-            existingCustomer.BillingAddressCountryCode = customer.BillingAddressCountryCode;
-            existingCustomer.BillingAddressLine1 = customer.BillingAddressLine1;
-            existingCustomer.BillingAddressZip = customer.BillingAddressZip;
-            existingCustomer.Email = customer.Email;
-            existingCustomer.FirstName = customer.FirstName;
-            existingCustomer.LastName = customer.LastName;
-
-            existingCustomer.ShippingName = customer.ShippingName;
-            existingCustomer.ShippingAddressCity = customer.ShippingAddressCity;
-            existingCustomer.ShippingAddressCountry = customer.ShippingAddressCountry;
-            existingCustomer.ShippingAddressCountryCode = customer.ShippingAddressCountryCode;
-            existingCustomer.ShippingAddressLine1 = customer.ShippingAddressLine1;
-            existingCustomer.ShippingAddressZip = customer.ShippingAddressZip;
-            existingCustomer.UserId = customer.UserId;
+            _mapper.Map(customer, existingCustomer);
+            var x = customer;
+            var y = existingCustomer;
 
             _context.SaveChangesAsync();
         }

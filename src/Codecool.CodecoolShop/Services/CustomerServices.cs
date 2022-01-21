@@ -40,19 +40,10 @@ namespace Codecool.CodecoolShop.Services
             
             DataAccessLayer.Model.Customer alreadyCustomer = 
                 _customerDao.GetAlreadyCustomer(order.StripeEmail);
-            
-            bool isAutheticated = httpContext.User.Identity.IsAuthenticated;
-
-            if (isAutheticated)
-            {
-                string userEmail = httpContext.User.Identity.Name;
-                string userId = _usersDao.Get(userEmail).Id;
-
-                newCustomer.UserId = userId;
-            }
+           
 
 
-            if (alreadyCustomer != null && alreadyCustomer.UserId != null)
+            if (alreadyCustomer != null)
             {
                 //newCustomer.UserId = alreadyCustomer.UserId;
                 _customerDao.UpdateCustomer(newCustomer);
