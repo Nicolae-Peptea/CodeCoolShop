@@ -63,7 +63,7 @@ namespace Codecool.CodecoolShop.Services
             }
         }
 
-        public void UpdateCustomerUserId (string email, string userId)
+        public void UpdateOrCreateCustomer (string email, string userId)
         {
             DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomer(email);
             
@@ -71,6 +71,16 @@ namespace Codecool.CodecoolShop.Services
             {
                 alreadyCustomer.UserId = userId;
                 _customerDao.UpdateCustomer(alreadyCustomer);
+            }
+            else
+            {
+                DataAccessLayer.Model.Customer customer = new()
+                {
+                    UserId = userId,
+                    Email = email,
+                };
+
+                _customerDao.Add(customer);
             }
         }
 

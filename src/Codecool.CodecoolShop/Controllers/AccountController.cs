@@ -145,7 +145,7 @@ namespace Codecool.CodecoolShop.Controllers
             if (result.Succeeded)
             {   
                 Log.Information($"the user Id {userId} successful confirmed the account");
-                _customerService.UpdateCustomerUserId(user.Email, userId);
+                _customerService.UpdateOrCreateCustomer(user.Email, userId);
                 await _signInManager.SignInAsync(user, isPersistent: false);
               
                 return View();
