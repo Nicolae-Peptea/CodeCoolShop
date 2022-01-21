@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.Threading.Tasks;
-//using System.Web.Http;
 
 namespace Codecool.CodecoolShop.Controllers
 {

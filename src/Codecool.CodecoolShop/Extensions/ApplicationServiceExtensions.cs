@@ -21,6 +21,7 @@ namespace Codecool.CodecoolShop.Extensions
             services.AddTransient<IProductOrderDao, ProductOrderDaoDb>();
             services.AddTransient<ICustomerDao, CustomerDaoDb>();
             services.AddTransient<IProductOrderDao, ProductOrderDaoDb>();
+            services.AddTransient<IUsersDao, UserDaoDb>();
 
             services.AddScoped<IProductServices, ProductServices>();
             services.AddScoped<ICategoryService, CategoryServices>();
@@ -34,9 +35,10 @@ namespace Codecool.CodecoolShop.Extensions
             return services;
         }
 
-        public static IServiceCollection CongigureDbContext(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration config)
+        public static IServiceCollection CongigureDbContext(this IServiceCollection services, IConfiguration config)
         {
             string connectionString = config.GetConnectionString("CodeCoolShop");
+            
             services.AddDbContext<CodeCoolShopContext>(options =>
                 options.UseNpgsql(connectionString),
                 ServiceLifetime.Transient

@@ -1,4 +1,4 @@
-﻿import OrdersList from "/js/React/OrdersList.jsx";
+﻿import OrdersList from "/js/OrderPage/OrdersList.jsx";
 
 const Content = () => (
     <div className="page-content">

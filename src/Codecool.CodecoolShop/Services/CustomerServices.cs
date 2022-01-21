@@ -5,6 +5,7 @@ using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Stripe;
+using System;
 using System.Security.Claims;
 
 namespace Codecool.CodecoolShop.Services
@@ -14,13 +15,15 @@ namespace Codecool.CodecoolShop.Services
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ICustomerDao _customerDao;
         private readonly IMapper _mapper;
+        private readonly IUsersDao _usersDao;
 
         public CustomerServices(UserManager<IdentityUser> userManager, ICustomerDao customerDao,
-            IMapper mapper)
+            IMapper mapper, IUsersDao usersDao)
         {
             _userManager = userManager;
             _customerDao = customerDao;
             _mapper = mapper;
+            _usersDao = usersDao;
         }
 
         public void CreateCustomer(OrderViewDetailsModel order, HttpContext httpContext)
@@ -33,23 +36,36 @@ namespace Codecool.CodecoolShop.Services
                 Name = order.StripeBillingName,
             });
 
-            DataAccessLayer.Model.Customer customerForDb = MapOrderDetailsToCustomerModel(order);
-            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomers(order.StripeEmail);
+            DataAccessLayer.Model.Customer newCustomer = MapOrderDetailsToCustomerModel(order);
+            
+            DataAccessLayer.Model.Customer alreadyCustomer = 
+                _customerDao.GetAlreadyCustomer(order.StripeEmail);
+            
+            bool isAutheticated = httpContext.User.Identity.IsAuthenticated;
 
-            if (alreadyCustomer != null)
+            if (isAutheticated)
             {
-                customerForDb.UserId = alreadyCustomer.UserId;
-                _customerDao.UpdateCustomer(customerForDb);
+                string userEmail = httpContext.User.Identity.Name;
+                string userId = _usersDao.Get(userEmail).Id;
+
+                newCustomer.UserId = userId;
+            }
+
+
+            if (alreadyCustomer != null && alreadyCustomer.UserId != null)
+            {
+                //newCustomer.UserId = alreadyCustomer.UserId;
+                _customerDao.UpdateCustomer(newCustomer);
             }
             else
             {
-                _customerDao.Add(customerForDb);
+                _customerDao.Add(newCustomer);
             }
         }
 
         public void UpdateCustomerUserId (string email, string userId)
         {
-            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomers(email);
+            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomer(email);
             
             if (alreadyCustomer != null)
             {

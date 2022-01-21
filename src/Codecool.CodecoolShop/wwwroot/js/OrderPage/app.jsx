@@ -1,5 +1,5 @@
-﻿import Header from "/js/React/Header.jsx";
-import Content from "/js/React/Content.jsx";
+﻿import Header from "/js/OrderPage/Header.jsx";
+import Content from "/js/OrderPage/Content.jsx";
 
 const App = () => (
     <div className="App">

@@ -29,7 +29,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 .First();
         }
 
-        public Customer GetAlreadyCustomers(string email)
+        public Customer GetAlreadyCustomer(string email)
         {
             Customer customer = _context.Customers
                 .Where(customer => customer.Email == email)

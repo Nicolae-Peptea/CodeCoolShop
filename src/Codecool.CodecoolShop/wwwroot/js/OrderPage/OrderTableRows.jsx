@@ -1,4 +1,4 @@
-﻿import useFetch from "/js/React/useFetch.jsx";
+﻿import useFetch from "/js/OrderPage/useFetch.jsx";
 
 const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
    /* const baseLink = process.env.REACT_APP_API_URL;*/
