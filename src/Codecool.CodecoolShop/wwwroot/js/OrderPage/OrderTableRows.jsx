@@ -77,19 +77,3 @@ const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
 };
 
 export default OrderTableRows;
-
-//orders.map((order, i) => (
-//    <div
-//        className="row"
-//        key={i + 1}
-//        data-order-id={order.Id}
-//        onClick={rowClickHandler}
-//    >
-//        <div className="order-preview">
-//            <div className="column order-number">{i + 1}</div>
-//            <div className="column order-date-preview">
-//                {order.OrderPlaced.split("T").join(" ")}
-//            </div>
-//        </div>
-//    </div>
-//))}
