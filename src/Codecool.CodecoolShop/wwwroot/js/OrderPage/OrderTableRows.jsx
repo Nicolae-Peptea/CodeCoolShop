@@ -1,7 +1,7 @@
 ﻿import useFetch from "/js/React/useFetch.jsx";
 
 const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
-    //  const baseLink = process.env.REACT_APP_BACKEND_LINK;
+   /* const baseLink = process.env.REACT_APP_API_URL;*/
     const baseLink = "https://localhost:5001";
     const { data: orders, isLoading, error } = useFetch(baseLink + url);
 
