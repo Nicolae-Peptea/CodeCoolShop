@@ -32,6 +32,27 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 .First();
         }
 
+        public int GetCustomerIdByEmail(OrderViewDetailsModel order)
+        {
+            return _context.Customers
+                .Where(customer => customer.Email == order.StripeEmail)
+                .FirstOrDefault().Id;
+        }
+
+        public void CreateOrUpdateCustomer(Customer customer)
+        {
+            Customer alreadyCustomer = GetAlreadyCustomer(customer.Email);
+
+            if (alreadyCustomer != null)
+            {
+                UpdateCustomer(customer, alreadyCustomer);
+            }
+            else
+            {
+                Add(customer);
+            }
+        }
+
         public Customer GetAlreadyCustomer(string email)
         {
             Customer customer = _context.Customers
@@ -40,29 +61,24 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return customer;
         }
 
-        public int GetCustomerIdByEmail(OrderViewDetailsModel order)
+        public void UpdateCustomer(Customer newCustomer, Customer existingCustomer)
         {
-            return _context.Customers
-                .Where(customer => customer.Email == order.StripeEmail)
-                .FirstOrDefault().Id;
-        }
+            string userId = existingCustomer.UserId ?? newCustomer.UserId;
+            int customerId = existingCustomer.Id;
 
-        public void UpdateCustomer(Customer customer)
-        {
-            Customer existingCustomer = _context.Customers
-                .Where(c => c.Email == customer.Email)
-                .FirstOrDefault();
+            if (existingCustomer.UserId != null)
+            {
+                _mapper.Map(newCustomer, existingCustomer);
+            }
+            else
+            {
+                _mapper.Map(existingCustomer, newCustomer);
+            }
 
-            _mapper.Map(customer, existingCustomer);
-            var x = customer;
-            var y = existingCustomer;
+            existingCustomer.Id = customerId;
+            existingCustomer.UserId = userId;
 
-            _context.SaveChangesAsync();
-        }
-
-        public IEnumerable<Customer> GetAll()
-        {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public int GetId(string userId)
@@ -73,6 +89,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         }
 
         public void RemoveItem(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Customer> GetAll()
         {
             throw new NotImplementedException();
         }
