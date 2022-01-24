@@ -15,15 +15,13 @@ namespace Codecool.CodecoolShop.Services
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ICustomerDao _customerDao;
         private readonly IMapper _mapper;
-        private readonly IUsersDao _usersDao;
 
         public CustomerServices(UserManager<IdentityUser> userManager, ICustomerDao customerDao,
-            IMapper mapper, IUsersDao usersDao)
+            IMapper mapper)
         {
             _userManager = userManager;
             _customerDao = customerDao;
             _mapper = mapper;
-            _usersDao = usersDao;
         }
 
         public void CreateCustomerFromOrder(OrderViewDetailsModel order, HttpContext httpContext)

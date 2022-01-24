@@ -21,7 +21,6 @@ namespace Codecool.CodecoolShop.Extensions
             services.AddTransient<IProductOrderDao, ProductOrderDaoDb>();
             services.AddTransient<ICustomerDao, CustomerDaoDb>();
             services.AddTransient<IProductOrderDao, ProductOrderDaoDb>();
-            services.AddTransient<IUsersDao, UserDaoDb>();
 
             services.AddScoped<IProductServices, ProductServices>();
             services.AddScoped<ICategoryService, CategoryServices>();
