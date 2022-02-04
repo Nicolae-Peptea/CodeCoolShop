@@ -44,7 +44,7 @@ Codecool shop is an online shop you can use to buy gadgets like phones and table
 ### Main Features
 
 - Sort Products by Category and Supplier
-- Register (the account is enbabled after email confirmation)
+- Register (the account is enabled after email confirmation)
 - Login using Identity Package with cookies
 - Logout
 - Add to Cart
@@ -53,7 +53,7 @@ Codecool shop is an online shop you can use to buy gadgets like phones and table
 - Place an order with or without an account
 - Pay by credit card using Stripe
 - User Dashboard - Placed orders details
-- Email confirmation for both user registration and placed order
+- Email confirmation for both user registration and orders
 - Event logging
 
 <p align="right">(<a href="#top">back to top</a>)</p>
