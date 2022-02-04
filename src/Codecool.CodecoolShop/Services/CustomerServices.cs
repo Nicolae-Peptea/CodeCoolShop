@@ -5,6 +5,7 @@ using Codecool.CodecoolShop.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Stripe;
+using System;
 using System.Security.Claims;
 
 namespace Codecool.CodecoolShop.Services
@@ -23,7 +24,7 @@ namespace Codecool.CodecoolShop.Services
             _mapper = mapper;
         }
 
-        public void CreateCustomer(OrderViewDetailsModel order, HttpContext httpContext)
+        public void CreateCustomerFromOrder(OrderViewDetailsModel order, HttpContext httpContext)
         {
             CustomerService stripeCustomer = new();
 
@@ -33,29 +34,20 @@ namespace Codecool.CodecoolShop.Services
                 Name = order.StripeBillingName,
             });
 
-            DataAccessLayer.Model.Customer customerForDb = MapOrderDetailsToCustomerModel(order);
-            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomers(order.StripeEmail);
+            DataAccessLayer.Model.Customer newCustomer = MapOrderDetailsToCustomerModel(order);
 
-            if (alreadyCustomer != null)
-            {
-                customerForDb.UserId = alreadyCustomer.UserId;
-                _customerDao.UpdateCustomer(customerForDb);
-            }
-            else
-            {
-                _customerDao.Add(customerForDb);
-            }
+            _customerDao.CreateOrUpdateCustomer(newCustomer);
         }
 
-        public void UpdateCustomerUserId (string email, string userId)
+        public void CreateOrUpdateCustomerOnEmailConfirmation (string email, string userId)
         {
-            DataAccessLayer.Model.Customer alreadyCustomer = _customerDao.GetAlreadyCustomers(email);
-            
-            if (alreadyCustomer != null)
+            DataAccessLayer.Model.Customer newCustomer = new()
             {
-                alreadyCustomer.UserId = userId;
-                _customerDao.UpdateCustomer(alreadyCustomer);
-            }
+                UserId = userId,
+                Email = email,
+            };
+
+            _customerDao.CreateOrUpdateCustomer(newCustomer);
         }
 
         private DataAccessLayer.Model.Customer MapOrderDetailsToCustomerModel(OrderViewDetailsModel order)

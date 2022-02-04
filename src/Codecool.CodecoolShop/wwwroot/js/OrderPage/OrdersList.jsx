@@ -1,5 +1,5 @@
-﻿import OrderTableRows from "/js/React/OrderTableRows.jsx";
-import OrderProductList from "/js/React/OrderProductList.jsx";
+﻿import OrderTableRows from "/js/OrderPage/OrderTableRows.jsx";
+import OrderProductList from "/js/OrderPage/OrderProductList.jsx";
 
 const OrdersList = ({ url }) => {
     const [isDetails, setIsDetails] = React.useState(false);

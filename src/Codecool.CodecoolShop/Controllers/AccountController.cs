@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.Threading.Tasks;
-//using System.Web.Http;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -146,7 +145,7 @@ namespace Codecool.CodecoolShop.Controllers
             if (result.Succeeded)
             {   
                 Log.Information($"the user Id {userId} successful confirmed the account");
-                _customerService.UpdateCustomerUserId(user.Email, userId);
+                _customerService.CreateOrUpdateCustomerOnEmailConfirmation(user.Email, userId);
                 await _signInManager.SignInAsync(user, isPersistent: false);
               
                 return View();

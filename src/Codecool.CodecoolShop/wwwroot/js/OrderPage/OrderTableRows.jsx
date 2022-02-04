@@ -1,7 +1,7 @@
-﻿import useFetch from "/js/React/useFetch.jsx";
+﻿import useFetch from "/js/OrderPage/useFetch.jsx";
 
 const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
-    //  const baseLink = process.env.REACT_APP_BACKEND_LINK;
+   /* const baseLink = process.env.REACT_APP_API_URL;*/
     const baseLink = "https://localhost:5001";
     const { data: orders, isLoading, error } = useFetch(baseLink + url);
 
@@ -77,19 +77,3 @@ const OrderTableRows = ({ url, isDetails, setIsDetails, setProducts }) => {
 };
 
 export default OrderTableRows;
-
-//orders.map((order, i) => (
-//    <div
-//        className="row"
-//        key={i + 1}
-//        data-order-id={order.Id}
-//        onClick={rowClickHandler}
-//    >
-//        <div className="order-preview">
-//            <div className="column order-number">{i + 1}</div>
-//            <div className="column order-date-preview">
-//                {order.OrderPlaced.split("T").join(" ")}
-//            </div>
-//        </div>
-//    </div>
-//))}

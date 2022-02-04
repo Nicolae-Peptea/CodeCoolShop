@@ -39,7 +39,7 @@ namespace Codecool.CodecoolShop.Extensions
             string connectionString = config.GetConnectionString("CodeCoolShop");
             
             services.AddDbContext<CodeCoolShopContext>(options =>
-                options.UseNpgsql(connectionString),
+                options.UseSqlServer(connectionString),
                 ServiceLifetime.Transient
             );
 

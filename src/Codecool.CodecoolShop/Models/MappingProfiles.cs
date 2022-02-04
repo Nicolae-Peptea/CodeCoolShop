@@ -22,6 +22,8 @@ namespace Codecool.CodecoolShop.Models
 
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.StripeEmail))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.StripeBillingName));
+
+            CreateMap<Customer, Customer>();
         }
     }
 }

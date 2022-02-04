@@ -1,4 +1,5 @@
-﻿using Codecool.CodecoolShop.Models;
+﻿using AutoMapper;
+using Codecool.CodecoolShop.Models;
 using DataAccessLayer.Data;
 using DataAccessLayer.Model;
 using System;
@@ -10,10 +11,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     public class CustomerDaoDb : ICustomerDao
     {
         private readonly CodeCoolShopContext _context;
+        private readonly IMapper _mapper;
 
-        public CustomerDaoDb(CodeCoolShopContext context)
+        public CustomerDaoDb(CodeCoolShopContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public void Add(Customer item)
@@ -29,14 +32,6 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 .First();
         }
 
-        public Customer GetAlreadyCustomers(string email)
-        {
-            Customer customer = _context.Customers
-                .Where(customer => customer.Email == email)
-                .FirstOrDefault();
-            return customer;
-        }
-
         public int GetCustomerIdByEmail(OrderViewDetailsModel order)
         {
             return _context.Customers
@@ -44,36 +39,46 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 .FirstOrDefault().Id;
         }
 
-        public void UpdateCustomer(Customer customer)
+        public void CreateOrUpdateCustomer(Customer customer)
         {
-            Customer existingCustomer = _context.Customers
-                .Where(c => c.Email == customer.Email)
-                .FirstOrDefault();
+            Customer alreadyCustomer = GetAlreadyCustomer(customer.Email);
 
-            existingCustomer.BillingName = customer.BillingName;
-            existingCustomer.BillingAddressCity = customer.BillingAddressCity;
-            existingCustomer.BillingAddressCountry = customer.BillingAddressCountry;
-            existingCustomer.BillingAddressCountryCode = customer.BillingAddressCountryCode;
-            existingCustomer.BillingAddressLine1 = customer.BillingAddressLine1;
-            existingCustomer.BillingAddressZip = customer.BillingAddressZip;
-            existingCustomer.Email = customer.Email;
-            existingCustomer.FirstName = customer.FirstName;
-            existingCustomer.LastName = customer.LastName;
-
-            existingCustomer.ShippingName = customer.ShippingName;
-            existingCustomer.ShippingAddressCity = customer.ShippingAddressCity;
-            existingCustomer.ShippingAddressCountry = customer.ShippingAddressCountry;
-            existingCustomer.ShippingAddressCountryCode = customer.ShippingAddressCountryCode;
-            existingCustomer.ShippingAddressLine1 = customer.ShippingAddressLine1;
-            existingCustomer.ShippingAddressZip = customer.ShippingAddressZip;
-            existingCustomer.UserId = customer.UserId;
-
-            _context.SaveChangesAsync();
+            if (alreadyCustomer != null)
+            {
+                UpdateCustomer(customer, alreadyCustomer);
+            }
+            else
+            {
+                Add(customer);
+            }
         }
 
-        public IEnumerable<Customer> GetAll()
+        public Customer GetAlreadyCustomer(string email)
         {
-            throw new NotImplementedException();
+            Customer customer = _context.Customers
+                .Where(customer => customer.Email == email)
+                .FirstOrDefault();
+            return customer;
+        }
+
+        public void UpdateCustomer(Customer newCustomer, Customer existingCustomer)
+        {
+            string userId = existingCustomer.UserId ?? newCustomer.UserId;
+            int customerId = existingCustomer.Id;
+
+            if (existingCustomer.UserId != null)
+            {
+                _mapper.Map(newCustomer, existingCustomer);
+            }
+            else
+            {
+                _mapper.Map(existingCustomer, newCustomer);
+            }
+
+            existingCustomer.Id = customerId;
+            existingCustomer.UserId = userId;
+
+            _context.SaveChanges();
         }
 
         public int GetId(string userId)
@@ -84,6 +89,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         }
 
         public void RemoveItem(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Customer> GetAll()
         {
             throw new NotImplementedException();
         }

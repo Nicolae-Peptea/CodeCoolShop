@@ -1,4 +1,4 @@
-﻿import Total from "/js/React/Total.jsx";
+﻿import Total from "/js/OrderPage/Total.jsx";
 
 const OrderProductList = ({ products, setIsDetails }) => {
     const backHandler = (e) => {

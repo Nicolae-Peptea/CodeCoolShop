@@ -7,11 +7,12 @@ namespace Codecool.CodecoolShop.Daos
     {
         public int GetCustomerIdByEmail(OrderViewDetailsModel order);
 
-        //public Customer GetAlreadyCustomers(OrderViewDetailsModel order);
+        public Customer GetAlreadyCustomer(string email);
 
-        public Customer GetAlreadyCustomers(string email);
-
-        public void UpdateCustomer(Customer customer);
+        public void UpdateCustomer(Customer customer, Customer existingCustomer);
+        
         int GetId(string userId);
+
+        void CreateOrUpdateCustomer(Customer customer);
     }
 }

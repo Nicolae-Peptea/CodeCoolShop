@@ -37,7 +37,7 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 _orderServices.ChargeCustomer(order, orderTotal);
 
-                _customerService.CreateCustomer(order, HttpContext);
+                _customerService.CreateCustomerFromOrder(order, HttpContext);
                 _orderServices.AddOrder(order);
                 _productOrderService.AddProducts(orderItems);
 
