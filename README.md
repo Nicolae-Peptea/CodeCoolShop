@@ -51,7 +51,7 @@ Codecool shop is an online shop you can use to buy gadgets like phones and table
 - Cart Preview
 - Edit cart items quantity from the Cart Preview (Increase, Decrease, Remove)
 - Place with or without an account
-- Pay by credit card
+- Pay by credit card using Stripe
 - User Dashboard - Placed orders details
 - Email confirmation for both user registration and placed order details
 - Event logging
