@@ -34,11 +34,12 @@ namespace Codecool.CodecoolShop.Extensions
             return services;
         }
 
-        public static IServiceCollection CongigureDbContext(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration config)
+        public static IServiceCollection CongigureDbContext(this IServiceCollection services, IConfiguration config)
         {
             string connectionString = config.GetConnectionString("CodeCoolShop");
+            
             services.AddDbContext<CodeCoolShopContext>(options =>
-                options.UseSqlServer(connectionString),
+                options.UseNpgsql(connectionString),
                 ServiceLifetime.Transient
             );
 

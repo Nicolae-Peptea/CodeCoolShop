@@ -1,27 +1,32 @@
+using Codecool.CodecoolShop.Extensions;
+using DataAccessLayer;
+using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
+using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var confirguration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+            IHost host = CreateHostBuilder(args).Build();
 
-            Log.Logger = new LoggerConfiguration().
-                ReadFrom.Configuration(confirguration)
-                .CreateLogger();
+            SerilogConfig.Configure();
+
+             await SeedData.TrySeedData(host);
 
             try
             {
                 Log.Information("Codecool Shop App starting up");
-                CreateHostBuilder(args).Build().Run();
+                await host.RunAsync();
             }
             catch (Exception ex)
             {
