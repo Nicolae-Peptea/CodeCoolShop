@@ -161,10 +161,6 @@ User Dashboard - Order Details:
         "CodeCoolShop": "<your-database-connection-string-comes-here>",
       }
   ```
-- In Visual Studio open the Package Manager Console from Tools → Library Package Manager → Package Manager Console and then run the `enable-migrations` command (make sure that the default project is the "DataAccessLayer").
-![enbale-database.png][enable-database]
-- Then run `Update-Database` in the Package Manager Console to seed the database
-![update-database.png][update-database]
 
 - Create a Stripe account [here][registerStripe]
 - Go to appsettings.json ->Fill in the Stripe - SecretKey and Publishable Key [how to locate them in your Stripe account][stripeKey]
@@ -275,7 +271,3 @@ Thanks for all the support to the Codecool mentors that have guided us!
 [delivery-details]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429612/CodeCoolShop/delivery-details_mqbys6.png
 [successful-order]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429634/CodeCoolShop/successful-order_ycmwbf.png
 [placed-order-details]: https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642429633/CodeCoolShop/placed-order-details_rm8xz0.png
-[update-database]:
-https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642434570/CodeCoolShop/update_database_txm84b.png
-[enable-database]:
-https://res.cloudinary.com/dqwtm9fw1/image/upload/v1642434563/CodeCoolShop/enable-migrations_g6ep9i.png
